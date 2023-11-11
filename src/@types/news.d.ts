@@ -5,7 +5,7 @@ export interface INews {
   slug: string;
   banner_url: string;
   description: string;
-  contents: (IContentText | IContentImage)[];
+  // contents: (IContentText | IContentImage)[];
   author: string;
   tags: string[];
 
