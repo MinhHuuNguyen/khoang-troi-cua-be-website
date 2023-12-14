@@ -11,6 +11,8 @@ import Head from "next/head";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { CssBaseline } from "@mui/material";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { useEffect, useState } from "react";
 
 const clientSideEmotionCache = createEmotionCache();
@@ -34,14 +36,16 @@ export default function App(props: MyAppProps) {
       </Head>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            {hydated && (
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
-            )}
-          </ThemeProvider>
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <ThemeProvider theme={theme}>
+              <CssBaseline />
+              {hydated && (
+                <Layout>
+                  <Component {...pageProps} />
+                </Layout>
+              )}
+            </ThemeProvider>
+          </LocalizationProvider>
         </Hydrate>
       </QueryClientProvider>
       <Analytics />
