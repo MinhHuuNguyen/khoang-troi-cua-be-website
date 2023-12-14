@@ -69,9 +69,17 @@ const Header = () => {
           </Stack>
         </Box>
 
-        <IconButton>
-          <LanguageIcon sx={{ fontSize: 25 }} />
-        </IconButton>
+        <Stack direction="row" alignItems="center" gap="12px">
+          <Link
+            href="/login"
+            className="text-sm font-semibold hover:opacity-80 cursor-pointer"
+          >
+            Đăng nhập
+          </Link>
+          <IconButton>
+            <LanguageIcon sx={{ fontSize: 25 }} />
+          </IconButton>
+        </Stack>
       </Stack>
 
       <Drawer anchor="left" open={openSideMenu} onClose={handleToggleSideMenu}>

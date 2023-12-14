@@ -227,7 +227,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     return {
       props: {
         news,
-        rightOtherNews: rightOtherNews?.slice(0, 6),
+        rightOtherNews: rightOtherNews?.slice(0, 6) || [],
         content: content,
       },
     };

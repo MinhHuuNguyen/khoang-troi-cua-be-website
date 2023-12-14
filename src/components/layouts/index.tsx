@@ -8,7 +8,11 @@ const Layout = ({ children }: any) => {
     <>
       <Header />
       <div id="primary" className="content-area pt-0">
-        <main id="main" className="site-main mt-[0px]" role="main">
+        <main
+          id="main"
+          className="site-main mt-[0px] min-h-[calc(100vh-74px-243px)]"
+          role="main"
+        >
           {children}
         </main>
       </div>
