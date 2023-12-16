@@ -55,7 +55,7 @@ export const UserInformation: React.FC<Props> = ({ control, errors }) => {
                 value={value as unknown as Date}
                 onChange={onChange}
                 error={!!errors.birthday?.message}
-                helperText={errors.birthday?.message}
+                helperText={errors.birthday?.message as string}
                 maxDate={new Date()}
               />
             )}

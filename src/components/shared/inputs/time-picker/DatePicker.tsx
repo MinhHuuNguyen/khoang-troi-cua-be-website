@@ -44,16 +44,24 @@ export const DatePicker = ({
       <MUIDatePicker
         onChange={handleChange}
         value={value ? value : null}
-        // renderInput={(params) => (
-        //   <TextField
-        //     size="small"
-        //     error={error}
-        //     onKeyDown={(e) => {
-        //       e.preventDefault();
-        //     }}
-        //     {...params}
-        //   />
-        // )}
+        slotProps={{
+          field: {
+            readOnly: true,
+          },
+          textField: {
+            inputProps: {
+              onKeyDown: (e) => {
+                e.preventDefault();
+              },
+            },
+            size: "small",
+            sx: {
+              "& .MuiOutlinedInput-root": {
+                borderRadius: "0.5rem",
+              },
+            },
+          },
+        }}
         {...props}
       />
     </InputControl>

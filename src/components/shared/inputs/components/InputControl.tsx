@@ -1,7 +1,7 @@
-import { FormControl, FormControlProps, FormHelperText } from '@mui/material';
-import Image from 'next/image';
-import { FieldError } from 'react-hook-form';
-import { FormLabel } from './FormLabel';
+import { FormControl, FormControlProps, FormHelperText } from "@mui/material";
+import Image from "next/image";
+import { FieldError } from "react-hook-form";
+import { FormLabel } from "./FormLabel";
 
 export type AddControlProps = {
   helperText?: string | JSX.Element;
@@ -10,7 +10,7 @@ export type AddControlProps = {
   fieldError?: FieldError | boolean;
 };
 
-export type InputControlProps = FormControlProps<'div', AddControlProps>;
+export type InputControlProps = FormControlProps<"div", AddControlProps>;
 
 const InputControl = ({
   fieldError,
@@ -33,13 +33,21 @@ const InputControl = ({
               width={20}
               height={20}
               style={{
-                marginRight: '6px',
+                marginRight: "6px",
               }}
             />
           )}
           {label}
           {required ? (
-            <span style={{ marginLeft: '3px', color: 'red' }}>*</span>
+            <span
+              style={{
+                marginLeft: "3px",
+                color: "red",
+                alignSelf: "flex-start",
+              }}
+            >
+              *
+            </span>
           ) : null}
         </FormLabel>
       }
@@ -52,8 +60,9 @@ const InputControl = ({
           sx={{
             marginRight: 0,
             marginLeft: 0,
-          }}>
-          {typeof fieldError === 'boolean' ? helperText : fieldError?.message}
+          }}
+        >
+          {typeof fieldError === "boolean" ? helperText : fieldError?.message}
         </FormHelperText>
       )}
     </FormControl>

@@ -20,3 +20,5 @@ export const TEAM_NAME = {
   NOI_DUNG: "noi-dung",
   QUY_KTCB: "quy-ktcb",
 };
+
+export const REGEX_PHONE_NUMBER = /(84|0[3|5|7|8|9])+([0-9]{8})\b/g;
