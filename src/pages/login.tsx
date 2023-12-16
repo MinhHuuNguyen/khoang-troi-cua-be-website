@@ -1,25 +1,50 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
-import TextField from "@mui/material/TextField";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
-import Image from "next/image";
 import logoNoBackground from "@public/ktcb_logo_no_background.png";
 import Link from "next/link";
+import { Controller, useForm } from "react-hook-form";
+import { Input } from "@/components/shared/inputs";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+import { notEmptyMessage } from "@/utils/common";
+import { z } from "zod";
+
+export const LoginInputSchema = z.object({
+  email: z
+    .string()
+    .min(1, {
+      message: notEmptyMessage("Email"),
+    })
+    .email({
+      message: "Email không hợp lệ",
+    }),
+
+  password: z.string().min(1, {
+    message: "Mật khẩu không được bỏ trống",
+  }),
+});
 
 export default function Login() {
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<z.infer<typeof LoginInputSchema>>({
+    resolver: zodResolver(LoginInputSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
+  });
 
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
-  };
+  const onSubmit = handleSubmit((data) => {
+    console.log(data);
+  });
 
   return (
-    <Container component="main" maxWidth="sm">
+    <Container component="main" maxWidth="sm" className="mb-10">
       <Box
         sx={{
           marginTop: 8,
@@ -48,33 +73,50 @@ export default function Login() {
         </p>
         <Box
           component="form"
-          onSubmit={handleSubmit}
+          onSubmit={onSubmit}
           noValidate
           maxWidth={320}
-          sx={{ mt: 1 }}
+          sx={{
+            mt: 1,
+            display: "flex",
+            flexDirection: "column",
+            gap: "16px",
+            width: "100%",
+          }}
         >
-          <TextField
-            margin="normal"
-            size="small"
-            required
-            fullWidth
-            id="email"
-            label="Tài khoản"
+          <Controller
             name="email"
-            autoComplete="email"
-            autoFocus
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <Input
+                label={"Email"}
+                fullWidth
+                placeholder={"Nhập email"}
+                value={value}
+                onChange={onChange}
+                error={!!errors.email?.message}
+                helperText={errors.email?.message}
+              />
+            )}
           />
-          <TextField
-            margin="normal"
-            size="small"
-            required
-            fullWidth
+
+          <Controller
             name="password"
-            label="Mật khẩu"
-            type="password"
-            id="password"
-            autoComplete="current-password"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <Input
+                label={"Mật khẩu"}
+                fullWidth
+                placeholder={"Nhập mật khẩu"}
+                type="password"
+                value={value}
+                onChange={onChange}
+                error={!!errors.password?.message}
+                helperText={errors.password?.message}
+              />
+            )}
           />
+
           <Button
             type="submit"
             fullWidth

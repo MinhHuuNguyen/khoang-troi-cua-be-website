@@ -2,7 +2,6 @@ import {
   InputAdornment,
   OutlinedInput,
   OutlinedInputProps,
-  makeStyles,
 } from "@mui/material";
 import React from "react";
 import { InputControl } from "./components/InputControl";
