@@ -30,7 +30,7 @@ const RecruitmentManagementPage = () => {
   return (
     <Container>
       <Box className="py-4">
-        <DefaultSeo {...SEO} title="Đăng ký thành viên" />
+        <DefaultSeo {...SEO} title="Quản lý đơn tuyển" />
         <TabBase tabElement={tabElement} tabIndex={0} />
       </Box>
     </Container>
