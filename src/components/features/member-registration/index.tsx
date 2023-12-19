@@ -9,6 +9,7 @@ import {
 import { Button, Typography } from "@mui/material";
 import { Container } from "@/components/layouts/Container";
 import { toast } from "react-toastify";
+import ktcbBackground from "@public/mission-background.jpg";
 
 export const MemberRegistration = () => {
   const {
@@ -42,7 +43,13 @@ export const MemberRegistration = () => {
   });
 
   return (
-    <Container>
+    <Container
+      sx={{
+        backgroundImage: `url(${ktcbBackground.src})`,
+        backgroundSize: "100% 100%;",
+        backgroundPosition: "center",
+      }}
+    >
       <div className="flex flex-col mt-9 gap-4">
         <Typography fontSize={28} fontWeight={"bold"}>
           Đăng ký trở thành thành viên Khoảng Trời Của Bé

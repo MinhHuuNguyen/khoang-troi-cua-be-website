@@ -1,14 +1,21 @@
-import React from 'react'
-import { Container as MUIContainer } from "@mui/material";
+import React from "react";
+import { Container as MUIContainer, SxProps, Theme } from "@mui/material";
 
-export const Container = ({children}: {children: React.ReactElement}) => {
+export const Container = ({
+  children,
+  sx,
+}: {
+  children: React.ReactElement;
+  sx: SxProps<Theme>;
+}) => {
   return (
     <MUIContainer
       sx={{
         maxWidth: "1900px !important",
+        ...sx,
       }}
     >
-        {children}
+      {children}
     </MUIContainer>
-  )
-}
+  );
+};
