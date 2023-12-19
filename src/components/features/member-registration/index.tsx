@@ -6,8 +6,9 @@ import {
   MemberRegistrationInputSchema,
   MemberRegistrationInputType,
 } from "./types";
-import { Button } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { Container } from "@/components/layouts/Container";
+import { toast } from "react-toastify";
 
 export const MemberRegistration = () => {
   const {
@@ -36,11 +37,17 @@ export const MemberRegistration = () => {
 
   const onSubmit = handleSubmit((data) => {
     console.log(data);
+
+    toast.success("Xác nhận thành công và Cảm ơn đã gửi thông tin");
   });
 
   return (
     <Container>
       <div className="flex flex-col mt-9 gap-4">
+        <Typography fontSize={28} fontWeight={"bold"}>
+          Đăng ký trở thành thành viên Khoảng Trời Của Bé
+        </Typography>
+
         <UserInformation control={control} errors={errors} />
 
         <UserSocialActivities control={control} errors={errors} />
@@ -52,8 +59,10 @@ export const MemberRegistration = () => {
           sx={{
             marginTop: "1rem",
             width: "fit-content",
-            alignSelf: "flex-end",
+            alignSelf: "center",
+            color: "#fff",
           }}
+          color="secondary"
           onClick={onSubmit}
         >
           Gửi thông tin

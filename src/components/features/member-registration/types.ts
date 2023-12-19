@@ -1,4 +1,4 @@
-import { notEmptyMessage, maxLengthMessage } from "@/utils/common";
+import {  maxLengthMessage } from "@/utils/common";
 import { z } from "zod";
 import { REGEX_PHONE_NUMBER } from "@/utils/constants";
 
@@ -9,7 +9,7 @@ export const MemberRegistrationInputSchema = z
       .string()
       .trim()
       .min(1, {
-        message: notEmptyMessage("Họ và tên"),
+        message: "Không được để trống",
       })
       .max(255, {
         message: maxLengthMessage("Họ và tên"),
@@ -18,7 +18,7 @@ export const MemberRegistrationInputSchema = z
     email: z
       .string()
       .min(1, {
-        message: notEmptyMessage("Email"),
+        message: "Không được để trống",
       })
       .email({
         message: "Email không hợp lệ",
@@ -26,7 +26,7 @@ export const MemberRegistrationInputSchema = z
     phone_number: z
       .string()
       .min(1, {
-        message: notEmptyMessage("Số điện thoại"),
+        message: "Không được để trống",
       })
       .max(11, {
         message: maxLengthMessage("Số điện thoại", 11),
@@ -38,7 +38,7 @@ export const MemberRegistrationInputSchema = z
       .string()
       .trim()
       .min(1, {
-        message: notEmptyMessage("Địa chỉ"),
+        message: "Không được để trống",
       })
       .max(255, {
         message: maxLengthMessage("Địa chỉ"),
@@ -47,7 +47,7 @@ export const MemberRegistrationInputSchema = z
       .string()
       .trim()
       .min(1, {
-        message: notEmptyMessage("Nơi làm việc"),
+        message: "Không được để trống",
       })
       .max(255, {
         message: maxLengthMessage("Nơi làm việc"),
@@ -68,13 +68,13 @@ export const MemberRegistrationInputSchema = z
       .string()
       .trim()
       .min(1, {
-        message: notEmptyMessage("Chức vụ"),
+        message: "Không được để trống",
       }),
     hope_to_receive: z
       .string()
       .trim()
       .min(1, {
-        message: notEmptyMessage("Mong muốn nhận"),
+        message: "Không được để trống",
       })
       .max(1000, {
         message: maxLengthMessage("Mong muốn nhận"),

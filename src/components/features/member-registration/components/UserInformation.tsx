@@ -19,7 +19,7 @@ const COL_SPAN = {
 export const UserInformation: React.FC<Props> = ({ control, errors }) => {
   return (
     <Stack>
-      <Typography variant="h6" mb={2}>
+      <Typography variant="h5" mb={2}>
         Bạn hãy chia sẻ một số thông tin cá nhân với chúng mình nhé…
       </Typography>
 

@@ -43,6 +43,7 @@ export const DatePicker = ({
     >
       <MUIDatePicker
         onChange={handleChange}
+        format="dd/MM/yyyy"
         value={value ? value : null}
         slotProps={{
           field: {

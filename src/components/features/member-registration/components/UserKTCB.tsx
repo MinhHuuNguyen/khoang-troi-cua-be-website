@@ -12,7 +12,7 @@ interface Props {
 export const UserKTCB: React.FC<Props> = ({ control, errors }) => {
   return (
     <Stack>
-      <Typography variant="h6" mb={2}>
+      <Typography variant="h5" mb={2}>
         Về Khoảng Trời Của Bé…
       </Typography>
 
