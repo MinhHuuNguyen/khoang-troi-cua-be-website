@@ -10,8 +10,11 @@ import { Button, Typography } from "@mui/material";
 import { Container } from "@/components/layouts/Container";
 import { toast } from "react-toastify";
 import ktcbBackground from "@public/mission-background.jpg";
+import { useRouter } from "next/router";
 
 export const MemberRegistration = () => {
+  const router = useRouter();
+
   const {
     control,
     handleSubmit,
@@ -39,7 +42,7 @@ export const MemberRegistration = () => {
   const onSubmit = handleSubmit((data) => {
     console.log(data);
 
-    toast.success("Xác nhận thành công và Cảm ơn đã gửi thông tin");
+    toast.success("Xác nhận thành công. Cảm ơn đã gửi thông tin");
   });
 
   return (
@@ -51,6 +54,32 @@ export const MemberRegistration = () => {
       }}
     >
       <div className="flex flex-col mt-9 gap-4">
+        <div className="flex items-center gap-2">
+          <Button
+            variant="contained"
+            sx={{
+              width: "fit-content",
+              color: "#fff",
+            }}
+            disabled
+            color="secondary"
+            onClick={() => router.push("/member-registration")}
+          >
+            Trở thành thành viên
+          </Button>
+          <Button
+            variant="contained"
+            sx={{
+              width: "fit-content",
+              color: "#fff",
+            }}
+            color="secondary"
+            onClick={() => router.push("/donor-registration")}
+          >
+            Trở thành nhà hảo tâm
+          </Button>
+        </div>
+
         <Typography fontSize={28} fontWeight={"bold"}>
           Đăng ký trở thành thành viên Khoảng Trời Của Bé
         </Typography>
