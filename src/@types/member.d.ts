@@ -1,0 +1,14 @@
+export interface IMember {
+  full_name: string;
+  birthday: string;
+  email: string;
+  phone_number: string;
+  address: string;
+  work_place: string;
+  has_social_activities: string;
+  memories?: string;
+  position: string;
+  hope_to_receive: string;
+}
+
+export interface IDonor {}

@@ -22,6 +22,11 @@ export const useTable = <T extends MRT_RowData>({
     localization: MRT_Localization_VI,
     enableDensityToggle: false,
     enableFilters: false,
+    enableColumnActions: false,
+    enableColumnFilters: false,
+    enableSorting: false,
+    enableFullScreenToggle: false,
+    enableHiding: false,
     ...props,
   });
 
