@@ -2,7 +2,8 @@ import React from "react";
 import { Control, Controller, FieldErrors } from "react-hook-form";
 import { MemberRegistrationInputType } from "../types";
 import { Stack, Typography, Grid } from "@mui/material";
-import { Input, Radio } from "@/components/shared/inputs";
+import { Input, SelectBox } from "@/components/shared/inputs";
+import PositionKTCB from "@/utils/data/json/position-ktcb.json";
 
 interface Props {
   control: Control<MemberRegistrationInputType>;
@@ -22,7 +23,7 @@ export const UserKTCB: React.FC<Props> = ({ control, errors }) => {
             name="position"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <Radio
+              <SelectBox
                 label={
                   "Bạn mong muốn tham gia vào vị trí nào trong Khoảng Trời Của Bé?"
                 }
@@ -32,16 +33,7 @@ export const UserKTCB: React.FC<Props> = ({ control, errors }) => {
                 onChange={onChange}
                 error={!!errors.position?.message}
                 helperText={errors.position?.message}
-                options={[
-                  {
-                    value: 0,
-                    label: "Tình nguyện viên",
-                  },
-                  {
-                    value: 1,
-                    label: "Thành viên ban tổ chức",
-                  },
-                ]}
+                options={PositionKTCB}
               />
             )}
           />

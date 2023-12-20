@@ -33,20 +33,19 @@ const SelectBox = ({
   disabledClearable = false,
   ...props
 }: Props) => {
-  const [_value, setValue] = useState<string | number | null>(null);
+  const [_value, setValue] = useState<string | number>();
 
   useEffect(() => {
     const option = options.find((option) => option?.value == value);
 
-    setValue(option?.value || null);
+    setValue(option?.value);
   }, [options, value]);
 
   const handleChangeValue = (_event: SyntheticEvent<Element, Event>) => {
-    console.log(_event);
     const newValue = (_event.target as HTMLInputElement).value;
     if (!newValue) {
       onChange("");
-      setValue(null);
+      setValue(undefined);
 
       return;
     }
@@ -66,7 +65,7 @@ const SelectBox = ({
       <select
         value={_value as string | number}
         onChange={handleChangeValue}
-        className="rounded-md border min-w-[120px] border-gray-300 px-2 py-2 focus:border-[#556cd6] h-[40px]"
+        className="rounded-md border min-w-[120px] border-gray-300 px-2 py-2 focus:border-[#556cd6] h-[40px] bg-transparent"
         {...props}
       >
         {options.map((option) => {
