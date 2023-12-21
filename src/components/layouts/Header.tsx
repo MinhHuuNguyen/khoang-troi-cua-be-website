@@ -76,6 +76,7 @@ const Header = () => {
           >
             Đăng nhập
           </Link>
+          <Link href="/profile">Chào Nguyễn Hữu Minh</Link>
           <IconButton>
             <LanguageIcon sx={{ fontSize: 25 }} />
           </IconButton>
