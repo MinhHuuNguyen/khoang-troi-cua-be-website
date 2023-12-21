@@ -11,4 +11,14 @@ export interface IMember {
   hope_to_receive: string;
 }
 
+export interface IOfficialMember {
+  full_name: string;
+  birthday: string;
+  email: string;
+  phone_number: string;
+  address: string;
+  work_place: string;
+  bank_account: string;
+}
+
 export interface IDonor {}
