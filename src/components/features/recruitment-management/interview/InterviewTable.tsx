@@ -1,9 +1,14 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
 import { useTable } from "@/libs/hooks/useTable";
 import { MenuItem, Tooltip, Typography } from "@mui/material";
 import { IMember } from "@/@types/member";
 import { ellipsisText } from "@/utils/common";
+import { ModalConfirm } from "@/components/shared/modals";
+import { ACTIONS } from "@/utils/constants";
+import { useDisclosure } from "@/libs/hooks/useDisclosure";
+import { ActionType } from "@/@types/common";
+import { toast } from "react-toastify";
 
 interface Person extends IMember {
   date_time: string;
@@ -197,37 +202,71 @@ const InterviewTable = () => {
     []
   );
 
+  const [opened, { open, close }] = useDisclosure();
+  const [rowSelected, setRowSelected] = useState<Person>();
+  const [action, setAction] = useState<ActionType>();
+
+  const handleOpenModal = (person: Person, action: ActionType) => {
+    open();
+    setRowSelected(person);
+    setAction(action);
+  };
+
+  const handleComfirm = () => {
+    console.log("rowSelected", rowSelected);
+
+    if (action === ACTIONS["ACCEPT"]) {
+      toast.success("Duyệt thành công");
+    } else if (action === ACTIONS["REJECT"]) {
+      toast.success("Không duyệt thành công");
+    }
+
+    close();
+  };
+
   const table = useTable({
     columns,
     data,
     enableRowActions: true,
-    renderRowActionMenuItems: ({ row }) => [
-      <MenuItem
-        key="1"
-        onClick={() => console.info("Xác nhận phỏng vấn", row.original)}
-      >
-        Xác nhận phỏng vấn
-      </MenuItem>,
-      <MenuItem key="2" onClick={() => console.info("Duyệt", row.original)}>
-        Duyệt
-      </MenuItem>,
-      <MenuItem
-        key="3"
-        onClick={() => console.info(" Không duyệt", row.original)}
-      >
-        Không duyệt
-      </MenuItem>,
-      <MenuItem
-        key="4"
-        onClick={() => console.info(" Không phỏng vấn", row.original)}
-      >
-        Không phỏng vấn
-      </MenuItem>,
-    ],
+    renderRowActions: ({ row }) => (
+      <div className="flex items-center justify-center min-w-">
+        <button
+          className={`flex items-center justify-center w-8 h-8 mr-2 text-white bg-green-700 rounded-full hover:bg-green-600`}
+          onClick={() =>
+            handleOpenModal(row.original, ACTIONS["ACCEPT"] as ActionType)
+          }
+        >
+          V
+        </button>
+        <button
+          className={`flex items-center justify-center w-8 h-8 mr-2 text-white bg-red-700 rounded-full hover:bg-red-600`}
+          onClick={() =>
+            handleOpenModal(row.original, ACTIONS["REJECT"] as ActionType)
+          }
+        >
+          X
+        </button>
+      </div>
+    ),
     positionActionsColumn: "last",
   });
 
-  return <MaterialReactTable table={table} />;
+  return (
+    <>
+      <MaterialReactTable table={table} />
+      <ModalConfirm
+        title={`Xác nhận ${
+          action === ACTIONS["ACCEPT"] ? "DUYỆT" : "KHÔNG DUYỆT"
+        } tham gia phỏng vấn`}
+        open={opened}
+        onClose={close}
+        content={`Bạn xác nhận ${
+          action === ACTIONS["ACCEPT"] ? "DUYỆT" : "KHÔNG DUYỆT"
+        } tham gia phỏng vấn?`}
+        onConfirm={handleComfirm}
+      />
+    </>
+  );
 };
 
 export { InterviewTable };

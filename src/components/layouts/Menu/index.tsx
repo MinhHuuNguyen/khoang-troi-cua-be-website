@@ -71,7 +71,7 @@ const MenuSection: React.FC<MenuSectionProps> = ({ menuData }) => {
           onMouseOver={handleClick}
           onMouseLeave={handleClose}
           sx={{
-            zIndex: 9999999,
+            zIndex: 999,
             whiteSpace: "nowrap",
             cursor: "pointer",
             color: "black",
