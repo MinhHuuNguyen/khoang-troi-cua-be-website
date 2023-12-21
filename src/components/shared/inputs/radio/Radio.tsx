@@ -14,7 +14,7 @@ type Props = {
   label?: string;
   iconLabel?: string;
   startAdornmentIcon?: React.ReactNode;
-} & { options: Array<{ value: number; label: string }> } & RadioGroupProps;
+} & { options: Array<{ value: number | string; label: string }> } & RadioGroupProps;
 
 const Radio = ({
   required = false,
@@ -42,7 +42,7 @@ const Radio = ({
         name="row-radio-buttons-group"
         {...props}
       >
-        {options.map((o: { value: number; label: string }, index) => {
+        {options.map((o: { value: number | string; label: string }, index) => {
           return (
             <FormControlLabel
               key={index}

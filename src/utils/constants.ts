@@ -23,7 +23,17 @@ export const TEAM_NAME = {
 
 export const REGEX_PHONE_NUMBER = /(84|0[3|5|7|8|9])+([0-9]{8})\b/g;
 
+export const KIND_OF_DONATION_OPTIONS = [
+  {
+    value: "1",
+    label: "Tiền",
+  },
+  {
+    value: "2",
+    label: "Hiện vật",
+  },
+];
 export const ACTIONS = {
   ACCEPT: "accept",
   REJECT: "reject",
-}
+};
