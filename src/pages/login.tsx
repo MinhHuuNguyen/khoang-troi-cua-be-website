@@ -122,6 +122,7 @@ export default function Login() {
             fullWidth
             variant="contained"
             sx={{ mt: 3, mb: 2, backgroundColor: "#3b4b95" }}
+            color="secondary"
           >
             Đăng nhập
           </Button>
