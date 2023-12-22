@@ -65,7 +65,7 @@
 //         {activities.map((activity) => (
 //           <ActivityCard activity={activity} key={activity.imgUrl} />
 //         ))}
-//       </Slider>     
+//       </Slider>
 //     </div>
 //   );
 // };

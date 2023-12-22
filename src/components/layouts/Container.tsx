@@ -6,7 +6,7 @@ export const Container = ({
   sx,
 }: {
   children: React.ReactElement;
-  sx: SxProps<Theme>;
+  sx?: SxProps<Theme>;
 }) => {
   return (
     <MUIContainer
