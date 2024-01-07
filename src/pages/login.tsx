@@ -47,7 +47,7 @@ export default function Login() {
     <Container component="main" maxWidth="sm" className="mb-10">
       <Box
         sx={{
-          marginTop: 8,
+          marginTop: 20,
           display: "flex",
           flexDirection: "column",
           alignItems: "center",
@@ -55,29 +55,32 @@ export default function Login() {
           boxShadow:
             "rgba(0, 0, 0, 0.05) 0px 0.0625rem 0.1875rem, rgba(0, 0, 0, 0.05) 0px 1.25rem 1.5625rem -0.3125rem, rgba(0, 0, 0, 0.04) 0px 0.625rem 0.625rem -0.3125rem",
           borderRadius: "8px",
-          padding: "30px",
+          padding: {
+            sm: "40px 60px",
+            xs: "24px 32px",
+          },
         }}
       >
         <Link href="/" className="flex items-center">
           <Box
             component="img"
-            maxHeight={70}
-            width={70}
+            maxHeight={80}
+            width={80}
             src={logoNoBackground.src}
             alt="logoNoBackground"
             loading="lazy"
           />
         </Link>
-        <p className="text-[#292929] text-[28px] font-bold mt-4">
-          Chào mừng đến với KTCB
+        <p className="text-[#292929] text-[28px] font-bold mt-6">
+          Đăng nhập Hệ thống Nội bộ KTCB
         </p>
         <Box
           component="form"
           onSubmit={onSubmit}
           noValidate
-          maxWidth={320}
+          maxWidth={400}
           sx={{
-            mt: 1,
+            mt: 3,
             display: "flex",
             flexDirection: "column",
             gap: "16px",
@@ -121,7 +124,7 @@ export default function Login() {
             type="submit"
             fullWidth
             variant="contained"
-            sx={{ mt: 3, mb: 2, backgroundColor: "#3b4b95" }}
+            sx={{ mt: 3, mb: 2 }}
             color="secondary"
           >
             Đăng nhập
