@@ -33,10 +33,10 @@ const SelectBox = ({
   disabledClearable = false,
   ...props
 }: Props) => {
-  const [_value, setValue] = useState<string | number>();
+  const [_value, setValue] = useState<string | number | undefined>("");
 
   useEffect(() => {
-    const option = options.find((option) => option?.value == value);
+    const option = options.find((option) => option?.value === value);
 
     setValue(option?.value);
   }, [options, value]);
@@ -65,9 +65,18 @@ const SelectBox = ({
       <select
         value={_value as string | number}
         onChange={handleChangeValue}
-        className="rounded-md border min-w-[120px] border-gray-300 px-2 py-2 focus:border-[#556cd6] h-[40px] bg-transparent"
+        className="rounded-md border min-w-[120px] border-gray-300 px-2 py-2 focus:border-[#556cd6] h-[40px] bg-transparent bg-white"
         {...props}
       >
+        {placeholder && (
+          <option
+            className="px-4 py-2 block whitespace-nowrap text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
+            value=""
+            disabled
+          >
+            {placeholder}
+          </option>
+        )}
         {options.map((option) => {
           return (
             <option

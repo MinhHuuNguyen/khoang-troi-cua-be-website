@@ -44,6 +44,7 @@ const Input: React.FC<Props> = ({
           fontSize: "16px",
           lineHeight: "24px",
           fontWeight: 400,
+          backgroundColor: "#fff",
 
           "& .MuiOutlinedInput-input": {
             padding: 0,

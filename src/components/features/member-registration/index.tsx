@@ -8,12 +8,14 @@ import {
 } from "./types";
 import { Button, Typography } from "@mui/material";
 import { Container } from "@/components/layouts/Container";
-import { toast } from "react-toastify";
 import ktcbBackground from "@public/mission-background.jpg";
 import { useRouter } from "next/router";
+import ToastSuccess from "@/components/shared/toasts/ToastSuccess";
 
 export const MemberRegistration = () => {
   const router = useRouter();
+
+  const [open, setOpen] = React.useState(true);
 
   const {
     control,
@@ -34,7 +36,7 @@ export const MemberRegistration = () => {
       memories: "",
 
       // ktcb
-      position: "1",
+      position: "",
       hope_to_receive: "",
     },
   });
@@ -42,7 +44,7 @@ export const MemberRegistration = () => {
   const onSubmit = handleSubmit((data) => {
     console.log(data);
 
-    toast.success("Xác nhận thành công. Cảm ơn đã gửi thông tin");
+    setOpen(true);
   });
 
   return (
@@ -54,12 +56,17 @@ export const MemberRegistration = () => {
       }}
     >
       <div className="flex flex-col mt-9 gap-4">
-        <div className="flex items-center gap-2">
+        <ToastSuccess
+          open={open}
+          onClose={() => setOpen(false)}
+          heading="Xác nhận thành công"
+          content="Cảm ơn đã gửi thông tin"
+        />
+        <div className="flex justify-center items-center gap-2">
           <Button
             variant="contained"
             sx={{
               width: "fit-content",
-              color: "#fff",
             }}
             disabled
             color="secondary"
@@ -71,7 +78,6 @@ export const MemberRegistration = () => {
             variant="contained"
             sx={{
               width: "fit-content",
-              color: "#fff",
             }}
             color="secondary"
             onClick={() => router.push("/donor-registration")}
@@ -96,7 +102,6 @@ export const MemberRegistration = () => {
             marginTop: "1rem",
             width: "fit-content",
             alignSelf: "center",
-            color: "#fff",
           }}
           color="secondary"
           onClick={onSubmit}
