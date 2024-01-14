@@ -139,7 +139,6 @@ export const UploadFile = <T extends FieldValues>({
           variant="contained"
           sx={{
             width: "fit-content",
-            color: "#fff",
           }}
           color="secondary"
           onClick={open}

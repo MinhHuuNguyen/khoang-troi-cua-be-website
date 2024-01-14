@@ -8,6 +8,7 @@ const FormLabel = styled(MFormLabel)({
   display: "flex",
   alignItems: "center",
   marginBottom: "4px",
+  whiteSpace: "pre-wrap",
 
   "&.Mui-focused": {
     color: "#292929",

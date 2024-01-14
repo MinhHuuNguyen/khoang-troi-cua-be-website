@@ -15,7 +15,7 @@ import ToastSuccess from "@/components/shared/toasts/ToastSuccess";
 export const MemberRegistration = () => {
   const router = useRouter();
 
-  const [open, setOpen] = React.useState(true);
+  const [open, setOpen] = React.useState(false);
 
   const {
     control,

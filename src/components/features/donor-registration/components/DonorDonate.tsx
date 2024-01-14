@@ -1,5 +1,10 @@
 import React from "react";
-import { Control, Controller, FieldErrors, UseFormSetError } from "react-hook-form";
+import {
+  Control,
+  Controller,
+  FieldErrors,
+  UseFormSetError,
+} from "react-hook-form";
 import { DonorRegistrationInputType } from "../types";
 import { Stack, Typography, Grid } from "@mui/material";
 import { Input, Radio, SelectBox } from "@/components/shared/inputs";
@@ -16,7 +21,6 @@ const COL_SPAN = {
   xs: 12,
   md: 6,
 };
-
 
 export const DonorDonate: React.FC<Props> = ({ control, errors, setError }) => {
   return (
@@ -51,10 +55,8 @@ export const DonorDonate: React.FC<Props> = ({ control, errors, setError }) => {
             control={control}
             render={({ field: { onChange } }) => (
               <UploadFile
-              name="image_url"
-              label={`Bạn hãy cho chúng mình xin một vài hình ảnh về nội dung quyên góp nhé.\n
-                Đối với tiền, bạn hãy gửi ảnh chụp màn hình chuyển khoản.\n
-                Đối với hiện vật, bạn hãy chụp ảnh hiện vật.`}
+                name="image_url"
+                label={`Bạn hãy cho chúng mình xin một vài hình ảnh về nội dung quyên góp nhé.\nĐối với tiền, bạn hãy gửi ảnh chụp màn hình chuyển khoản. Đối với hiện vật, bạn hãy chụp ảnh hiện vật.`}
                 fullWidth
                 required
                 onChange={onChange}
