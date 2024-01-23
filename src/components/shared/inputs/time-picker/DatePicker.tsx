@@ -60,6 +60,7 @@ export const DatePicker = ({
               "& .MuiOutlinedInput-root": {
                 borderRadius: "0.5rem",
               },
+              backgroundColor: "white",
             },
           },
         }}
