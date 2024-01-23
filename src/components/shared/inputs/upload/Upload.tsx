@@ -173,7 +173,7 @@ export const UploadFile = <T extends FieldValues>({
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              maxWidth: "70vw",
+              maxWidth: "80vw",
               width: "100%",
               height: "auto",
               minHeight: "700px",

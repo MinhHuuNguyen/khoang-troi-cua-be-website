@@ -6,8 +6,7 @@ import {
   DonorRegistrationInputType,
 } from "./types";
 import { Button, Typography, Grid } from "@mui/material";
-import { Container } from "@/components/layouts/Container";
-import { toast } from "react-toastify";
+import { ContainerXL } from "@/components/layouts/ContainerXL";
 import ktcbBackground from "@public/mission-background.jpg";
 import { useRouter } from "next/router";
 import { DonorDonate, DonorInformation } from "./components";
@@ -43,7 +42,7 @@ export const DonorRegistration = () => {
   });
 
   return (
-    <Container
+    <ContainerXL
       sx={{
         backgroundImage: `url(${ktcbBackground.src})`,
         backgroundSize: "100% 100%;",
@@ -116,6 +115,6 @@ export const DonorRegistration = () => {
           Gửi thông tin
         </Button>
       </div>
-    </Container>
+    </ContainerXL>
   );
 };
