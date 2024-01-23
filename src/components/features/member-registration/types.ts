@@ -91,7 +91,7 @@ export const MemberRegistrationInputSchema = z
     },
     {
       path: ["memories"],
-      message: "Bạn phải điền kỷ niệm nếu đã tham gia hoạt động xã hội",
+      message: "Không được để trống",
     }
   );
 
