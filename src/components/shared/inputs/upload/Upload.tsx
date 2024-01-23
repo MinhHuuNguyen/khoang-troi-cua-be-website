@@ -1,10 +1,12 @@
-import { Button } from "@mui/material";
+import { Button, Modal } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import { DropzoneOptions, FileRejection, useDropzone } from "react-dropzone";
 import { FieldError, FieldValues, UseFormSetError } from "react-hook-form";
 import { PreviewFile } from "../components/PreviewFile";
 import { InputControl } from "../components/InputControl";
 import FileUploadIcon from "@mui/icons-material/FileUpload";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import { useDisclosure } from "@/libs/hooks/useDisclosure";
 
 const MAX_SIZE = 200;
 
@@ -43,6 +45,8 @@ export const UploadFile = <T extends FieldValues>({
   const [files, setFiles] = useState<FilePreviewType[]>([]);
   const [typeFile, setTypeFile] = useState<FileType>("image");
   const [firstHasPreview, setFirstHasPreview] = useState(false);
+  const [openedPreview, { open: openPreview, close: closePreview }] =
+    useDisclosure(false);
 
   const onDrop = useCallback(
     (acceptedFiles: File[], fileRejections: FileRejection[]) => {
@@ -115,6 +119,8 @@ export const UploadFile = <T extends FieldValues>({
     setFiles(newFiles);
     setTypeFile("image");
     onChange?.(newFiles.length ? newFiles[0] : null);
+
+    closePreview();
   };
 
   useEffect(() => {
@@ -132,7 +138,7 @@ export const UploadFile = <T extends FieldValues>({
       required={required}
       helperText={helperText}
     >
-      <div {...getRootProps()} className="flex flex-1 justify-center">
+      <div {...getRootProps()} className="flex flex-1 justify-center gap-3">
         <input {...getInputProps()} />
 
         <Button
@@ -145,16 +151,42 @@ export const UploadFile = <T extends FieldValues>({
         >
           <FileUploadIcon /> Tải lên
         </Button>
+
+        {files.length > 0 ? (
+          <Button
+            variant="contained"
+            sx={{
+              width: "fit-content",
+            }}
+            color="secondary"
+            onClick={openPreview}
+          >
+            <VisibilityIcon /> Xem ảnh
+          </Button>
+        ) : null}
       </div>
-      <div className="mt-4">
-        {files.length > 0 && (
-          <PreviewFile
-            file={files[0]}
-            type={typeFile}
-            handleDeleteFile={handleDeleteFile}
-          />
-        )}
-      </div>
+      {files.length > 0 && (
+        <Modal open={openedPreview} onClose={closePreview}>
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              transform: "translate(-50%, -50%)",
+              maxWidth: "70vw",
+              width: "100%",
+              height: "auto",
+              minHeight: "700px",
+            }}
+          >
+            <PreviewFile
+              file={files[0]}
+              type={typeFile}
+              handleDeleteFile={handleDeleteFile}
+            />
+          </div>
+        </Modal>
+      )}
     </InputControl>
   );
 };
