@@ -11,7 +11,7 @@ interface Props {
 
 export const UserSocialActivities: React.FC<Props> = ({ control, errors }) => {
   return (
-    <Stack>
+    <Stack mt={1}>
       <Typography variant="h5" mb={2}>
         Bạn hãy chia sẻ một số kinh nghiệm hoạt động xã hội nhé…
       </Typography>

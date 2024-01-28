@@ -45,8 +45,8 @@ export const DonorRegistration = () => {
     <ContainerXL
       sx={{
         backgroundImage: `url(${ktcbBackground.src})`,
-        backgroundSize: "100% 100%;",
-        backgroundPosition: "center",
+        backgroundSize: "cover",
+        backgroundPosition: "top",
       }}
     >
       <div className="flex flex-col mt-9 gap-4">

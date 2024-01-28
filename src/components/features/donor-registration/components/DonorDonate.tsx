@@ -24,7 +24,7 @@ const COL_SPAN = {
 
 export const DonorDonate: React.FC<Props> = ({ control, errors, setError }) => {
   return (
-    <Stack>
+    <Stack mt={3}>
       <Typography variant="h5" mb={2}>
         Bạn hãy cung cấp một số thông tin quyên góp nhé…
       </Typography>
