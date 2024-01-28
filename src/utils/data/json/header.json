@@ -53,7 +53,7 @@
   },
   {
     "name": "Tham Gia",
-    "path": "/contact",
+    "path": "/member-registration",
     "subMenus": [
       { "name": "Thành viên", "path": "" },
       { "name": "Nhà hảo tâm", "path": "" }
