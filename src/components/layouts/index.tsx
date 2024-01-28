@@ -10,7 +10,7 @@ const Layout = ({ children }: any) => {
       <div id="primary" className="content-area pt-0">
         <main
           id="main"
-          className="site-main mt-[0px] min-h-[calc(100vh-74px)]"
+          className="site-main mt-[0px] min-h-[calc(100vh-74px-290px)]"
           role="main"
         >
           {children}

@@ -53,6 +53,7 @@ export const MemberRegistration = () => {
         backgroundImage: `url(${ktcbBackground.src})`,
         backgroundSize: "cover",
         backgroundPosition: "top",
+        paddingBottom: "2rem",
       }}
     >
       <div className="flex flex-col mt-9 gap-4">
