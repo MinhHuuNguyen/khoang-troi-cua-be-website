@@ -1,4 +1,4 @@
-import { Button, Modal } from "@mui/material";
+import { Box, Button, Modal } from "@mui/material";
 import { useCallback, useEffect, useState } from "react";
 import { DropzoneOptions, FileRejection, useDropzone } from "react-dropzone";
 import { FieldError, FieldValues, UseFormSetError } from "react-hook-form";
@@ -167,16 +167,18 @@ export const UploadFile = <T extends FieldValues>({
       </div>
       {files.length > 0 && (
         <Modal open={openedPreview} onClose={closePreview}>
-          <div
-            style={{
+          <Box
+            sx={{
               position: "absolute",
               top: "50%",
               left: "50%",
               transform: "translate(-50%, -50%)",
-              maxWidth: "80vw",
-              width: "100%",
-              height: "auto",
-              minHeight: "700px",
+              width: "80vw",
+              height: {
+                xs: "auto",
+                md: "80vh",
+              },
+              backgroundColor: "#000",
             }}
           >
             <PreviewFile
@@ -184,7 +186,7 @@ export const UploadFile = <T extends FieldValues>({
               type={typeFile}
               handleDeleteFile={handleDeleteFile}
             />
-          </div>
+          </Box>
         </Modal>
       )}
     </InputControl>

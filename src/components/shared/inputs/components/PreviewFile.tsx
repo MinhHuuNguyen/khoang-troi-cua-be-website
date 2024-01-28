@@ -32,8 +32,8 @@ export const PreviewFile: React.FC<PreviewFileProps> = ({
               position: "relative",
               width: "100%",
               height: "100%",
+
               zIndex: 10,
-              border: "1px solid #E0E0E0",
               borderRadius: "4px",
             }}
           >
