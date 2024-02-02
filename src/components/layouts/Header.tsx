@@ -70,15 +70,13 @@ const Header = () => {
         </Box>
 
         <Stack direction="row" alignItems="center" gap="12px">
-          {/* <Link
+          <Link
             href="/login"
             className="text-sm font-semibold hover:opacity-80 cursor-pointer"
           >
             Đăng nhập
-            </Link>
-          <Link href="/profile">
-          Chào Nguyễn Hữu Minh
-          </Link> */}
+          </Link>
+          <Link href="/profile">Chào Nguyễn Hữu Minh</Link>
           <IconButton>
             <LanguageIcon sx={{ fontSize: 25 }} />
           </IconButton>
