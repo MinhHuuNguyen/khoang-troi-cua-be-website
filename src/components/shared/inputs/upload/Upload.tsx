@@ -21,6 +21,7 @@ type UploadFileProps<T extends FieldValues> = {
   previewUrl?: string;
   hasPreviewUrl?: boolean;
   required?: boolean;
+  notShowText?: boolean;
 } & DropzoneOptions;
 
 export type FilePreviewType = {
@@ -40,6 +41,7 @@ export const UploadFile = <T extends FieldValues>({
   previewUrl,
   hasPreviewUrl,
   required,
+  notShowText,
   ...props
 }: UploadFileProps<T>) => {
   const [files, setFiles] = useState<FilePreviewType[]>([]);
@@ -149,7 +151,7 @@ export const UploadFile = <T extends FieldValues>({
           color="secondary"
           onClick={open}
         >
-          <FileUploadIcon /> Tải lên
+          <FileUploadIcon /> {notShowText ? null : "Tải lên"}
         </Button>
 
         {files.length > 0 ? (
@@ -161,7 +163,7 @@ export const UploadFile = <T extends FieldValues>({
             color="secondary"
             onClick={openPreview}
           >
-            <VisibilityIcon /> Xem ảnh
+            <VisibilityIcon /> {notShowText ? null : "Xem ảnh"}
           </Button>
         ) : null}
       </div>

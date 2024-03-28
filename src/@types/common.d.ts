@@ -3,7 +3,7 @@ export interface DataResponseInfinite<T extends any[]> {
   pageKey?: number;
 }
 
-export type ActionType = "accept" | "reject";
+export type ActionType = "accept" | "reject" | "un_accept";
 
 export interface IBankVietQR {
   id: number;

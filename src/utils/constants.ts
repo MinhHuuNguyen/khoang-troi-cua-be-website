@@ -38,6 +38,21 @@ export const ACTIONS = {
   ACCEPT: "accept",
   REJECT: "reject",
   ACCEPT_INTERVIEW: "accept_interview",
+  UN_ACCEPT: "un_accept",
+};
+
+export const STATUS_OF_EXPENSE = {
+  PENDING: "pending",
+  ACCEPTED: "accepted",
+  REJECTED: "rejected",
+  DISBURSED: "disbursed",
+};
+
+export const TEXT_OF_STATUS = {
+  [STATUS_OF_EXPENSE.PENDING]: "Chờ duyệt",
+  [STATUS_OF_EXPENSE.ACCEPTED]: "Đã duyệt",
+  [STATUS_OF_EXPENSE.REJECTED]: "Không duyệt",
+  [STATUS_OF_EXPENSE.DISBURSED]: "Đã gỉai ngân",
 };
 
 export const BANKS = [

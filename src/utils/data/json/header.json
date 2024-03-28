@@ -64,7 +64,7 @@
     "path": "/internal",
     "subMenus": [
       { "name": "Quản lý đơn tuyển", "path": "/recruitment-management" },
-      { "name": "Quản lý thu chi", "path": "/" },
+      { "name": "Quản lý thu chi", "path": "/expense-management" },
       { "name": "Tài liệu nội bộ", "path": "/" },
       { "name": "Danh sách thành viên", "path": "/member-list" }
     ]
