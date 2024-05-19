@@ -1,4 +1,5 @@
-import * as nodemailer from 'nodemailer';
+import * as nodemailer from "nodemailer";
+import { Address } from "nodemailer/lib/mailer";
 
 export async function sendMail(to: [string], subject: string, html: any) {
   var transporter = nodemailer.createTransport({
@@ -11,11 +12,18 @@ export async function sendMail(to: [string], subject: string, html: any) {
     }
   });
 
-  var mailOptions = {
+export async function sendMail(
+  to: [string],
+  subject: string,
+  html: any,
+  bcc?: string | Address | Array<string | Address>
+) {
+  const mailOptions = {
     from: process.env.NODEMAILER_EMAIL,
     to,
     subject,
     html,
+    bcc,
   };
 
   return transporter.sendMail(mailOptions, (err: Error | null, info) => {

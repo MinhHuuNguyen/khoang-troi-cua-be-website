@@ -54,6 +54,7 @@ model Position {
 
 enum MemberRegistrationStatus {
   REVIEWING
+  INTERVIEW
   PASSED
   FAILED
 }

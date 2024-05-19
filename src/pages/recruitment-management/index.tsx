@@ -16,6 +16,7 @@ import { ContainerXL } from "@/components/layouts/ContainerXL";
 import ToastSuccess from "@/components/shared/toasts/ToastSuccess";
 import { SEO } from "@/configs/seo.config";
 import { Box, Button, Typography } from "@mui/material";
+import { useQuery } from "@tanstack/react-query";
 
 interface Props {
   registrations: MemberRegistrationWithPosition[];
@@ -26,8 +27,8 @@ const RecruitmentManagementPage: NextPage<Props> = ({ registrations }) => {
   const { data: session } = useSession({
     required: true,
     onUnauthenticated() {
-      router.push('/login');
-    }
+      router.push("/login");
+    },
   });
   const router = useRouter();
 
@@ -37,16 +38,33 @@ const RecruitmentManagementPage: NextPage<Props> = ({ registrations }) => {
     },
   });
 
+  const { data, isLoading } = useQuery<MemberRegistrationWithPosition[]>({
+    queryKey: ["recruitment"],
+    queryFn: async () => {
+      const registrations = await prisma.memberRegistration.findMany({
+        include: {
+          position: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      });
+
+      return registrations;
+    },
+  });
+
   const tabElement = [
     {
-      element: <SubmissionTable data={registrations} />,
+      element: <SubmissionTable data={data} />,
     },
     {
       element: <InterviewTable />,
     },
   ];
 
-  if (!session) {
+  if (!session || isLoading) {
     return (
       <div>
         {/* TODO: Them icon loading */}
@@ -117,12 +135,12 @@ export const getServerSideProps = async () => {
         select: {
           name: true,
         },
-      }
-    }
+      },
+    },
   });
   return {
     props: {
-      registrations: JSON.parse(JSON.stringify(registrations))
+      registrations: JSON.parse(JSON.stringify(registrations)),
     },
   };
 };

@@ -1,9 +1,12 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
+import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/libs/prisma";
-import { sendMail } from '@mailer/mailService';
-import mailData from '@mailer/templates/member-registration-complete';
+import { sendMail } from "@mailer/mailService";
+import mailData from "@mailer/templates/recruit-members/member-registration-complete";
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const data = req.body;
 
   if (!data) {
@@ -35,22 +38,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       },
     });
 
-    await sendMail(
-      [data.email],
-      'CẢM ƠN BẠN ĐÃ ĐĂNG KÝ THÀNH VIÊN KHOẢNG TRỜI CỦA BÉ',
-      mailData(member)
-    ).catch((err) => {
-      console.error('Error sending email:', err);
-      throw new Error(err);
-    });
-
-    return res.status(200).json({
-      message: 'Registration completed!'
-    });
-  } catch (err: any) {
-    console.log(err);
-    return res.status(500).json({
-      error: err.message || 'Something went wrong!'
-    });
-  }
+  await new Promise(async (resolve, reject) => {
+    try {
+      const result = await sendMail(
+        [data.email],
+        "CẢM ƠN BẠN ĐÃ ĐĂNG KÝ THÀNH VIÊN KHOẢNG TRỜI CỦA BÉ",
+        mailData(member)
+      );
+      resolve(result);
+      res.status(200).json({ message: "Mail sent!" });
+    } catch (err: any) {
+      reject(err);
+      return res.status(500).json({
+        error: err.message || "Something went wrong",
+      });
+    }
+  });
 }
