@@ -5,9 +5,6 @@ import { DefaultSeo } from "next-seo";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
-import prisma from "@/libs/prisma";
-import type { MemberRegistrationWithPosition } from "@/@types/membershipRegistration";
-
 import {
   InterviewTable,
   SubmissionTable,
@@ -16,13 +13,10 @@ import { ContainerXL } from "@/components/layouts/ContainerXL";
 import ToastSuccess from "@/components/shared/toasts/ToastSuccess";
 import { SEO } from "@/configs/seo.config";
 import { Box, Button, Typography } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
+import { QueryClient, dehydrate, useQuery } from "@tanstack/react-query";
+import { getMemberRegistration } from "@/components/features/recruitment-management/services";
 
-interface Props {
-  registrations: MemberRegistrationWithPosition[];
-}
-
-const RecruitmentManagementPage: NextPage<Props> = ({ registrations }) => {
+const RecruitmentManagementPage = () => {
   const [open, setOpen] = useState(false);
   const { data: session } = useSession({
     required: true,
@@ -38,33 +32,35 @@ const RecruitmentManagementPage: NextPage<Props> = ({ registrations }) => {
     },
   });
 
-  const { data, isLoading } = useQuery<MemberRegistrationWithPosition[]>({
-    queryKey: ["recruitment"],
-    queryFn: async () => {
-      const registrations = await prisma.memberRegistration.findMany({
-        include: {
-          position: {
-            select: {
-              name: true,
-            },
-          },
-        },
-      });
+  // This useQuery could just as well happen in some deeper child to
+  // the "Posts"-page, data will be available immediately either way
+  const { data } = useQuery({
+    queryKey: ["memberRegistration"],
+    queryFn: () => getMemberRegistration({}),
+  });
 
-      return registrations;
-    },
+  // This query was not prefetched on the server and will not start
+  // fetching until on the client, both patterns are fine to mix
+  const { data: otherData } = useQuery({
+    queryKey: ["posts-2"],
+    queryFn: () => getMemberRegistration({}),
+  });
+
+  console.log({
+    data,
+    otherData,
   });
 
   const tabElement = [
-    {
-      element: <SubmissionTable data={data} />,
-    },
+    // {
+    //   element: <SubmissionTable />,
+    // },
     {
       element: <InterviewTable />,
     },
   ];
 
-  if (!session || isLoading) {
+  if (!session) {
     return (
       <div>
         {/* TODO: Them icon loading */}
@@ -128,21 +124,18 @@ const RecruitmentManagementPage: NextPage<Props> = ({ registrations }) => {
   );
 };
 
-export const getServerSideProps = async () => {
-  const registrations = await prisma.memberRegistration.findMany({
-    include: {
-      position: {
-        select: {
-          name: true,
-        },
-      },
-    },
+export async function getStaticProps() {
+  const queryClient = new QueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ["memberRegistration"],
+    queryFn: () => getMemberRegistration({}),
   });
+
   return {
     props: {
-      registrations: JSON.parse(JSON.stringify(registrations)),
+      dehydratedState: dehydrate(queryClient),
     },
   };
-};
-
+}
 export default RecruitmentManagementPage;
