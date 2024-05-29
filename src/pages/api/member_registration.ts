@@ -39,12 +39,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       [data.email],
       'CẢM ƠN BẠN ĐÃ ĐĂNG KÝ THÀNH VIÊN KHOẢNG TRỜI CỦA BÉ',
       mailData(member)
-    );
+    ).catch((err) => {
+      console.error('Error sending email:', err);
+    });
 
     return res.status(200).json({
       message: 'Registration completed!'
     });
   } catch (err: any) {
+    console.log(err);
     return res.status(500).json({
       error: err.message || 'Something went wrong!'
     });
