@@ -2,11 +2,11 @@ import * as nodemailer from 'nodemailer';
 
 export async function sendMail(to: [string], subject: string, html: any) {
   var transporter = nodemailer.createTransport({
-    host: "smtp-relay.brevo.com",
-    port: 587,
-    secure: false,
+    host: 'smtp.resend.com',
+    port: 465,
+    secure: true,
     auth: {
-      user: process.env.NODEMAILER_EMAIL,
+      user: process.env.NODEMAILER_USER,
       pass: process.env.NODEMAILER_PW,
     }
   });

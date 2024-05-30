@@ -41,6 +41,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
       mailData(member)
     ).catch((err) => {
       console.error('Error sending email:', err);
+      throw new Error(err);
     });
 
     return res.status(200).json({
