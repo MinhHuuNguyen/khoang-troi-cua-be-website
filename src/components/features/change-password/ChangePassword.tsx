@@ -8,23 +8,25 @@ import ktcbBackground from "@public/mission-background.jpg";
 import { Controller } from "react-hook-form";
 import { Grid } from "@mui/material";
 import { ContainerXL } from "@/components/layouts/ContainerXL";
-import ToastSuccess from "@/components/shared/toasts/ToastSuccess";
 import { useRouter } from "next/router";
 import { PasswordInput } from "@/components/shared/inputs/PasswordInput";
-
-const COL_SPAN = {
-  xs: 12,
-  sm: 6,
-  md: 4,
-};
+import {
+  MODAL_TYPES,
+  useGlobalModalContext,
+} from "../global-modal/GlobalModal";
+import { useChangePassword } from "./hooks/useChangePassword";
+import { useSession } from "next-auth/react";
 
 export const ChangePassword = () => {
   const router = useRouter();
-  const [open, setOpen] = React.useState(false);
+  const { showModal } = useGlobalModalContext();
+  const mutate = useChangePassword();
+  const session = useSession();
 
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<ChangePasswordInputType>({
     resolver: zodResolver(ChangePasswordInputSchema),
@@ -36,9 +38,24 @@ export const ChangePassword = () => {
   });
 
   const onSubmit = handleSubmit((data) => {
-    console.log(data);
+    mutate
+      .mutateAsync({ ...data, email: session.data?.user?.email })
+      .then((res) => {
+        if (res instanceof Error) {
+          showModal(MODAL_TYPES.MODAL_ERROR, {
+            content: res.message || "Something went wrong",
+          });
 
-    setOpen(true);
+          return;
+        }
+
+        showModal(MODAL_TYPES.MODAL_SUCCESS, {
+          heading: "Xác nhận thành công",
+          content: "Cảm ơn đã gửi thông tin",
+        });
+
+        reset();
+      });
   });
 
   return (
@@ -51,12 +68,6 @@ export const ChangePassword = () => {
       }}
     >
       <div className="flex flex-col mt-9 gap-4">
-        <ToastSuccess
-          open={open}
-          onClose={() => setOpen(false)}
-          heading="Xác nhận thành công"
-          content="Cảm ơn đã gửi thông tin"
-        />
         <div className="flex justify-center items-center gap-2">
           <Button
             variant="contained"

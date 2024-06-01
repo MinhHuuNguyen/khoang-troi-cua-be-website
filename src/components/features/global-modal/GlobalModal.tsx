@@ -1,13 +1,16 @@
 import React, { createContext, useContext, useState } from "react";
 import { ModalConfirm, ModalSuccess } from "./components";
+import { ModalError } from "./components/ModalError";
 
 export const MODAL_TYPES = {
   MODAL_SUCCESS: "MODAL_SUCCESS",
   MODAL_CONFIRM: "MODAL_CONFIRM",
+  MODAL_ERROR: "MODAL_ERROR",
 };
 
 const MODAL_COMPONENTS: any = {
   [MODAL_TYPES.MODAL_SUCCESS]: ModalSuccess,
+  [MODAL_TYPES.MODAL_ERROR]: ModalError,
   [MODAL_TYPES.MODAL_CONFIRM]: ModalConfirm,
 };
 
