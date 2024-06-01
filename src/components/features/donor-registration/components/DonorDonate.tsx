@@ -1,28 +1,23 @@
 import React from "react";
-import {
-  Control,
-  Controller,
-  FieldErrors,
-  UseFormSetError,
-} from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import { DonorRegistrationInputType } from "../types";
 import { Stack, Typography, Grid } from "@mui/material";
-import { Input, Radio, SelectBox } from "@/components/shared/inputs";
+import { Radio } from "@/components/shared/inputs";
 import { KIND_OF_DONATION_OPTIONS } from "@/utils/constants";
 import { UploadFile } from "@/components/shared/inputs/upload";
-
-interface Props {
-  control: Control<DonorRegistrationInputType>;
-  errors: FieldErrors<DonorRegistrationInputType>;
-  setError: UseFormSetError<DonorRegistrationInputType>;
-}
 
 const COL_SPAN = {
   xs: 12,
   md: 6,
 };
 
-export const DonorDonate: React.FC<Props> = ({ control, errors, setError }) => {
+export const DonorDonate = () => {
+  const {
+    control,
+    setError,
+    formState: { errors },
+  } = useFormContext<DonorRegistrationInputType>();
+
   return (
     <Stack mt={3}>
       <Typography variant="h5" mb={2}>

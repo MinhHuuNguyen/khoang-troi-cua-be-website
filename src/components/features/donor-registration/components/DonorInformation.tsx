@@ -1,21 +1,21 @@
 import React from "react";
-import { Control, Controller, FieldErrors } from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import { DonorRegistrationInputType } from "../types";
 import { Stack, Typography, Grid } from "@mui/material";
 import { Input } from "@/components/shared/inputs";
 import { DatePicker } from "@/components/shared/inputs/time-picker";
-
-interface Props {
-  control: Control<DonorRegistrationInputType>;
-  errors: FieldErrors<DonorRegistrationInputType>;
-}
 
 const COL_SPAN = {
   xs: 12,
   md: 6,
 };
 
-export const DonorInformation: React.FC<Props> = ({ control, errors }) => {
+export const DonorInformation = () => {
+  const {
+    control,
+    formState: { errors },
+  } = useFormContext<DonorRegistrationInputType>();
+
   return (
     <Stack>
       <Typography variant="h5" mb={2}>
