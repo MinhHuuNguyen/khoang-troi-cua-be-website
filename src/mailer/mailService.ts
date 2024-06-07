@@ -2,7 +2,7 @@ import * as nodemailer from "nodemailer";
 import Mail, { Address, Options } from "nodemailer/lib/mailer";
 
 const transporter = nodemailer.createTransport({
-  host: "smtp-relay.brevo.com",
+  host: "smtp.mailersend.net",
   port: 587,
   secure: false,
   auth: {

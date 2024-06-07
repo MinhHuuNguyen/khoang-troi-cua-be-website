@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import {
   DonorRegistrationInputSchema,
   DonorRegistrationInputType,
 } from "./types";
-import { Button, Typography, Grid, Box } from "@mui/material";
+import {Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, Typography, Grid, Box } from "@mui/material";
 import { ContainerXL } from "@/components/layouts/ContainerXL";
 import ktcbBackground from "@public/mission-background.jpg";
 import { useRouter } from "next/router";
@@ -16,10 +16,13 @@ import {
   MODAL_TYPES,
   useGlobalModalContext,
 } from "../global-modal/GlobalModal";
+import { KIND_OF_DONATION_OPTIONS } from "@/utils/constants";
 
 export const DonorRegistration = () => {
   const router = useRouter();
   const { showModal } = useGlobalModalContext();
+  const [formData, setFormData] = useState<DonorRegistrationInputType | null>(null);
+  const [open, setOpen] = useState(false);
 
   const methods = useForm<DonorRegistrationInputType>({
     resolver: zodResolver(DonorRegistrationInputSchema),
@@ -30,7 +33,7 @@ export const DonorRegistration = () => {
       email: "",
 
       // donate
-      kind_of_donate: "1",
+      kind_of_donate: "",
       image_url: "",
     },
   });
@@ -41,15 +44,28 @@ export const DonorRegistration = () => {
 
   const onSubmit = handleSubmit(async (data) => {
     try {
-      mutate.mutate(data);
-      showModal(MODAL_TYPES.MODAL_SUCCESS, {
-        heading: "Xác nhận thành công",
-        content: "Cảm ơn đã gửi thông tin",
-      });
+      setFormData(data);
+      setOpen(true);
     } catch (err) {
       console.error(err);
     }
   });
+
+  const handleConfirm = () => {
+    // Xác nhận dữ liệu và đóng Dialog
+    mutate.mutate(formData as DonorRegistrationInputType);
+    showModal(MODAL_TYPES.MODAL_SUCCESS, { heading: "Xác nhận thành công", content: "Cảm ơn đã gửi thông tin", }); 
+    setOpen(false);
+    setFormData(null);
+
+    // Reset form
+    methods.reset();
+  };
+
+  const handleClose = () => {
+    // Đóng Dialog mà không xác nhận
+    setOpen(false);
+  };
 
   return (
     <FormProvider {...methods}>
@@ -140,6 +156,25 @@ export const DonorRegistration = () => {
           </Button>
         </div>
       </ContainerXL>
+
+      <Dialog open={open} onClose={handleClose}>
+        <DialogTitle variant="h5">Xác nhận thông tin</DialogTitle>
+        <DialogContent>
+          <DialogContentText fontStyle="italic">
+            {/* Hiển thị thông tin từ form */}
+            Họ và tên: {formData?.full_name}<br/>
+            Ngày sinh: {new Date(formData?.birthday).toLocaleDateString('vi-VN')}<br/>
+            Số điện thoại: {formData?.phone_number}<br/>
+            Email: {formData?.email}<br/>
+            Quyên góp: {formData?.kind_of_donate}<br/>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose}>Hủy</Button>
+          <Button onClick={handleConfirm} color="primary">Xác nhận</Button>
+        </DialogActions>
+      </Dialog>
+
     </FormProvider>
   );
 };

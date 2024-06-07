@@ -33,8 +33,7 @@ export default async function handler(
         });
 
         const bcc = [
-          "minhhuunguyen1511@gmail.com",
-          "lamthaoanh.2004@gmail.com",
+          "tainguyen29702@gmail.com"
         ];
 
         await sendMail(
