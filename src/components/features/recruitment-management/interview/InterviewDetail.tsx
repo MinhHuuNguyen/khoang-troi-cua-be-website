@@ -1,5 +1,5 @@
 import React from "react";
-import { PersonInterview } from "./InterviewTable";
+import { MemberRegistrationWithPosition } from "@/@types/membershipRegistration";
 import { IconButton, Modal, Tooltip } from "@mui/material";
 import { DatetimePicker, SelectBox } from "@/components/shared/inputs";
 import TestOptions from "@/utils/data/json/test.json";
@@ -11,10 +11,10 @@ import { ACTIONS } from "@/utils/constants";
 import { format } from "date-fns";
 
 interface Props {
-  data: PersonInterview;
+  data: MemberRegistrationWithPosition;
   open: boolean;
   onClose: () => void;
-  handleOpenModal: (person: PersonInterview, action?: ActionType) => void;
+  handleOpenModal: (person: MemberRegistrationWithPosition, action?: ActionType) => void;
 }
 
 const classNameCol = "md:col-span-1 xs:col-span-2";
@@ -32,11 +32,11 @@ export const InterviewDetail: React.FC<Props> = ({
           <div className="lg:col-span-4 col-span-6 grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className={classNameCol}>
               <span className="font-bold">Họ và tên: </span>
-              {data.full_name}
+              {data.fullName}
             </div>
             <div className={classNameCol}>
               <span className="font-bold">Ngày tháng năm sinh: </span>
-              {data.birthday}
+              {new Date(data.birthday).toLocaleDateString("vi")}
             </div>
             <div className={classNameCol}>
               <span className="font-bold">Email: </span>
@@ -44,11 +44,11 @@ export const InterviewDetail: React.FC<Props> = ({
             </div>
             <div className={classNameCol}>
               <span className="font-bold">Số điện thoại: </span>
-              {data.phone_number}
+              {data.phoneNumber}
             </div>
             <div className={classNameCol}>
               <span className="font-bold">Nơi làm việc: </span>
-              {data.work_place}
+              {data.workPlace}
             </div>
             <div className={classNameCol}>
               <span className="font-bold">Địa chỉ: </span>
@@ -59,7 +59,7 @@ export const InterviewDetail: React.FC<Props> = ({
                 Đã từng tham gia hoạt động xã hội:{" "}
               </span>
 
-              {data.has_social_activities ? "Có" : "Không"}
+              {data.hasSocialActivities ? "Có" : "Không"}
             </div>
             <div className={classNameCol}>
               <span className="font-bold">
@@ -69,34 +69,34 @@ export const InterviewDetail: React.FC<Props> = ({
             </div>
             <div className={classNameCol}>
               <span className="font-bold">Vị trí mong muốn: </span>
-              {data.position}
+              {data.position.name}
             </div>
             <div className={classNameCol}>
               <span className="font-bold">
                 Điều mong muốn nhận khi tham gia KTCB:{" "}
               </span>
-              {data.hope_to_receive}
+              {data.hopeToReceive}
             </div>
-            <div className={classNameCol}>
+            {/* <div className={classNameCol}>
               <span className="font-bold">Link GG meet: </span>
               <a href={data.link_gg_met} target="_blank" className="underline">
                 {data.link_gg_met}
               </a>
-            </div>
+            </div> */}
           </div>
 
           <div className="lg:col-span-2 col-span-6 gap-4 flex flex-col">
-            <div className="flex flex-col gap-1">
+            {/* <div className="flex flex-col gap-1">
               <p className="font-bold">Chọn ngày giờ phỏng vấn</p>
               <DatetimePicker
                 defaultValue={format(
-                  new Date(data?.date_time as string),
+                  new Date(data?.datetime as string),
                   "yyyy-MM-dd HH:mm"
                 )}
                 onChange={(e) => console.log(e)}
                 fullWidth
               />
-            </div>
+            </div> */}
             <div className="flex flex-col gap-1">
               <p className="font-bold">Chọn bài test</p>
               <SelectBox

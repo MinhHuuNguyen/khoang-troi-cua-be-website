@@ -53,6 +53,12 @@ const SubmissionTable = (props: { data: MemberRegistrationWithPosition[] }) => {
         Cell: (props) => <EllipsisCell {...props} />,
       },
       {
+        accessorKey: "status",
+        header: "Trạng thái",
+        size: 200,
+        Cell: (props) => <EllipsisCell {...props} />,
+      },
+      {
         accessorFn: (rowData: any) =>
           new Date(rowData.birthday).toLocaleDateString("vi"),
         id: "birthday",
@@ -69,8 +75,7 @@ const SubmissionTable = (props: { data: MemberRegistrationWithPosition[] }) => {
   const [openedDetail, { open: openDetail, close: closeDetail }] =
     useDisclosure();
 
-  const [rowSelected, setRowSelected] =
-    useState<MemberRegistrationWithPosition>();
+  const [rowSelected, setRowSelected] = useState<MemberRegistrationWithPosition>();
   const [action, setAction] = useState<ActionTypeAdd>();
 
   const handleOpenModal = (
