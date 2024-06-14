@@ -71,6 +71,40 @@ export default async function handler(
         );
 
         return res.status(201).json(member);
+
+      case "GET":
+        const interviews = await prisma.memberRegistration.findMany({
+          where: {
+            status: "INTERVIEW",
+          },
+          include: {
+            position: {
+              select: {
+                name: true,
+              },
+            },
+            interview: true,
+          },
+        });
+
+        return res.status(200).json(interviews);
+
+      case "POST":
+        const { dateTime, linkGGmeet } = req.body;
+
+        if (!dateTime || !linkGGmeet) {
+          return res.status(400).json({ message: "Missing required fields" });
+        }
+
+        const newInterview = await prisma.interview.create({
+          data: {
+            dateTime: new Date(dateTime),
+            linkGGmeet,
+          },
+        });
+
+        return res.status(201).json(newInterview);
+
       default:
         return res.status(405).end();
     }

@@ -119,12 +119,6 @@ const InterviewTable = (props: {data: MemberRegistrationWithPosition[] }) => {
         Cell: (props) => <EllipsisCell {...props} />,
       },
       {
-        accessorKey: "status",
-        header: "Trạng thái",
-        size: 200,
-        Cell: (props) => <EllipsisCell {...props} />,
-      },
-      {
         accessorFn: (rowData: any) =>
           new Date(rowData.birthday).toLocaleDateString("vi"),
         id: "birthday",
@@ -133,16 +127,18 @@ const InterviewTable = (props: {data: MemberRegistrationWithPosition[] }) => {
         Cell: (props) => <EllipsisCell {...props} />,
       },
       {
-        accessorKey: "link_gg_met",
+        accessorKey: "interview.linkGGmeet",
         header: "Link Google Meet",
         size: 200,
         Cell: (props) => <EllipsisCell {...props} />,
       },
       {
-        accessorKey: "date_time",
-        header: "Ngày giờ phỏng vấn",
-        size: 200,
-        Cell: (props) => <EllipsisCell {...props} />,
+          accessorFn: (rowData: any) =>
+            new Date(rowData.interview?.dateTime).toLocaleString("vi-VN"),
+          id: "interview.dateTime",
+          header: "Ngày giờ phỏng vấn",
+          size: 200,
+          Cell: (props) => <EllipsisCell {...props} />,
       },
       {
         accessorKey: "test_id",

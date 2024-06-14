@@ -30,6 +30,8 @@ model MemberRegistration {
   position            Position                 @relation(fields: [positionId], references: [id])
   positionId          Int
   hopeToReceive       String
+  interview           Interview?               @relation(fields: [interviewId], references: [id])
+  interviewId         Int?
   createdAt           DateTime                 @default(now())
   updatedAt           DateTime                 @updatedAt
 }
@@ -51,6 +53,7 @@ model Position {
   name               String
   memberRegistration MemberRegistration[]
 }
+
 
 enum MemberRegistrationStatus {
   REVIEWING

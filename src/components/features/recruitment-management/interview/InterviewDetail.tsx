@@ -77,26 +77,26 @@ export const InterviewDetail: React.FC<Props> = ({
               </span>
               {data.hopeToReceive}
             </div>
-            {/* <div className={classNameCol}>
+            <div className={classNameCol}>
               <span className="font-bold">Link GG meet: </span>
-              <a href={data.link_gg_met} target="_blank" className="underline">
-                {data.link_gg_met}
+              <a href={data.interview?.linkGGmeet} target="_blank" className="underline">
+                {data.interview?.linkGGmeet}
               </a>
-            </div> */}
+            </div>
           </div>
 
           <div className="lg:col-span-2 col-span-6 gap-4 flex flex-col">
-            {/* <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-1">
               <p className="font-bold">Chọn ngày giờ phỏng vấn</p>
               <DatetimePicker
                 defaultValue={format(
-                  new Date(data?.datetime as string),
+                  new Date(data.interview?.dateTime as unknown as string),
                   "yyyy-MM-dd HH:mm"
                 )}
                 onChange={(e) => console.log(e)}
                 fullWidth
               />
-            </div> */}
+            </div>
             <div className="flex flex-col gap-1">
               <p className="font-bold">Chọn bài test</p>
               <SelectBox

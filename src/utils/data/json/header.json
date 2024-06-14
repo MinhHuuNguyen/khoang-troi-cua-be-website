@@ -46,10 +46,6 @@
       "path": "/list-news"
     },
     {
-      "name": "Nội bộ",
-      "path": "/recruitment-management"
-    },
-    {
       "name": "Tham Gia",
       "path": "/",
       "subMenus": [
