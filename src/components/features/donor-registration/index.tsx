@@ -38,6 +38,11 @@ export const DonorRegistration = () => {
     },
   });
 
+  const getDonationLabel = (value: string | undefined) => {
+    const option = KIND_OF_DONATION_OPTIONS.find(option => option.value === value);
+    return option ? option.label : "Không xác định";
+  };
+
   const { handleSubmit } = methods;
 
   const mutate = useCreateDonorRegistration();
@@ -166,7 +171,7 @@ export const DonorRegistration = () => {
             Ngày sinh: {new Date(formData?.birthday).toLocaleDateString('vi-VN')}<br/>
             Số điện thoại: {formData?.phone_number}<br/>
             Email: {formData?.email}<br/>
-            Quyên góp: {formData?.kind_of_donate}<br/>
+            Quyên góp: {getDonationLabel(formData?.kind_of_donate)}<br/>
           </DialogContentText>
         </DialogContent>
         <DialogActions>
