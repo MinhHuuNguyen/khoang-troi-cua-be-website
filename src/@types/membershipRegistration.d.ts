@@ -1,5 +1,5 @@
 import { Prisma } from '@prisma/client';
 
 export type MemberRegistrationWithPosition = Prisma.MemberRegistrationGetPayload<{
-  include: { position: true }
+  include: { position: true , interview: true }
 }>

@@ -30,8 +30,17 @@ model MemberRegistration {
   position            Position                 @relation(fields: [positionId], references: [id])
   positionId          Int
   hopeToReceive       String
+  interview           Interview?               @relation(fields: [interviewId], references: [id])
+  interviewId         Int?
   createdAt           DateTime                 @default(now())
   updatedAt           DateTime                 @updatedAt
+}
+
+model Interview {
+  id         Int                  @id @default(autoincrement())
+  dateTime   DateTime
+  linkGGmeet String
+  memberRegistration MemberRegistration[]
 }
 
 model Position {
@@ -40,9 +49,11 @@ model Position {
   memberRegistration MemberRegistration[]
 }
 
+
 enum MemberRegistrationStatus {
   REVIEWING
   INTERVIEW
   PASSED
   FAILED
 }
+
