@@ -1,3 +1,4 @@
+import { SessionProvider } from "next-auth/react";
 import Layout from "@/components/layouts";
 import createEmotionCache from "@/libs/mui/createEmotionCache";
 import theme from "@/libs/mui/theme";
@@ -11,7 +12,12 @@ import Head from "next/head";
 import { Analytics } from "@vercel/analytics/react";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { CssBaseline } from "@mui/material";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { useEffect, useState } from "react";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { GlobalModal } from "@/components/features/global-modal/GlobalModal";
 
 const clientSideEmotionCache = createEmotionCache();
 export interface MyAppProps extends AppProps {
@@ -19,9 +25,13 @@ export interface MyAppProps extends AppProps {
 }
 
 export default function App(props: MyAppProps) {
-  const { Component, emotionCache = clientSideEmotionCache, pageProps } = props;
+  const {
+    Component,
+    emotionCache = clientSideEmotionCache,
+    pageProps: { session, ...pageProps },
+  } = props;
 
-  const [hydated, seHydrated] = useState(false);
+  const [hydrated, seHydrated] = useState(false);
 
   useEffect(() => {
     seHydrated(true);
@@ -34,14 +44,21 @@ export default function App(props: MyAppProps) {
       </Head>
       <QueryClientProvider client={queryClient}>
         <Hydrate state={pageProps.dehydratedState}>
-          <ThemeProvider theme={theme}>
-            <CssBaseline />
-            {hydated && (
-              <Layout>
-                <Component {...pageProps} />
-              </Layout>
-            )}
-          </ThemeProvider>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <ThemeProvider theme={theme}>
+              <ToastContainer />
+              <CssBaseline />
+              {hydrated && (
+                <SessionProvider session={session}>
+                  <GlobalModal>
+                    <Layout>
+                      <Component {...pageProps} />
+                    </Layout>
+                  </GlobalModal>
+                </SessionProvider>
+              )}
+            </ThemeProvider>
+          </LocalizationProvider>
         </Hydrate>
       </QueryClientProvider>
       <Analytics />

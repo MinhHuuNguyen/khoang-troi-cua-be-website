@@ -1,21 +1,23 @@
+import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { useState } from "react";
+import Image from "next/image";
 import LanguageIcon from "@mui/icons-material/Language";
 import MenuIcon from "@mui/icons-material/Menu";
-import { Box, IconButton, Paper, Stack, Typography } from "@mui/material";
+import { Box, IconButton, Stack } from "@mui/material";
 import Drawer from "@mui/material/Drawer";
-import Link from "next/link";
+
 import menuData from "../../utils/data/json/header.json";
 import logoNoBackground from "../../../public/ktcb_logo_no_background.png";
-
 import MenuSection from "./Menu";
-import { useState } from "react";
 import VerticalMenu from "./Menu/SideMenu/SideMenuSection";
-import Image from "next/image";
-// import { COLORS } from "@/utils/constants";
+import { AccountMenu } from "../features/account-menu";
 
 export type MenuType = typeof menuData;
 
 const Header = () => {
   const [openSideMenu, setOpenSideMenu] = useState(false);
+  const { data: session } = useSession();
 
   const handleToggleSideMenu = () => {
     setOpenSideMenu((prev) => !prev);
@@ -69,9 +71,22 @@ const Header = () => {
           </Stack>
         </Box>
 
-        <IconButton>
-          <LanguageIcon sx={{ fontSize: 25 }} />
-        </IconButton>
+        <Stack direction="row" alignItems="center" gap="12px">
+          {!!session ? (
+            <AccountMenu userName="Nguyễn Hữu Minh" />
+          ) : (
+            <Link
+              href="/"
+              className="text-sm font-semibold hover:opacity-80 cursor-pointer"
+            >
+              Đăng nhập
+            </Link>
+          )
+          }
+          <IconButton>
+            <LanguageIcon sx={{ fontSize: 25 }} />
+          </IconButton>
+        </Stack>
       </Stack>
 
       <Drawer anchor="left" open={openSideMenu} onClose={handleToggleSideMenu}>

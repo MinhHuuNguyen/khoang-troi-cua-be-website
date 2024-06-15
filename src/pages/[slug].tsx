@@ -9,13 +9,16 @@ import {
   getNewsByTags,
   getOtherNewWithoutTags,
 } from "@/utils/common";
-import { Box, Container, Stack } from "@mui/material";
+import { Box, Button, Container, Stack } from "@mui/material";
 import { format } from "date-fns";
 import { GetStaticPaths, GetStaticProps, NextPage } from "next";
 import { DefaultSeo } from "next-seo";
 import { useEffect } from "react";
 import logoImg from "../../public/ktcb-logo-512.png";
 import Error404 from "./404";
+import { useDisclosure } from "@/libs/hooks/useDisclosure";
+import { ModalConfirm } from "@/components/shared/modals";
+import ToastSuccess from "@/components/shared/toasts/ToastSuccess";
 
 interface Props {
   news: INews;
@@ -35,7 +38,7 @@ const innerHtmlStyle = {
     marginBottom: "20px",
     maxWidth: "700px",
     width: "100%",
-    maxHeight: "675px",
+    // maxHeight: "675px",
     height: "auto",
     marginLeft: "auto",
     marginRight: "auto",
@@ -45,7 +48,7 @@ const innerHtmlStyle = {
       top: "10px",
       left: "10px",
       width: "50px",
-      height: "50px"
+      height: "50px",
     },
   },
 
@@ -90,7 +93,7 @@ const innerHtmlStyle = {
     marginBottom: "10px",
   },
   "& p": {
-    marginTop: "15px"
+    marginTop: "15px",
   },
   "& em": {
     fontStyle: "italic",
@@ -99,6 +102,12 @@ const innerHtmlStyle = {
 
 const News: NextPage<Props> = ({ news, rightOtherNews, content }) => {
   const slideNewsData = getOtherNewWithoutTags(news?.tags);
+
+  const [openedConfirm, { open: openConfirm, close: closeConfirm }] =
+    useDisclosure(false);
+
+  const [openedSuccess, { open: openSuccess, close: closeSuccess }] =
+    useDisclosure(false);
 
   useEffect(() => {
     if (typeof document !== "undefined") {
@@ -128,6 +137,14 @@ const News: NextPage<Props> = ({ news, rightOtherNews, content }) => {
       });
     }
   }, [news]);
+
+  const handleShareViaEmail = async () => {
+    console.log("Share via email");
+
+    closeConfirm();
+
+    openSuccess();
+  };
 
   return (
     <>
@@ -171,6 +188,18 @@ const News: NextPage<Props> = ({ news, rightOtherNews, content }) => {
                         }}
                       />
                     ) : null}
+
+                    <Button
+                      variant="contained"
+                      sx={{
+                        alignSelf: "flex-end",
+                        width: "fit-content",
+                      }}
+                      color="secondary"
+                      onClick={openConfirm}
+                    >
+                      Chia sẻ bài viết qua Email
+                    </Button>
                   </div>
 
                   <div className="flex flex-col align-center justify-start gap-4 lg:px-6 lg:w-1/4 pr-4 pl-4 w-full lg:mt-0 mt-4">
@@ -194,6 +223,21 @@ const News: NextPage<Props> = ({ news, rightOtherNews, content }) => {
           <Stack alignItems="center" px={7}>
             <SlideNews slideNewsData={slideNewsData} />
           </Stack>
+
+          <ModalConfirm
+            title={`Chia sẻ bài viết qua Email`}
+            open={openedConfirm}
+            onClose={closeConfirm}
+            content={`Bạn xác nhận sẽ chia sẽ bài viết qua Email?`}
+            onConfirm={handleShareViaEmail}
+          />
+
+          <ToastSuccess
+            open={openedSuccess}
+            onClose={closeSuccess}
+            heading="Xác nhận thành công"
+            content="Chia sẻ bài viết qua Email thành công"
+          />
         </>
       ) : (
         <Error404 />
@@ -227,7 +271,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     return {
       props: {
         news,
-        rightOtherNews: rightOtherNews?.slice(0, 6),
+        rightOtherNews: rightOtherNews?.slice(0, 6) || [],
         content: content,
       },
     };

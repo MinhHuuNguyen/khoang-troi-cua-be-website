@@ -1,3 +1,4 @@
+import { COLORS } from "@/utils/constants";
 import { red } from "@mui/material/colors";
 import { createTheme } from "@mui/material/styles";
 import { Roboto } from "next/font/google";
@@ -15,7 +16,7 @@ const theme = createTheme({
       main: "#556cd6",
     },
     secondary: {
-      main: "#19857b",
+      main: COLORS["PINK"],
     },
     error: {
       main: red.A400,
@@ -23,6 +24,15 @@ const theme = createTheme({
   },
   typography: {
     fontFamily: roboto.style.fontFamily,
+  },
+  components: {
+    MuiTooltip: {
+      styleOverrides: {
+        tooltip: {
+          fontSize: "14px",
+        },
+      },
+    },
   },
 });
 
