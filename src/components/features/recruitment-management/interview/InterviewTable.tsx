@@ -8,6 +8,7 @@ import { ACTIONS } from "@/utils/constants";
 import { useDisclosure } from "@/libs/hooks/useDisclosure";
 import { ActionType } from "@/@types/common";
 import { useRecruitment } from "../hooks/useRecuitment";
+import { useDeleteRecruitment } from "../hooks/useDeleteRecruitment";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -16,6 +17,7 @@ import { InterviewDetail } from "./InterviewDetail";
 import { EllipsisCell } from "@/components/shared/table";
 import { MemberRegistrationWithPosition } from "@/@types/membershipRegistration";
 import { MemberRegistrationStatus } from "@prisma/client";
+import Test from "@/utils/data/json/test.json";
 
 export interface PersonInterview extends IMember {
   date_time: string;
@@ -103,6 +105,7 @@ const TEXT_CONFIRM = {
 const InterviewTable = (props: {data: MemberRegistrationWithPosition[] }) => {
   const {data} = props;
   const recruitment = useRecruitment();
+  const deleteRecruitment = useDeleteRecruitment();
 
   const columns = useMemo<MRT_ColumnDef<MemberRegistrationWithPosition>[]>(
     () => [
@@ -127,21 +130,21 @@ const InterviewTable = (props: {data: MemberRegistrationWithPosition[] }) => {
         Cell: (props) => <EllipsisCell {...props} />,
       },
       {
-        accessorKey: "interview.linkGGmeet",
+        accessorKey: "linkGGmeet",
         header: "Link Google Meet",
         size: 200,
         Cell: (props) => <EllipsisCell {...props} />,
       },
       {
           accessorFn: (rowData: any) =>
-            new Date(rowData.interview?.dateTime).toLocaleString("vi-VN"),
-          id: "interview.dateTime",
+            new Date(rowData.interviewTime).toLocaleString("vi-VN"),
+          id: "interviewTime",
           header: "Ngày giờ phỏng vấn",
           size: 200,
           Cell: (props) => <EllipsisCell {...props} />,
       },
       {
-        accessorKey: "test_id",
+        accessorKey: "testId",
         header: "Bài test",
         size: 200,
         Cell: (props) => <EllipsisCell {...props} />,
@@ -170,14 +173,19 @@ const InterviewTable = (props: {data: MemberRegistrationWithPosition[] }) => {
 
   const handleConfirm = () => {
     if (action) {
-      recruitment.mutateAsync({
-        id: rowSelected!.id,
-        status: renderStatusByAction(action),
-        email: rowSelected!.email,
-        type: action === "accept" ? "FORM" : "INTERVIEW",
-      });
+      if (action === "reject") {
+        // Gọi hàm deleteRecruitment để xóa bản ghi
+        deleteRecruitment.mutateAsync({ id: rowSelected!.id });
+      } else {
+        // Cập nhật trạng thái của bản ghi nếu không phải là hành động "reject"
+        recruitment.mutateAsync({
+          id: rowSelected!.id,
+          status: renderStatusByAction(action),
+          email: rowSelected!.email,
+          type: action === "accept_interview" ? "INTERVIEW" : "FORM",
+        });
+      }
     }
-
     setOpenToast(true);
     closeDetail();
     close();
