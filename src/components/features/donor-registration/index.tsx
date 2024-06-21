@@ -5,7 +5,9 @@ import {
   DonorRegistrationInputSchema,
   DonorRegistrationInputType,
 } from "./types";
-import {Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button, Typography, Grid, Box } from "@mui/material";
+import { IconButton, Modal, Button, Typography, Grid, Box } from "@mui/material";
+import CheckIcon from "@mui/icons-material/Check";
+import CloseIcon from "@mui/icons-material/Close";
 import { ContainerXL } from "@/components/layouts/ContainerXL";
 import ktcbBackground from "@public/mission-background.jpg";
 import { useRouter } from "next/router";
@@ -44,6 +46,7 @@ export const DonorRegistration = () => {
   };
 
   const { handleSubmit } = methods;
+  const classNameCol = "md:col-span-1 xs:col-span-2";
 
   const mutate = useCreateDonorRegistration();
 
@@ -59,7 +62,7 @@ export const DonorRegistration = () => {
   const handleConfirm = () => {
     // Xác nhận dữ liệu và đóng Dialog
     mutate.mutate(formData as DonorRegistrationInputType);
-    showModal(MODAL_TYPES.MODAL_SUCCESS, { heading: "Xác nhận thành công", content: "Cảm ơn đã gửi thông tin", }); 
+    showModal(MODAL_TYPES.MODAL_SUCCESS, { heading: "Xác nhận thành công", content: "Cảm ơn đã gửi thông tin", });
     setOpen(false);
     setFormData(null);
 
@@ -162,24 +165,42 @@ export const DonorRegistration = () => {
         </div>
       </ContainerXL>
 
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle variant="h5">Xác nhận thông tin</DialogTitle>
-        <DialogContent>
-          <DialogContentText fontStyle="italic">
-            {/* Hiển thị thông tin từ form */}
-            Họ và tên: {formData?.full_name}<br/>
-            Ngày sinh: {new Date(formData?.birthday).toLocaleDateString('vi-VN')}<br/>
-            Số điện thoại: {formData?.phone_number}<br/>
-            Email: {formData?.email}<br/>
-            Quyên góp: {getDonationLabel(formData?.kind_of_donate)}<br/>
-          </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Hủy</Button>
-          <Button onClick={handleConfirm} color="primary">Xác nhận</Button>
-        </DialogActions>
-      </Dialog>
-
+      <Modal open={open} onClose={handleClose}>
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 max-w-[60vw] w-3/4 h-auto max-h-[60vh] bg-white mx-auto shadow-xl rounded-lg overflow-hidden">
+          <div className="grid grid-cols-6 h-full md:p-8 p-4 gap-4">
+            <div className="lg:col-span-6 col-span-6 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className={classNameCol}>
+                <span className="font-bold">Họ và tên: </span>
+                {formData?.full_name}
+              </div>
+              <div className={classNameCol}>
+                <span className="font-bold">Ngày tháng năm sinh: </span>
+                {new Date(formData?.birthday).toLocaleDateString('vi-VN')}
+              </div>
+              <div className={classNameCol}>
+                <span className="font-bold">Email: </span>
+                {formData?.email}
+              </div>
+              <div className={classNameCol}>
+                <span className="font-bold">Số điện thoại: </span>
+                {formData?.phone_number}
+              </div>
+              <div className={classNameCol}>
+                <span className="font-bold">Quyên góp: </span>
+                {getDonationLabel(formData?.kind_of_donate)}
+              </div>
+            </div>
+          </div>
+          <div className="flex justify-end space-x-4 p-4">
+            <IconButton onClick={handleClose} aria-label="cancel">
+              <CloseIcon />
+            </IconButton>
+            <IconButton onClick={handleConfirm} aria-label="confirm" color="primary">
+              <CheckIcon />
+            </IconButton>
+          </div>
+        </div>
+      </Modal>
     </FormProvider>
   );
 };
