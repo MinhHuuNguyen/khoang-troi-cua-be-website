@@ -10,6 +10,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import { ACTIONS } from "@/utils/constants";
 import { format } from "date-fns";
 
+
 interface Props {
   data: MemberRegistrationWithPosition;
   open: boolean;
@@ -79,8 +80,8 @@ export const InterviewDetail: React.FC<Props> = ({
             </div>
             <div className={classNameCol}>
               <span className="font-bold">Link GG meet: </span>
-              <a href={data.interview?.linkGGmeet} target="_blank" className="underline">
-                {data.interview?.linkGGmeet}
+              <a href={data.linkGGmeet} target="_blank" className="underline">
+                {data.linkGGmeet}
               </a>
             </div>
           </div>
@@ -90,7 +91,7 @@ export const InterviewDetail: React.FC<Props> = ({
               <p className="font-bold">Chọn ngày giờ phỏng vấn</p>
               <DatetimePicker
                 defaultValue={format(
-                  new Date(data.interview?.dateTime as unknown as string),
+                  new Date(data.interviewTime as unknown as string),
                   "yyyy-MM-dd HH:mm"
                 )}
                 onChange={(e) => console.log(e)}

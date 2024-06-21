@@ -16,11 +16,12 @@ import ClearIcon from "@mui/icons-material/Clear";
 import ToastSuccess from "@/components/shared/toasts/ToastSuccess";
 import { SubmissionDetail } from "./SubmissionDetail";
 import { EllipsisCell } from "@/components/shared/table";
-import { useRecruitment } from "../hooks/useRecuitment";
+import { useRecruitment} from "../hooks/useRecuitment";
+import { useDeleteRecruitment } from "../hooks/useDeleteRecruitment";
 import { MemberRegistrationStatus } from "@prisma/client";
 import TestOptions from "@/utils/data/json/test.json";
 import { DatetimePicker, SelectBox } from "@/components/shared/inputs";
-
+import { format } from "date-fns";
 
 export type ActionTypeAdd = ActionType | "accept_interview";
 
@@ -40,25 +41,8 @@ const TEXT_CONFIRM = {
 const SubmissionTable = (props: { data: MemberRegistrationWithPosition[] }) => {
   const { data } = props;
   const recruitment = useRecruitment();
-  const [selectedDate, setSelectedDate] = useState<Date | null>(null);
-
-  // Step 3: Save to Database
-  const saveDateToDatabase = async (date: any) => {
-    try {
-      // Replace with your actual API call
-      await fetch('api/recruitment_management', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ date: date }),
-      });
-      console.log('Date saved successfully');
-    } catch (error) {
-      console.error('Error saving date:', error);
-    }
-  };
-
+  const deleteRecruitment = useDeleteRecruitment(); 
+  
   const columns = useMemo<MRT_ColumnDef<MemberRegistrationWithPosition>[]>(
     () => [
       {
@@ -83,10 +67,17 @@ const SubmissionTable = (props: { data: MemberRegistrationWithPosition[] }) => {
         Cell: (props) => <EllipsisCell {...props} />,
       },
       {
-        accessorKey: "dateTime",
+        accessorKey: "interviewTime",
         header: "Chọn ngày phỏng vấn",
         size: 200,
-        Cell: (props) => <EllipsisCell {...props} />,
+        Cell: (props) =>  <DatetimePicker
+        defaultValue={format(
+          new Date(),
+          "yyyy-MM-dd HH:mm"
+        )}
+        onChange={(e) => console.log(e)}
+        fullWidth
+      />,
       },
       {
         accessorKey: "test_id",
@@ -124,18 +115,24 @@ const SubmissionTable = (props: { data: MemberRegistrationWithPosition[] }) => {
 
   const handleConfirm = () => {
     if (action) {
-      recruitment.mutateAsync({
-        id: rowSelected!.id,
-        status: renderStatusByAction(action),
-        email: rowSelected!.email,
-        type: action === "accept_interview" ? "INTERVIEW" : "FORM",
-      });
+      if (action === "reject") {
+        // Gọi hàm deleteRecruitment để xóa bản ghi
+        deleteRecruitment.mutateAsync({ id: rowSelected!.id });
+      } else {
+        // Cập nhật trạng thái của bản ghi nếu không phải là hành động "reject"
+        recruitment.mutateAsync({
+          id: rowSelected!.id,
+          status: renderStatusByAction(action),
+          email: rowSelected!.email,
+          type: action === "accept_interview" ? "INTERVIEW" : "FORM",
+        });
+      }
     }
-
     setOpenToast(true);
     closeDetail();
     close();
   };
+
 
   const table = useTable({
     columns,

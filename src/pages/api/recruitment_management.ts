@@ -14,6 +14,16 @@ export interface UpdateMemberRegistrationDto {
   type: "FORM" | "INTERVIEW";
 }
 
+export interface PassMemberRegistrationDto {
+  id: number;
+  email: string;
+  fullName: string;
+  birthday: any;
+  phoneNumber: string;
+  address: string;
+  workPlace: string;
+}
+
 const MAILS = {
   FORM: {
     PASSED: {
@@ -83,27 +93,47 @@ export default async function handler(
                 name: true,
               },
             },
-            interview: true,
           },
         });
 
         return res.status(200).json(interviews);
 
       case "POST":
-        const { dateTime, linkGGmeet } = req.body;
+        // Bước 1: Truy vấn dữ liệu từ MemberRegistration
+        const memberRegistrations = await prisma.memberRegistration.findMany();
 
-        if (!dateTime || !linkGGmeet) {
-          return res.status(400).json({ message: "Missing required fields" });
+        // Khởi tạo một mảng để lưu trữ ID của những bản ghi được chuyển
+        let transferredIds = [];
+
+        // Bước 2: Tạo bản ghi mới trong Member với dữ liệu đã lấy
+        for (const registration of memberRegistrations) {
+          await prisma.member.create({
+            data: {
+              fullName: registration.fullName,
+              birthday: registration.birthday,
+              phoneNumber: registration.phoneNumber,
+              email: registration.email,
+              address: registration.address,
+              workPlace: registration.workPlace,
+              // Giả sử các trường như bank, bankAccount, avatar được xử lý khác hoặc có giá trị mặc định
+              bank: "", // Cập nhật giá trị phù hợp
+              bankAccount: "", // Cập nhật giá trị phù hợp
+              avatar: "", // Cập nhật giá trị phù hợp
+            },
+          });
+
+          // Lưu ID của bản ghi vừa được chuyển
+          transferredIds.push(registration.id);
         }
 
-        const newInterview = await prisma.interview.create({
-          data: {
-            dateTime: new Date(dateTime),
-            linkGGmeet,
+        // Bước 3: Xóa những bản ghi trong MemberRegistration mà đã được chuyển
+        await prisma.memberRegistration.deleteMany({
+          where: {
+            id: {
+              in: transferredIds, // Sử dụng mảng ID đã lưu để chỉ định những bản ghi cần xóa
+            },
           },
         });
-
-        return res.status(201).json(newInterview);
 
       default:
         return res.status(405).end();

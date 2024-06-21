@@ -8,6 +8,10 @@ interface getMemberRegistrationDto {
   status: MemberRegistrationStatus;
 }
 
+export interface deleteMemberRegistrationDto {
+  id: number;
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -62,11 +66,9 @@ export default async function handler(
         });
 
       case "GET":
-        const params = req.query as unknown as getMemberRegistrationDto;
-
         const registrations = await prisma.memberRegistration.findMany({
           where: {
-            status: params.status,
+            status: "REVIEWING",
           },
           include: {
             position: {
@@ -78,6 +80,21 @@ export default async function handler(
         });
 
         return res.status(200).json(registrations);
+
+        case "PATCH":
+          const deletedData: deleteMemberRegistrationDto = req.body;
+  
+          if (!deletedData) {
+            return res.status(400).json({ message: "Content not found" });
+          }
+  
+          const deleteMember = await prisma.memberRegistration.delete({
+            where: {
+              id: deletedData.id,
+            },
+          });
+          return res.status(201).json(deleteMember);
+        
 
       default:
         return res.status(405).end();
