@@ -1,4 +1,4 @@
-import React from "react";
+import { useState } from "react";
 import { UserInformation, UserKTCB, UserSocialActivities } from "./components";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -15,7 +15,8 @@ import { ContainerXL } from "@/components/layouts/ContainerXL";
 export const MemberRegistration = () => {
   const router = useRouter();
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
   const {
     control,
@@ -43,6 +44,8 @@ export const MemberRegistration = () => {
   });
 
   const onSubmit = handleSubmit(async (data) => {
+    setIsSubmitted(true);
+
     try {
       const response = await fetch('/api/member_registration', {
         method: 'POST',
@@ -120,6 +123,7 @@ export const MemberRegistration = () => {
           }}
           color="secondary"
           onClick={onSubmit}
+          disabled={isSubmitted}
         >
           Gửi thông tin
         </Button>
