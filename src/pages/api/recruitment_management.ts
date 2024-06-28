@@ -10,6 +10,7 @@ import mailMemberFormFail from "@/mailer/templates/recruit-members/member-form-f
 export interface UpdateMemberRegistrationDto {
   id: number;
   status: MemberRegistrationStatus;
+  interviewTime?: any;
   email: string;
   type: "FORM" | "INTERVIEW";
 }
@@ -99,8 +100,15 @@ export default async function handler(
         return res.status(200).json(interviews);
 
       case "POST":
+        const passMember: PassMemberRegistrationDto = req.body;
         // Bước 1: Truy vấn dữ liệu từ MemberRegistration
-        const memberRegistrations = await prisma.memberRegistration.findMany();
+        const memberRegistrations = await prisma.memberRegistration.findMany(
+          {
+            where: {
+              id: passMember.id,
+            },
+          }
+        );
 
         // Khởi tạo một mảng để lưu trữ ID của những bản ghi được chuyển
         let transferredIds = [];
@@ -134,6 +142,8 @@ export default async function handler(
             },
           },
         });
+
+        return res.status(201).json({ transferredIds });
 
       default:
         return res.status(405).end();
