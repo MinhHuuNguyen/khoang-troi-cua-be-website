@@ -9,6 +9,7 @@ import { useDisclosure } from "@/libs/hooks/useDisclosure";
 import { ActionType } from "@/@types/common";
 import { useRecruitment } from "../hooks/useRecuitment";
 import { useDeleteRecruitment } from "../hooks/useDeleteRecruitment";
+import { useTranferRecruitment } from "../hooks/useTranferRecruitment";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import ClearIcon from "@mui/icons-material/Clear";
@@ -17,7 +18,9 @@ import { InterviewDetail } from "./InterviewDetail";
 import { EllipsisCell } from "@/components/shared/table";
 import { MemberRegistrationWithPosition } from "@/@types/membershipRegistration";
 import { MemberRegistrationStatus } from "@prisma/client";
-import Test from "@/utils/data/json/test.json";
+import { useRouter} from "next/navigation";
+import TestOptions from "@/utils/data/json/test.json";
+
 
 export interface PersonInterview extends IMember {
   date_time: string;
@@ -106,6 +109,8 @@ const InterviewTable = (props: {data: MemberRegistrationWithPosition[] }) => {
   const {data} = props;
   const recruitment = useRecruitment();
   const deleteRecruitment = useDeleteRecruitment();
+  const tranferRecruitment = useTranferRecruitment();
+  const router = useRouter();
 
   const columns = useMemo<MRT_ColumnDef<MemberRegistrationWithPosition>[]>(
     () => [
@@ -144,10 +149,14 @@ const InterviewTable = (props: {data: MemberRegistrationWithPosition[] }) => {
           Cell: (props) => <EllipsisCell {...props} />,
       },
       {
-        accessorKey: "testId",
+        accessorKey: "test",
         header: "Bài test",
         size: 200,
-        Cell: (props) => <EllipsisCell {...props} />,
+        Cell: (props) => {
+          // Tìm label trong TestOptions tương ứng với value lưu trong database
+          const label = TestOptions.find(option => option.value.toString() === props.row.original.test)?.label || 'Không xác định';
+          return <EllipsisCell {...props} value={label} />;
+        },
       },
     ],
     []
@@ -176,7 +185,20 @@ const InterviewTable = (props: {data: MemberRegistrationWithPosition[] }) => {
       if (action === "reject") {
         // Gọi hàm deleteRecruitment để xóa bản ghi
         deleteRecruitment.mutateAsync({ id: rowSelected!.id });
-      } else {
+        // router.refresh();
+      }else if(action === "accept"){
+        // Gọi hàm tranferRecruitment để chuyển bản ghi
+        tranferRecruitment.mutateAsync({
+          id: rowSelected!.id,
+          email: rowSelected!.email,
+          fullName: rowSelected!.fullName,
+          birthday: rowSelected!.birthday,
+          phoneNumber: rowSelected!.phoneNumber,
+          address: rowSelected!.address,
+          workPlace: rowSelected!.workPlace,
+        });
+        // router.refresh();
+      }else {
         // Cập nhật trạng thái của bản ghi nếu không phải là hành động "reject"
         recruitment.mutateAsync({
           id: rowSelected!.id,
@@ -184,6 +206,7 @@ const InterviewTable = (props: {data: MemberRegistrationWithPosition[] }) => {
           email: rowSelected!.email,
           type: action === "accept_interview" ? "INTERVIEW" : "FORM",
         });
+        // router.refresh();
       }
     }
     setOpenToast(true);

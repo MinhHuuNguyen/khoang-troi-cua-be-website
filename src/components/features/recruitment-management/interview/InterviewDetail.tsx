@@ -19,7 +19,10 @@ interface Props {
 }
 
 const classNameCol = "md:col-span-1 xs:col-span-2";
-
+const getLabelByValue = (value: number|string) => {
+  const item = TestOptions.find(item => item.value.toString() === value);
+  return item ? item.label : "Không thấy bài test";
+};
 export const InterviewDetail: React.FC<Props> = ({
   data,
   onClose,
@@ -88,24 +91,14 @@ export const InterviewDetail: React.FC<Props> = ({
 
           <div className="lg:col-span-2 col-span-6 gap-4 flex flex-col">
             <div className="flex flex-col gap-1">
-              <p className="font-bold">Chọn ngày giờ phỏng vấn</p>
-              <DatetimePicker
-                defaultValue={format(
-                  new Date(data.interviewTime as unknown as string),
-                  "yyyy-MM-dd HH:mm"
-                )}
-                onChange={(e) => console.log(e)}
-                fullWidth
-              />
+              <p className="font-bold">Giờ phỏng vấn</p>
+              {new Date(data.interviewTime).toLocaleString("vi", { day: 'numeric', month: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
             </div>
             <div className="flex flex-col gap-1">
-              <p className="font-bold">Chọn bài test</p>
-              <SelectBox
-                options={TestOptions}
-                value={""}
-                onChange={(value) => console.log(value)}
-                fullWidth
-              />
+              <p className="font-bold">Bài test</p>
+              <a href={getLabelByValue(data.test)} target="_blank" className="underline">
+              {getLabelByValue(data.test)}
+              </a>
             </div>
             <div className="flex items-center justify-center min-w-">
               <Tooltip title="Chuyển đơn tuyển sang thành viên chính thức">

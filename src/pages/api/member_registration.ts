@@ -3,6 +3,8 @@ import prisma from "@/libs/prisma";
 import { sendMail } from "@mailer/mailService";
 import mailData from "@mailer/templates/recruit-members/member-registration-complete";
 import { MemberRegistrationStatus } from "@prisma/client";
+import { da } from "date-fns/locale";
+import Test from "@/utils/data/json/test.json";
 
 interface getMemberRegistrationDto {
   status: MemberRegistrationStatus;
@@ -11,6 +13,9 @@ interface getMemberRegistrationDto {
 export interface deleteMemberRegistrationDto {
   id: number;
 }
+const fs = require('fs');
+const testData = JSON.parse(fs.readFileSync('src/utils/data/json/test.json', 'utf8'));
+const defaultValue = testData[0].value;
 
 export default async function handler(
   req: NextApiRequest,
@@ -38,6 +43,7 @@ export default async function handler(
             memories: data.memories,
             positionId: parseInt(data.position),
             hopeToReceive: data.hope_to_receive,
+            test: defaultValue,
           },
           include: {
             position: {
