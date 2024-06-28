@@ -15,3 +15,15 @@ export const getMemberRegistration = async ({ status }: Props) => {
 
   return registrations.json();
 };
+
+export const getPersonInterview = async ({ status }: Props) => {
+  const interview = await fetch(
+    `/api/recruitment_management${status ? `?status=${status}` : ""}`,
+    {
+      headers: { "Content-Type": "application/json" },
+      method: "GET",
+    }
+  );
+
+  return interview.json();
+};
