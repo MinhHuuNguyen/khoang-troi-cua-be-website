@@ -29,7 +29,6 @@ export const UserKTCB: React.FC<Props> = ({ control, errors }) => {
                 }
                 required
                 fullWidth
-                value={value}
                 onChange={onChange}
                 error={!!errors.position?.message}
                 helperText={errors.position?.message}

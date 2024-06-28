@@ -15,7 +15,7 @@ export default (data: any) => {
     6. Nơi sống: ${data.address}<br>
     7. Kinh nghiệm tham gia hoạt động xã hội: ${data.hasSocialActivities ? 'Có' : 'Không' }<br>
     8. Kỷ niệm khi tham gia hoạt động xã hội: ${data.memories}<br>
-    9. Vị trí muốn tham gia tại Khoảng Trời Của Bé: ${data.position.name}<br>
+    9. Vị trí muốn tham gia tại Khoảng Trời Của Bé: ${data.positionLabel}<br>
     10. Mong muốn của bạn khi tham gia Khoảng Trời Của Bé: ${data.hopeToReceive}<br>
     <br>
     Bạn hãy kiểm tra lại xem các thông tin đã chính xác hay chưa nhé. Trong trường hợp thông tin đã chính xác, bạn hãy chờ email thông báo Kết quả vòng đơn của chúng mình nhé.
