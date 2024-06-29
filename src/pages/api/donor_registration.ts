@@ -31,16 +31,10 @@ export default async function handler(
             donationImage: "https://picsum.photos/200/300", // random image
           },
         });
-
-        const bcc = [
-          "tainguyen29702@gmail.com"
-        ];
-
         await sendMail(
           [data.email],
           "CẢM ƠN BẠN ĐÃ ỦNG HỘ VÀO QUỸ KHOẢNG TRỜI CỦA BÉ",
           mailDonorRegistration(donor),
-          bcc
         );
 
         return res.status(201).json(donor);
