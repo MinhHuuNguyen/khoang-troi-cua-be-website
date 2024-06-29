@@ -12,7 +12,7 @@ import { ContainerXL } from "@/components/layouts/ContainerXL";
 import ktcbBackground from "@public/mission-background.jpg";
 import { useRouter } from "next/router";
 import { DonorDonate, DonorInformation } from "./components";
-import QR from "@public/QR_KTCB.png";
+import QR from "@public/QR_Techcombank.jpg";
 import { useCreateDonorRegistration } from "./hooks/useCreateDonorRegistration";
 import {
   MODAL_TYPES,
@@ -129,14 +129,6 @@ export const DonorRegistration = () => {
                 flexDirection: "column",
               }}
             >
-              <Typography fontSize={20} fontWeight={"bold"}>
-                Quét mã QR để quyên góp
-              </Typography>
-              <Typography fontSize={16} fontWeight={"bold"}>
-                Nguyễn Hữu Minh
-              </Typography>
-              <Typography fontSize={16}>1903 3179 1709 96</Typography>
-
               <Box
                 component="img"
                 src={QR.src}
