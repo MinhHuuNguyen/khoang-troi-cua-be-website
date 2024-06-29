@@ -15,7 +15,7 @@ export async function sendMail(to: [string], subject: string, html: any) {
     from: process.env.NODEMAILER_EMAIL,
     to,
     subject,
-    html
+    html,
   };
 
   return transporter.sendMail(mailOptions, (err: Error | null, info) => {

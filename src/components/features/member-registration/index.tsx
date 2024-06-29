@@ -22,6 +22,7 @@ export const MemberRegistration = () => {
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<MemberRegistrationInputType>({
     resolver: zodResolver(MemberRegistrationInputSchema),
     defaultValues: {
@@ -55,7 +56,7 @@ export const MemberRegistration = () => {
       if (!response.ok) {
         throw new Error(`API request failed with status ${response.status}`);
       }
-
+      reset();
       setOpen(true);
     } catch (err) {
       console.error(err);
@@ -78,6 +79,7 @@ export const MemberRegistration = () => {
           heading="Xác nhận thành công"
           content="Cảm ơn đã gửi thông tin"
         />
+        
         <div className="flex justify-center items-center gap-2">
           <Button
             variant="contained"
