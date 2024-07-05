@@ -2,9 +2,9 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/libs/prisma";
 import { sendMail } from "@mailer/mailService";
 import mailData from "@mailer/templates/recruit-members/member-registration-complete";
+import internalMail from "@mailer/templates/recruit-members/new-registration";
 import { MemberRegistrationStatus } from "@prisma/client";
-import { da } from "date-fns/locale";
-import Test from "@/utils/data/json/test.json";
+
 
 interface getMemberRegistrationDto {
   status: MemberRegistrationStatus;
@@ -16,6 +16,7 @@ export interface deleteMemberRegistrationDto {
 const fs = require('fs');
 const testData = JSON.parse(fs.readFileSync('src/utils/data/json/test.json', 'utf8'));
 const defaultValue = testData[0].value;
+const internalEmails = JSON.parse(fs.readFileSync('src/utils/data/json/internal-email.json', 'utf8'));
 
 export default async function handler(
   req: NextApiRequest,
@@ -56,13 +57,24 @@ export default async function handler(
 
         await new Promise(async (resolve, reject) => {
           try {
-            const result = await sendMail(
+            // Gửi mail cho người dùng
+            const userMailResult = await sendMail(
               [data.email],
               "CẢM ƠN BẠN ĐÃ ĐĂNG KÝ THÀNH VIÊN KHOẢNG TRỜI CỦA BÉ",
               mailData(member)
             );
-            resolve(result);
-            res.status(200).json({ message: "Mail sent!" });
+        
+            // Gửi mail nội bộ sau khi gửi mail cho người dùng thành công
+            const internalMailResult = await sendMail(
+              [internalEmails], // Thay thế bằng địa chỉ email nội bộ thực tế
+              "THÔNG BÁO ĐĂNG KÝ MỚI",
+               // Nội dung email nội bộ
+              internalMail(member)
+            );
+        
+            // Nếu cả hai email đều được gửi thành công
+            resolve({userMailResult, internalMailResult});
+            res.status(200).json({ message: "Mail sent to user and internal!" });
           } catch (err: any) {
             reject(err);
             return res.status(500).json({
