@@ -1,9 +1,10 @@
 import React from "react";
 import { IMemberList } from "./MemberListTable";
 import { Modal } from "@mui/material";
+import { Member } from "@prisma/client";
 
 interface Props {
-  data: IMemberList;
+  data: Member;
   open: boolean;
   onClose: () => void;
 }
@@ -18,15 +19,15 @@ export const MemberDetail: React.FC<Props> = ({ data, onClose, open }) => {
           <div className="lg:col-span-2 col-span-6 gap-4 flex flex-col">
             <div className={classNameCol}>
               <span className="font-bold">Họ và tên: </span>
-              {data.full_name}
+              {data.fullName}
             </div>
             <div className={classNameCol}>
               <span className="font-bold">Ngày tháng năm sinh: </span>
-              {data.birthday}
+              {new Date(data.birthday).toLocaleDateString("vi")}
             </div>
             <div className={classNameCol}>
               <span className="font-bold">Số điện thoại: </span>
-              {data.phone_number}
+              {data.phoneNumber}
             </div>
             <div className={classNameCol}>
               <span className="font-bold">Email: </span>
@@ -37,35 +38,35 @@ export const MemberDetail: React.FC<Props> = ({ data, onClose, open }) => {
           <div className="lg:col-span-2 col-span-6 gap-4 flex flex-col">
             <div className={classNameCol}>
               <span className="font-bold">Nơi làm việc: </span>
-              {data.work_place}
+              {data.address}
             </div>
             <div className={classNameCol}>
               <span className="font-bold">Địa chỉ: </span>
               {data.address}
             </div>
-            <div className={classNameCol}>
+            {/* <div className={classNameCol}>
               <span className="font-bold">Team: </span>
               {data.team}
             </div>
             <div className={classNameCol}>
               <span className="font-bold">Vị trí: </span>
               {data.position}
-            </div>
+            </div> */}
           </div>
 
           <div className="lg:col-span-2 col-span-6 gap-4 flex flex-col">
             <div className={classNameCol}>
               <span className="font-bold">Địa chỉ làm việc: </span>
-              {data.work_place}
+              {data.workPlace}
             </div>
             <div className={classNameCol}>
               <span className="font-bold">Ngân hàng: </span>
-              {data.bank_name}
+              {data.bank}
             </div>
 
             <div className={classNameCol}>
               <span className="font-bold">Số tài khoản ngân hàng: </span>
-              {data.bank_account}
+              {data.bankAccount}
             </div>
           </div>
         </div>
