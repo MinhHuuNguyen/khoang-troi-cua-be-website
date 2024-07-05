@@ -89,7 +89,7 @@ const InterviewTable = (props: {data: MemberRegistrationWithPosition[] }) => {
         size: 200,
         Cell: (props) => {
           // Tìm label trong TestOptions tương ứng với value lưu trong database
-          const label = TestOptions.find(option => option.value.toString() === props.row.original.test)?.label || 'Không xác định';
+          const label = TestOptions.find(option => option.name.toString() === props.row.original.test)?.content || 'Không xác định';
           return <EllipsisCell {...props} value={label} />;
         },
       },

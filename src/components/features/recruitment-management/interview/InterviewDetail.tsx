@@ -20,8 +20,8 @@ interface Props {
 
 const classNameCol = "md:col-span-1 xs:col-span-2";
 const getLabelByValue = (value: number|string) => {
-  const item = TestOptions.find(item => item.value.toString() === value);
-  return item ? item.label : "Không thấy bài test";
+  const item = TestOptions.find(item => item.name.toString() === value);
+  return item ? item.content : "Không thấy bài test";
 };
 export const InterviewDetail: React.FC<Props> = ({
   data,
