@@ -11,6 +11,7 @@ export interface UpdateMemberRegistrationDto {
   id: number;
   status: MemberRegistrationStatus;
   interviewTime?: any;
+  test: string;
   email: string;
   type: "FORM" | "INTERVIEW";
 }
