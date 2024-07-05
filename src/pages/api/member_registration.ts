@@ -14,9 +14,9 @@ export interface deleteMemberRegistrationDto {
   id: number;
 }
 const fs = require('fs');
-const testData = JSON.parse(fs.readFileSync('src/utils/data/json/test.json', 'utf8'));
+const testData = JSON.parse(fs.readFileSync('src/utils/data/json/recruiment_test', 'utf8'));
 const defaultValue = testData[0].value;
-const internalEmails = JSON.parse(fs.readFileSync('src/utils/data/json/internal-email.json', 'utf8'));
+const internalEmails = JSON.parse(fs.readFileSync('src/utils/data/json/internal_email.json', 'utf8'));
 
 export default async function handler(
   req: NextApiRequest,

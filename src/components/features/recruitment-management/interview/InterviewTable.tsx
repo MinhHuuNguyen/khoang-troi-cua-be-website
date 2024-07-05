@@ -19,7 +19,7 @@ import { EllipsisCell } from "@/components/shared/table";
 import { MemberRegistrationWithPosition } from "@/@types/membershipRegistration";
 import { MemberRegistrationStatus } from "@prisma/client";
 import { useRouter} from "next/navigation";
-import TestOptions from "@/utils/data/json/test.json";
+import TestOptions from "@/utils/data/json/recruitment_test.json";
 
 
 export interface PersonInterview extends IMember {

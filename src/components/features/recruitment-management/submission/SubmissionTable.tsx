@@ -20,7 +20,7 @@ import { useRecruitment } from "../hooks/useRecuitment";
 import { useDeleteRecruitment } from "../hooks/useDeleteRecruitment";
 import { useTranferRecruitment } from "../hooks/useTranferRecruitment";
 import { MemberRegistrationStatus } from "@prisma/client";
-import TestOptions from "@/utils/data/json/test.json";
+import TestOptions from "@/utils/data/json/recruitment_test.json";
 import { DatetimePicker, SelectTest } from "@/components/shared/inputs";
 import { format } from "date-fns";
 import { useRouter } from "next/navigation";
