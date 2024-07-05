@@ -14,7 +14,7 @@ import { EllipsisCell } from "@/components/shared/table";
 import { ClearIcon } from "@mui/x-date-pickers";
 import { ACTIONS } from "@/utils/constants";
 import SyncAltIcon from "@mui/icons-material/SyncAlt";
-import PositionKTCB from "@/utils/data/json/position-ktcb.json";
+
 
 import {
   MODAL_TYPES,
@@ -40,68 +40,6 @@ const TEAM_OPTIONS = [
   },
 ];
 
-// const data: IMemberList[] = [
-//   {
-//     full_name: "123",
-//     email: "Kentucky_dai_dai_dai_ktcb@gmail.com",
-//     birthday: "27/02/2001",
-//     phone_number: "0334455667",
-//     address: "144 Xuan Thuy",
-//     work_place: "144 Xuan Thuy",
-//     team: "Cùng bé trải nghiệm",
-//     position: "Tình nguyện viên",
-//     bank_account: "123456789",
-//     bank_name: "ACB",
-//   },
-//   {
-//     full_name: "123",
-//     email: "Ohio@gmail.com",
-//     birthday: "27/02/2001",
-//     phone_number: "0334455667",
-//     address: "144 Xuan Thuy",
-//     work_place: "144 Xuan Thuy",
-//     team: "Cùng bé trải nghiệm",
-//     position: "Tình nguyện viên",
-//     bank_account: "123456789",
-//     bank_name: "ACB",
-//   },
-//   {
-//     full_name: "123",
-//     email: "West Virginia@gmail.com",
-//     birthday: "27/02/2001",
-//     phone_number: "0334455667",
-//     address: "144 Xuan Thuy",
-//     work_place: "144 Xuan Thuy",
-//     team: "Cùng bé trải nghiệm",
-//     position: "Tình nguyện viên",
-//     bank_account: "123456789",
-//     bank_name: "ACB",
-//   },
-//   {
-//     full_name: "123",
-//     email: "Nebraska@gmail.com",
-//     birthday: "27/02/2001",
-//     phone_number: "0334455667",
-//     address: "144 Xuan Thuy",
-//     work_place: "144 Xuan Thuy",
-//     team: "Cùng bé trải nghiệm",
-//     position: "Tình nguyện viên",
-//     bank_account: "123456789",
-//     bank_name: "ACB",
-//   },
-//   {
-//     full_name: "123",
-//     email: "Nebraska@gmail.com",
-//     birthday: "27/02/2001",
-//     phone_number: "0334455667",
-//     address: "144 Xuan Thuy",
-//     work_place: "144 Xuan Thuy",
-//     team: "Cùng bé trải nghiệm",
-//     position: "Tình nguyện viên",
-//     bank_account: "123456789",
-//     bank_name: "ACB",
-//   },
-// ];
 
 const TEXT_TOAST = {
   [ACTIONS["REJECT"]]: "Xác nhận yêu cầu thành viên rời đội thành công",

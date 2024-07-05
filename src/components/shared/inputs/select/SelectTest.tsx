@@ -3,8 +3,8 @@ import { InputControl } from "../components/InputControl";
 import classNames from "classnames";
 
 export type SelectTest = {
-  label: string;
-  value: string | number;
+  content: string;
+  name: string | number;
 };
 
 type Props = {
@@ -12,9 +12,9 @@ type Props = {
   error?: boolean;
   required?: boolean;
   fullWidth?: boolean;
-  label?: string;
+  content?: string;
   options: SelectTest[];
-  value: string | number;
+  name: string | number;
   onChange: (value: string | number) => void;
   disabled?: boolean;
   placeholder?: string;
@@ -26,9 +26,9 @@ const SelectTest = ({
   fullWidth = false,
   helperText,
   error,
-  label,
+  content,
   options,
-  value,
+  name,
   onChange,
   placeholder,
   disabledClearable = false,
@@ -37,10 +37,10 @@ const SelectTest = ({
   const [_value, setValue] = useState<string | number | undefined>("");
 
   useEffect(() => {
-    const option = options.find((option) => option?.value === value);
+    const option = options.find((option) => option?.name === name);
 
-    setValue(option?.value);
-  }, [options, value]);
+    setValue(option?.name);
+  }, [options, name]);
 
   const handleChangeValue = (_event: SyntheticEvent<Element, Event>) => {
     const newValue = (_event.target as HTMLInputElement).value;
@@ -59,7 +59,7 @@ const SelectTest = ({
     <InputControl
       fieldError={error}
       fullWidth={fullWidth}
-      label={label}
+      label={content}
       required={required}
       helperText={helperText}
     >
@@ -87,10 +87,10 @@ const SelectTest = ({
           return (
             <option
               className="px-4 py-2 block whitespace-nowrap text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-              key={option.value}
-              value={option.value}
+              key={option.name}
+              value={option.name}
             >
-              {option.value}
+              {option.name}
             </option>
           );
         })}

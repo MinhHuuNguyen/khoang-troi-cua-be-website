@@ -2,7 +2,7 @@ import React from "react";
 import { MemberRegistrationWithPosition } from "@/@types/membershipRegistration";
 import { IconButton, Modal, Tooltip } from "@mui/material";
 import { DatetimePicker, SelectBox } from "@/components/shared/inputs";
-import TestOptions from "@/utils/data/json/test.json";
+import TestOptions from "@/utils/data/json/recruitment_test.json";
 import { ActionType } from "@/@types/common";
 
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
