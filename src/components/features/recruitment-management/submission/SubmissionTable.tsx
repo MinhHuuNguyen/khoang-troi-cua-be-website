@@ -85,7 +85,7 @@ const SubmissionTable = (props: { data: MemberRegistrationWithPosition[] }) => {
         size: 200,
         Cell: (props) => <SelectTest
           options={TestOptions}
-          value={""}
+          name={""}
           onChange={(value) => {
             saveDataToDatabase(props.row.original.id, value);
           }}
