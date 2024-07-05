@@ -40,71 +40,6 @@ const TEXT_CONFIRM = {
   [ACTIONS["REJECT"]]: "Xác nhận LOẠI đơn tuyển",
 };
 
-// const data: PersonInterview[] = [
-//   {
-//     full_name: "123",
-//     email: "Kentucky_dai_dai_dai_ktcb@gmail.com",
-//     birthday: "27/02/2001",
-//     phone_number: "0334455667",
-//     address: "144 Xuan Thuy",
-//     work_place: "144 Xuan Thuy",
-//     has_social_activities: "Đã từng",
-//     memories: "Làm việc nhóm tốt",
-//     position: "Thành viên",
-//     hope_to_receive: "Kinh nghiệm, kiến thức và trải nghiệm",
-//     date_time: "2022-10-10 10:10:10",
-//     test_id: 1,
-//     link_gg_met: "https://meet.google.com/lookup/abc",
-//   },
-//   {
-//     full_name: "123",
-//     email: "Ohio@gmail.com",
-//     birthday: "27/02/2001",
-//     phone_number: "0334455667",
-//     address: "144 Xuan Thuy",
-//     work_place: "144 Xuan Thuy",
-//     has_social_activities: "Chưa từng",
-//     memories: "Làm việc nhóm tốt",
-//     position: "Thành viên",
-//     hope_to_receive: "Kinh nghiệm, kiến thức và trải nghiệm",
-//     date_time: "2022-10-10 10:10:10",
-//     test_id: 1,
-//     link_gg_met: "https://meet.google.com/lookup/abc",
-//   },
-//   {
-//     full_name: "123",
-//     email: "West Virginia@gmail.com",
-//     birthday: "27/02/2001",
-//     phone_number: "0334455667",
-//     address: "144 Xuan Thuy",
-//     work_place: "144 Xuan Thuy",
-//     has_social_activities: "Đã từng",
-//     memories:
-//       "Làm việc nhóm tốt Làm việc nhóm tốt Làm việc nhóm tốt Làm việc nhóm tốt Làm việc nhóm tốt Làm việc nhóm tốt Làm việc nhóm tốt Làm việc nhóm tốt Làm việc nhóm tốtLàm việc nhóm tốtLàm việc nhóm tốt Làm việc nhóm tốt Làm việc nhóm tốt ",
-//     position: "Thành viên",
-//     hope_to_receive: "Kinh nghiệm, kiến thức và trải nghiệm",
-//     date_time: "2022-10-10 10:10:10",
-//     test_id: 1,
-//     link_gg_met: "https://meet.google.com/lookup/abc",
-//   },
-//   {
-//     full_name: "123",
-//     email: "Nebraska@gmail.com",
-//     birthday: "27/02/2001",
-//     phone_number: "0334455667",
-//     address: "144 Xuan Thuy",
-//     work_place: "144 Xuan Thuy",
-//     has_social_activities: "Chưa từng",
-//     memories: "Làm việc nhóm tốt",
-//     position: "Thành viên",
-//     hope_to_receive: "Kinh nghiệm, kiến thức và trải nghiệm",
-//     date_time: "2022-10-10 10:10:10",
-//     test_id: 1,
-//     link_gg_met: "https://meet.google.com/lookup/abc",
-//   },
- 
-// ];
-
 const InterviewTable = (props: {data: MemberRegistrationWithPosition[] }) => {
   const {data} = props;
   const recruitment = useRecruitment();
@@ -184,9 +119,13 @@ const InterviewTable = (props: {data: MemberRegistrationWithPosition[] }) => {
     if (action) {
       if (action === "reject") {
         // Gọi hàm deleteRecruitment để xóa bản ghi
-        deleteRecruitment.mutateAsync({ id: rowSelected!.id });
-        // router.refresh();
-      }else if(action === "accept"){
+        deleteRecruitment.mutateAsync({ id: rowSelected!.id },{
+          onSuccess: () => {
+            // Refresh the page after successful update
+            router.refresh();
+          }
+        });
+      } else if (action === "accept") {
         // Gọi hàm tranferRecruitment để chuyển bản ghi
         tranferRecruitment.mutateAsync({
           id: rowSelected!.id,
@@ -196,17 +135,26 @@ const InterviewTable = (props: {data: MemberRegistrationWithPosition[] }) => {
           phoneNumber: rowSelected!.phoneNumber,
           address: rowSelected!.address,
           workPlace: rowSelected!.workPlace,
+        },{
+          onSuccess: () => {
+            // Refresh the page after successful update
+            router.refresh();
+          }
         });
-        // router.refresh();
       }else {
-        // Cập nhật trạng thái của bản ghi nếu không phải là hành động "reject"
         recruitment.mutateAsync({
           id: rowSelected!.id,
           status: renderStatusByAction(action),
+          interviewTime: rowSelected!.interviewTime,
+          test: rowSelected!.test,
           email: rowSelected!.email,
           type: action === "accept_interview" ? "INTERVIEW" : "FORM",
+        },{
+          onSuccess: () => {
+            // Refresh the page after successful update
+            router.refresh();
+          }
         });
-        // router.refresh();
       }
     }
     setOpenToast(true);
