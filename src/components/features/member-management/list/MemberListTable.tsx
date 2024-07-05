@@ -14,7 +14,7 @@ import { EllipsisCell } from "@/components/shared/table";
 import { ClearIcon } from "@mui/x-date-pickers";
 import { ACTIONS } from "@/utils/constants";
 import SyncAltIcon from "@mui/icons-material/SyncAlt";
-import PositionKTCB from "@/utils/data/json/position-ktcb.json";
+
 
 import {
   MODAL_TYPES,
@@ -22,6 +22,7 @@ import {
 } from "../../global-modal/GlobalModal";
 import { SelectBox } from "@/components/shared/inputs";
 import { useUpdateMember } from "./hooks/useUpdateMember";
+import { Member } from "@prisma/client";
 
 export interface IMemberList extends IOfficialMember {
   team?: string;
@@ -39,68 +40,6 @@ const TEAM_OPTIONS = [
   },
 ];
 
-const data: IMemberList[] = [
-  {
-    full_name: "123",
-    email: "Kentucky_dai_dai_dai_ktcb@gmail.com",
-    birthday: "27/02/2001",
-    phone_number: "0334455667",
-    address: "144 Xuan Thuy",
-    work_place: "144 Xuan Thuy",
-    team: "Cùng bé trải nghiệm",
-    position: "Tình nguyện viên",
-    bank_account: "123456789",
-    bank_name: "ACB",
-  },
-  {
-    full_name: "123",
-    email: "Ohio@gmail.com",
-    birthday: "27/02/2001",
-    phone_number: "0334455667",
-    address: "144 Xuan Thuy",
-    work_place: "144 Xuan Thuy",
-    team: "Cùng bé trải nghiệm",
-    position: "Tình nguyện viên",
-    bank_account: "123456789",
-    bank_name: "ACB",
-  },
-  {
-    full_name: "123",
-    email: "West Virginia@gmail.com",
-    birthday: "27/02/2001",
-    phone_number: "0334455667",
-    address: "144 Xuan Thuy",
-    work_place: "144 Xuan Thuy",
-    team: "Cùng bé trải nghiệm",
-    position: "Tình nguyện viên",
-    bank_account: "123456789",
-    bank_name: "ACB",
-  },
-  {
-    full_name: "123",
-    email: "Nebraska@gmail.com",
-    birthday: "27/02/2001",
-    phone_number: "0334455667",
-    address: "144 Xuan Thuy",
-    work_place: "144 Xuan Thuy",
-    team: "Cùng bé trải nghiệm",
-    position: "Tình nguyện viên",
-    bank_account: "123456789",
-    bank_name: "ACB",
-  },
-  {
-    full_name: "123",
-    email: "Nebraska@gmail.com",
-    birthday: "27/02/2001",
-    phone_number: "0334455667",
-    address: "144 Xuan Thuy",
-    work_place: "144 Xuan Thuy",
-    team: "Cùng bé trải nghiệm",
-    position: "Tình nguyện viên",
-    bank_account: "123456789",
-    bank_name: "ACB",
-  },
-];
 
 const TEXT_TOAST = {
   [ACTIONS["REJECT"]]: "Xác nhận yêu cầu thành viên rời đội thành công",
@@ -110,34 +49,36 @@ const TEXT_CONFIRM = {
   [ACTIONS["REJECT"]]: "Xác nhận yêu cầu thành viên RỜI ĐỘI",
 };
 
-const MemberListTable = () => {
+const MemberListTable = (props: {data: Member[]}) => {
+  const {data} = props;
   const { showModal } = useGlobalModalContext();
   const [openedDetail, { open: openDetail, close: closeDetail }] =
     useDisclosure();
 
-  const [rowSelected, setRowSelected] = useState<IMemberList>();
+  const [rowSelected, setRowSelected] = useState<Member>();
 
   const { mutateAsync: updateMember, isLoading: isUpdatingMember } =
     useUpdateMember();
 
-  const handleOpenModal = (person: IMemberList) => {
+  const handleOpenModal = (person: Member) => {
     openDetail();
     setRowSelected(person);
   };
 
-  const columns = useMemo<MRT_ColumnDef<IMemberList>[]>(
+  const columns = useMemo<MRT_ColumnDef<Member>[]>(
     () => [
       {
-        accessorKey: "full_name",
+        accessorKey: "fullName",
         header: "Họ và tên",
         size: 200,
         enableEditing: false,
         Cell: (props) => <EllipsisCell {...props} />,
       },
       {
-        accessorKey: "birthday",
+        accessorFn: (rowData: any) =>
+          new Date(rowData.birthday).toLocaleDateString("vi"),
+        id: "birthday",
         header: "Ngày sinh",
-        enableEditing: false,
         size: 200,
         Cell: (props) => <EllipsisCell {...props} />,
       },
@@ -149,62 +90,62 @@ const MemberListTable = () => {
         Cell: (props) => <EllipsisCell {...props} />,
       },
       {
-        accessorKey: "phone_number",
+        accessorKey: "phoneNumber",
         header: "Số điện thoại",
         enableEditing: false,
         size: 200,
         Cell: (props) => <EllipsisCell {...props} />,
       },
-      {
-        accessorKey: "team",
-        header: "Team",
-        size: 200,
-        Cell: (props) => <EllipsisCell {...props} />,
-        Edit: (props) => {
-          const label = props.cell.getValue();
+      // {
+      //   accessorKey: "team",
+      //   header: "Team",
+      //   size: 200,
+      //   Cell: (props) => <EllipsisCell {...props} />,
+      //   Edit: (props) => {
+      //     const label = props.cell.getValue();
 
-          return (
-            <SelectBox
-              value={
-                TEAM_OPTIONS.find((p) => p.label === label)
-                  ?.value as unknown as string
-              }
-              onChange={(value: string | number): void => {
-                console.log(value);
-              }}
-              fullWidth
-              options={TEAM_OPTIONS}
-              placeholder="Chọn team ứng tuyển"
-              {...props}
-            />
-          );
-        },
-      },
-      {
-        accessorKey: "position",
-        header: "Vị trí",
-        size: 200,
-        Cell: (props) => <EllipsisCell {...props} />,
-        Edit: (props) => {
-          const label = props.cell.getValue();
+      //     return (
+      //       <SelectBox
+      //         value={
+      //           TEAM_OPTIONS.find((p) => p.label === label)
+      //             ?.value as unknown as string
+      //         }
+      //         onChange={(value: string | number): void => {
+      //           console.log(value);
+      //         }}
+      //         fullWidth
+      //         options={TEAM_OPTIONS}
+      //         placeholder="Chọn team ứng tuyển"
+      //         {...props}
+      //       />
+      //     );
+      //   },
+      // },
+      // {
+      //   accessorKey: "position",
+      //   header: "Vị trí",
+      //   size: 200,
+      //   Cell: (props) => <EllipsisCell {...props} />,
+      //   Edit: (props) => {
+      //     const label = props.cell.getValue();
 
-          return (
-            <SelectBox
-              value={
-                PositionKTCB.find((p) => p.label === label)
-                  ?.value as unknown as string
-              }
-              onChange={(value: string | number): void => {
-                console.log(value);
-              }}
-              fullWidth
-              options={PositionKTCB}
-              placeholder="Chọn vị trí"
-              {...props}
-            />
-          );
-        },
-      },
+      //     return (
+      //       <SelectBox
+      //         value={
+      //           PositionKTCB.find((p) => p.label === label)
+      //             ?.value as unknown as string
+      //         }
+      //         onChange={(value: string | number): void => {
+      //           console.log(value);
+      //         }}
+      //         fullWidth
+      //         options={PositionKTCB}
+      //         placeholder="Chọn vị trí"
+      //         {...props}
+      //       />
+      //     );
+      //   },
+      // },
     ],
     []
   );
@@ -219,17 +160,17 @@ const MemberListTable = () => {
     });
   };
 
-  const handleSaveUser: MRT_TableOptions<IMemberList>["onEditingRowSave"] =
-    async ({ values, table }) => {
-      console.log(values);
+  // const handleSaveUser: MRT_TableOptions<Member>["onEditingRowSave"] =
+  //   async ({ values, table }) => {
+  //     console.log(values);
 
-      await updateMember(values);
-      table.setEditingRow(null); //exit editing mode
-    };
+  //     await updateMember(values);
+  //     table.setEditingRow(null); //exit editing mode
+  //   };
 
   const table = useTable({
     columns,
-    data,
+    data: data || [],
     renderTopToolbar: () => <div />,
     renderBottomToolbar: () => <div />,
     enableRowActions: true,
@@ -237,7 +178,7 @@ const MemberListTable = () => {
     enableEditing: true,
 
     onEditingRowCancel: () => console.log("cancel"),
-    onEditingRowSave: handleSaveUser,
+    // onEditingRowSave: handleSaveUser,
 
     renderRowActions: ({ row }) => (
       <div className="flex items-center justify-center min-w-">

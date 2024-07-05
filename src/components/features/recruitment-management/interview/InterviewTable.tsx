@@ -7,19 +7,28 @@ import { ModalConfirm } from "@/components/shared/modals";
 import { ACTIONS } from "@/utils/constants";
 import { useDisclosure } from "@/libs/hooks/useDisclosure";
 import { ActionType } from "@/@types/common";
-
+import { useRecruitment } from "../hooks/useRecuitment";
+import { useDeleteRecruitment } from "../hooks/useDeleteRecruitment";
+import { useTranferRecruitment } from "../hooks/useTranferRecruitment";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import PeopleAltIcon from "@mui/icons-material/PeopleAlt";
 import ClearIcon from "@mui/icons-material/Clear";
 import ToastSuccess from "@/components/shared/toasts/ToastSuccess";
 import { InterviewDetail } from "./InterviewDetail";
 import { EllipsisCell } from "@/components/shared/table";
+import { MemberRegistrationWithPosition } from "@/@types/membershipRegistration";
+import { MemberRegistrationStatus } from "@prisma/client";
+import { useRouter} from "next/navigation";
+import TestOptions from "@/utils/data/json/recruitment_test.json";
+
 
 export interface PersonInterview extends IMember {
   date_time: string;
   test_id: number;
   link_gg_met: string;
 }
+
+export type ActionTypeAdd = ActionType | "accept_interview";
 
 const TEXT_TOAST = {
   [ACTIONS["ACCEPT"]]: "Xác nhận thành viên chính thức thành công!",
@@ -31,90 +40,17 @@ const TEXT_CONFIRM = {
   [ACTIONS["REJECT"]]: "Xác nhận LOẠI đơn tuyển",
 };
 
-const data: PersonInterview[] = [
-  {
-    full_name: "123",
-    email: "Kentucky_dai_dai_dai_ktcb@gmail.com",
-    birthday: "27/02/2001",
-    phone_number: "0334455667",
-    address: "144 Xuan Thuy",
-    work_place: "144 Xuan Thuy",
-    has_social_activities: "Đã từng",
-    memories: "Làm việc nhóm tốt",
-    position: "Thành viên",
-    hope_to_receive: "Kinh nghiệm, kiến thức và trải nghiệm",
-    date_time: "2022-10-10 10:10:10",
-    test_id: 1,
-    link_gg_met: "https://meet.google.com/lookup/abc",
-  },
-  {
-    full_name: "123",
-    email: "Ohio@gmail.com",
-    birthday: "27/02/2001",
-    phone_number: "0334455667",
-    address: "144 Xuan Thuy",
-    work_place: "144 Xuan Thuy",
-    has_social_activities: "Chưa từng",
-    memories: "Làm việc nhóm tốt",
-    position: "Thành viên",
-    hope_to_receive: "Kinh nghiệm, kiến thức và trải nghiệm",
-    date_time: "2022-10-10 10:10:10",
-    test_id: 1,
-    link_gg_met: "https://meet.google.com/lookup/abc",
-  },
-  {
-    full_name: "123",
-    email: "West Virginia@gmail.com",
-    birthday: "27/02/2001",
-    phone_number: "0334455667",
-    address: "144 Xuan Thuy",
-    work_place: "144 Xuan Thuy",
-    has_social_activities: "Đã từng",
-    memories:
-      "Làm việc nhóm tốt Làm việc nhóm tốt Làm việc nhóm tốt Làm việc nhóm tốt Làm việc nhóm tốt Làm việc nhóm tốt Làm việc nhóm tốt Làm việc nhóm tốt Làm việc nhóm tốtLàm việc nhóm tốtLàm việc nhóm tốt Làm việc nhóm tốt Làm việc nhóm tốt ",
-    position: "Thành viên",
-    hope_to_receive: "Kinh nghiệm, kiến thức và trải nghiệm",
-    date_time: "2022-10-10 10:10:10",
-    test_id: 1,
-    link_gg_met: "https://meet.google.com/lookup/abc",
-  },
-  {
-    full_name: "123",
-    email: "Nebraska@gmail.com",
-    birthday: "27/02/2001",
-    phone_number: "0334455667",
-    address: "144 Xuan Thuy",
-    work_place: "144 Xuan Thuy",
-    has_social_activities: "Chưa từng",
-    memories: "Làm việc nhóm tốt",
-    position: "Thành viên",
-    hope_to_receive: "Kinh nghiệm, kiến thức và trải nghiệm",
-    date_time: "2022-10-10 10:10:10",
-    test_id: 1,
-    link_gg_met: "https://meet.google.com/lookup/abc",
-  },
-  {
-    full_name: "123",
-    email: "Nebraska@gmail.com",
-    birthday: "27/02/2001",
-    phone_number: "0334455667",
-    address: "144 Xuan Thuy",
-    work_place: "144 Xuan Thuy",
-    has_social_activities: "Chưa từng",
-    memories: "Làm việc nhóm tốt",
-    position: "Thành viên",
-    hope_to_receive: "Kinh nghiệm, kiến thức và trải nghiệm",
-    date_time: "2022-10-10 10:10:10",
-    test_id: 1,
-    link_gg_met: "https://meet.google.com/lookup/abc",
-  },
-];
+const InterviewTable = (props: {data: MemberRegistrationWithPosition[] }) => {
+  const {data} = props;
+  const recruitment = useRecruitment();
+  const deleteRecruitment = useDeleteRecruitment();
+  const tranferRecruitment = useTranferRecruitment();
+  const router = useRouter();
 
-const InterviewTable = () => {
-  const columns = useMemo<MRT_ColumnDef<PersonInterview>[]>(
+  const columns = useMemo<MRT_ColumnDef<MemberRegistrationWithPosition>[]>(
     () => [
       {
-        accessorKey: "full_name",
+        accessorKey: "fullName",
         header: "Họ và tên",
         size: 200,
         Cell: (props) => <EllipsisCell {...props} />,
@@ -126,43 +62,53 @@ const InterviewTable = () => {
         Cell: (props) => <EllipsisCell {...props} />,
       },
       {
-        accessorKey: "birthday",
+        accessorFn: (rowData: any) =>
+          new Date(rowData.birthday).toLocaleDateString("vi"),
+        id: "birthday",
         header: "Ngày sinh",
         size: 200,
         Cell: (props) => <EllipsisCell {...props} />,
       },
       {
-        accessorKey: "link_gg_met",
+        accessorKey: "linkGGmeet",
         header: "Link Google Meet",
         size: 200,
         Cell: (props) => <EllipsisCell {...props} />,
       },
       {
-        accessorKey: "date_time",
-        header: "Ngày giờ phỏng vấn",
-        size: 200,
-        Cell: (props) => <EllipsisCell {...props} />,
+          accessorFn: (rowData: any) =>
+            new Date(rowData.interviewTime).toLocaleString("vi-VN"),
+          id: "interviewTime",
+          header: "Ngày giờ phỏng vấn",
+          size: 200,
+          Cell: (props) => <EllipsisCell {...props} />,
       },
       {
-        accessorKey: "test_id",
+        accessorKey: "test",
         header: "Bài test",
         size: 200,
-        Cell: (props) => <EllipsisCell {...props} />,
+        Cell: (props) => {
+          // Tìm label trong TestOptions tương ứng với value lưu trong database
+          const label = TestOptions.find(option => option.name.toString() === props.row.original.test)?.content || 'Không xác định';
+          return <EllipsisCell {...props} value={label} />;
+        },
       },
     ],
     []
   );
 
   const [opened, { open, close }] = useDisclosure();
+  const [openToast, setOpenToast] = useState(false);
   const [openedDetail, { open: openDetail, close: closeDetail }] =
     useDisclosure();
 
-  const [openToast, setOpenToast] = useState(false);
+  const [rowSelected, setRowSelected] = useState<MemberRegistrationWithPosition>();
+  const [action, setAction] = useState<ActionTypeAdd>();
 
-  const [rowSelected, setRowSelected] = useState<PersonInterview>();
-  const [action, setAction] = useState<ActionType>();
-
-  const handleOpenModal = (person: PersonInterview, action?: ActionType) => {
+  const handleOpenModal = (
+    person: MemberRegistrationWithPosition, 
+    action?: ActionTypeAdd
+  ) => {
     action ? open() : openDetail();
 
     setRowSelected(person);
@@ -170,6 +116,47 @@ const InterviewTable = () => {
   };
 
   const handleConfirm = () => {
+    if (action) {
+      if (action === "reject") {
+        // Gọi hàm deleteRecruitment để xóa bản ghi
+        deleteRecruitment.mutateAsync({ id: rowSelected!.id },{
+          onSuccess: () => {
+            // Refresh the page after successful update
+            router.refresh();
+          }
+        });
+      } else if (action === "accept") {
+        // Gọi hàm tranferRecruitment để chuyển bản ghi
+        tranferRecruitment.mutateAsync({
+          id: rowSelected!.id,
+          email: rowSelected!.email,
+          fullName: rowSelected!.fullName,
+          birthday: rowSelected!.birthday,
+          phoneNumber: rowSelected!.phoneNumber,
+          address: rowSelected!.address,
+          workPlace: rowSelected!.workPlace,
+        },{
+          onSuccess: () => {
+            // Refresh the page after successful update
+            router.refresh();
+          }
+        });
+      }else {
+        recruitment.mutateAsync({
+          id: rowSelected!.id,
+          status: renderStatusByAction(action),
+          interviewTime: rowSelected!.interviewTime,
+          test: rowSelected!.test,
+          email: rowSelected!.email,
+          type: action === "accept_interview" ? "INTERVIEW" : "FORM",
+        },{
+          onSuccess: () => {
+            // Refresh the page after successful update
+            router.refresh();
+          }
+        });
+      }
+    }
     setOpenToast(true);
     closeDetail();
     close();
@@ -242,3 +229,16 @@ const InterviewTable = () => {
 };
 
 export { InterviewTable };
+
+export const renderStatusByAction = (action: ActionTypeAdd) => {
+  switch (action) {
+    case "accept":
+      return MemberRegistrationStatus.PASSED;
+    case "reject":
+      return MemberRegistrationStatus.FAILED;
+    case "accept_interview":
+      return MemberRegistrationStatus.INTERVIEW;
+    default:
+      return MemberRegistrationStatus.REVIEWING;
+  }
+};

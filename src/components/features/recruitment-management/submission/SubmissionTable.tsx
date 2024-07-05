@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
 
 import { MemberRegistrationWithPosition } from "@/@types/membershipRegistration";
@@ -17,7 +17,14 @@ import ToastSuccess from "@/components/shared/toasts/ToastSuccess";
 import { SubmissionDetail } from "./SubmissionDetail";
 import { EllipsisCell } from "@/components/shared/table";
 import { useRecruitment } from "../hooks/useRecuitment";
+import { useDeleteRecruitment } from "../hooks/useDeleteRecruitment";
+import { useTranferRecruitment } from "../hooks/useTranferRecruitment";
 import { MemberRegistrationStatus } from "@prisma/client";
+import TestOptions from "@/utils/data/json/recruitment_test.json";
+import { DatetimePicker, SelectTest } from "@/components/shared/inputs";
+import { format } from "date-fns";
+import { useRouter } from "next/navigation";
+
 
 export type ActionTypeAdd = ActionType | "accept_interview";
 
@@ -37,6 +44,9 @@ const TEXT_CONFIRM = {
 const SubmissionTable = (props: { data: MemberRegistrationWithPosition[] }) => {
   const { data } = props;
   const recruitment = useRecruitment();
+  const deleteRecruitment = useDeleteRecruitment();
+  const tranferRecruitment = useTranferRecruitment();
+  const router = useRouter();
 
   const columns = useMemo<MRT_ColumnDef<MemberRegistrationWithPosition>[]>(
     () => [
@@ -52,6 +62,7 @@ const SubmissionTable = (props: { data: MemberRegistrationWithPosition[] }) => {
         size: 200,
         Cell: (props) => <EllipsisCell {...props} />,
       },
+
       {
         accessorFn: (rowData: any) =>
           new Date(rowData.birthday).toLocaleDateString("vi"),
@@ -60,9 +71,62 @@ const SubmissionTable = (props: { data: MemberRegistrationWithPosition[] }) => {
         size: 200,
         Cell: (props) => <EllipsisCell {...props} />,
       },
+      {
+        accessorKey: "interviewTime",
+        header: "Chọn ngày phỏng vấn",
+        size: 200,
+        Cell: (props) => <DatetimePicker
+          onChange={(value) => { saveTimeToDatabase(props.row.original.id, value); }}
+        />
+      },
+      {
+        accessorKey: "test",
+        header: "Chọn bài test",
+        size: 200,
+        Cell: (props) => <SelectTest
+          options={TestOptions}
+          name={""}
+          onChange={(value) => {
+            saveDataToDatabase(props.row.original.id, value);
+          }}
+          fullWidth
+        />,
+      },
     ],
     []
   );
+
+  const saveTimeToDatabase = async (id: number, dateTime: Date | null) => {
+    try {
+      const response = await fetch('/api/save_interview_time', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id, dateTime }), // Sửa đổi ở đây để khớp với API
+      });
+      if (!response.ok) throw new Error('Network response was not ok');
+      console.log('Data successfully saved to the database');
+    } catch (error) {
+      console.error('Error saving data to the database:', error);
+    }
+  }
+
+  const saveDataToDatabase = async (id: number, testId: string | number) => {
+    try {
+      const response = await fetch('/api/test_select', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ id, testId }), // Sửa đổi ở đây để khớp với API
+      });
+      if (!response.ok) throw new Error('Network response was not ok');
+      console.log('Data successfully saved to the database');
+    } catch (error) {
+      console.error('Error saving data to the database:', error);
+    }
+  };
 
   const [opened, { open, close }] = useDisclosure();
   const [openToast, setOpenToast] = useState(false);
@@ -85,14 +149,46 @@ const SubmissionTable = (props: { data: MemberRegistrationWithPosition[] }) => {
 
   const handleConfirm = () => {
     if (action) {
-      recruitment.mutateAsync({
-        id: rowSelected!.id,
-        status: renderStatusByAction(action),
-        email: rowSelected!.email,
-        type: action === "accept_interview" ? "INTERVIEW" : "FORM",
-      });
+      if (action === "reject") {
+        // Gọi hàm deleteRecruitment để xóa bản ghi
+        deleteRecruitment.mutateAsync({ id: rowSelected!.id },{
+          onSuccess: () => {
+            // Refresh the page after successful update
+            router.refresh();
+          }
+        });
+      } else if (action === "accept") {
+        // Gọi hàm tranferRecruitment để chuyển bản ghi
+        tranferRecruitment.mutateAsync({
+          id: rowSelected!.id,
+          email: rowSelected!.email,
+          fullName: rowSelected!.fullName,
+          birthday: rowSelected!.birthday,
+          phoneNumber: rowSelected!.phoneNumber,
+          address: rowSelected!.address,
+          workPlace: rowSelected!.workPlace,
+        },{
+          onSuccess: () => {
+            // Refresh the page after successful update
+            router.refresh();
+          }
+        });
+      }else {
+        recruitment.mutateAsync({
+          id: rowSelected!.id,
+          status: renderStatusByAction(action),
+          interviewTime: rowSelected!.interviewTime,
+          test: rowSelected!.test,
+          email: rowSelected!.email,
+          type: action === "accept_interview" ? "INTERVIEW" : "FORM",
+        },{
+          onSuccess: () => {
+            // Refresh the page after successful update
+            router.refresh();
+          }
+        });
+      }
     }
-
     setOpenToast(true);
     closeDetail();
     close();

@@ -14,7 +14,8 @@ import ToastSuccess from "@/components/shared/toasts/ToastSuccess";
 import { SEO } from "@/configs/seo.config";
 import { Box, Button, Typography } from "@mui/material";
 import { QueryClient, dehydrate, useQuery } from "@tanstack/react-query";
-import { getMemberRegistration } from "@/components/features/recruitment-management/services";
+import { getMemberRegistration, getPersonInterview } from "@/components/features/recruitment-management/services";
+
 
 const RecruitmentManagementPage = () => {
   const [open, setOpen] = useState(false);
@@ -42,8 +43,8 @@ const RecruitmentManagementPage = () => {
   // This query was not prefetched on the server and will not start
   // fetching until on the client, both patterns are fine to mix
   const { data: otherData } = useQuery({
-    queryKey: ["posts-2"],
-    queryFn: () => getMemberRegistration({}),
+    queryKey: ["personInterview"],
+    queryFn: () => getPersonInterview({}),
   });
 
   console.log({
@@ -52,11 +53,11 @@ const RecruitmentManagementPage = () => {
   });
 
   const tabElement = [
-    // {
-    //   element: <SubmissionTable />,
-    // },
     {
-      element: <InterviewTable />,
+      element: <SubmissionTable data={data} />,
+    },
+    {
+      element: <InterviewTable data={otherData}/>,
     },
   ];
 
@@ -130,6 +131,11 @@ export async function getStaticProps() {
   await queryClient.prefetchQuery({
     queryKey: ["memberRegistration"],
     queryFn: () => getMemberRegistration({}),
+  });
+
+  await queryClient.prefetchQuery({
+    queryKey: ["personInterview"],
+    queryFn: () => getPersonInterview({}),
   });
 
   return {
