@@ -34,6 +34,27 @@ model MemberRegistration {
   updatedAt           DateTime @updatedAt
 }
 
+model Member {
+  id           Int      @id @default(autoincrement())
+  fullName     String
+  birthday     DateTime
+  phoneNumber  String
+  email        String
+  address      String
+  workPlace    String
+  bank         String
+  bankAccount  String
+  avatar       String
+}
+
+model Meeting{
+   id           Int      @id @default(autoincrement())
+  name     String
+  date    DateTime
+  address  String
+  host      String
+}
+
 model Position {
   id                 Int      @id @default(autoincrement())
   name               String
