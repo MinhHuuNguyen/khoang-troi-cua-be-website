@@ -26,29 +26,6 @@ export interface PassMemberRegistrationDto {
   workPlace: string;
 }
 
-const MAILS = {
-  FORM: {
-    PASSED: {
-      subject: "MỜI PHỎNG VẤN THÀNH VIÊN KHOẢNG TRỜI CỦA BÉ",
-      template: mailMemberFormPass,
-    },
-    FAILED: {
-      subject: "KẾT QUẢ VÒNG ĐƠN KHOẢNG TRỜI CỦA BÉ",
-      template: mailMemberFormFail,
-    },
-  },
-  INTERVIEW: {
-    PASSED: {
-      subject: "KẾT QUẢ TRÚNG TUYỂN THÀNH VIÊN KHOẢNG TRỜI CỦA BÉ",
-      template: mailMemberInterviewPass,
-    },
-    FAILED: {
-      subject: "KẾT QUẢ VÒNG PHỎNG VẤN KHOẢNG TRỜI CỦA BÉ",
-      template: mailMemberInterviewFail,
-    },
-  },
-};
-
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
@@ -71,15 +48,10 @@ export default async function handler(
           },
         });
 
-        const status =
-          data.status === "PASSED" || data.status === "INTERVIEW"
-            ? "PASSED"
-            : "FAILED";
-
         await sendMail(
           [data.email],
-          MAILS[data.type][status].subject,
-          MAILS[data.type][status].template(member)
+          "MỜI PHỎNG VẤN THÀNH VIÊN KHOẢNG TRỜI CỦA BÉ",
+          mailMemberFormPass(member)
         );
 
         return res.status(201).json(member);
@@ -102,7 +74,6 @@ export default async function handler(
 
       case "POST":
         const passMember: PassMemberRegistrationDto = req.body;
-        // Bước 1: Truy vấn dữ liệu từ MemberRegistration
         const memberRegistrations = await prisma.memberRegistration.findMany(
           {
             where: {
@@ -110,11 +81,8 @@ export default async function handler(
             },
           }
         );
-
-        // Khởi tạo một mảng để lưu trữ ID của những bản ghi được chuyển
         let transferredIds = [];
 
-        // Bước 2: Tạo bản ghi mới trong Member với dữ liệu đã lấy
         for (const registration of memberRegistrations) {
           await prisma.member.create({
             data: {
@@ -124,22 +92,24 @@ export default async function handler(
               email: registration.email,
               address: registration.address,
               workPlace: registration.workPlace,
-              // Giả sử các trường như bank, bankAccount, avatar được xử lý khác hoặc có giá trị mặc định
-              bank: "", // Cập nhật giá trị phù hợp
-              bankAccount: "", // Cập nhật giá trị phù hợp
-              avatar: "", // Cập nhật giá trị phù hợp
+              bank: "", 
+              bankAccount: "",
+              avatar: "", 
             },
           });
 
-          // Lưu ID của bản ghi vừa được chuyển
           transferredIds.push(registration.id);
+          await sendMail(
+            [registration.email],
+            "KẾT QUẢ TRÚNG TUYỂN THÀNH VIÊN KHOẢNG TRỜI CỦA BÉ",
+            mailMemberInterviewPass(registration)
+          );
         }
 
-        // Bước 3: Xóa những bản ghi trong MemberRegistration mà đã được chuyển
         await prisma.memberRegistration.deleteMany({
           where: {
             id: {
-              in: transferredIds, // Sử dụng mảng ID đã lưu để chỉ định những bản ghi cần xóa
+              in: transferredIds, 
             },
           },
         });
