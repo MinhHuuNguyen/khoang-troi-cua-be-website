@@ -165,7 +165,7 @@ const MemberListTable = () => {
 
           return (
             <SelectBox
-              value={
+              label={
                 TEAM_OPTIONS.find((p) => p.label === label)
                   ?.value as unknown as string
               }
@@ -190,7 +190,7 @@ const MemberListTable = () => {
 
           return (
             <SelectBox
-              value={
+              label={
                 PositionKTCB.find((p) => p.label === label)
                   ?.value as unknown as string
               }

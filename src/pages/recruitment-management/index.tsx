@@ -112,13 +112,6 @@ const RecruitmentManagementPage: NextPage<Props> = ({ registrations }) => {
 
 export const getServerSideProps = async () => {
   const registrations = await prisma.memberRegistration.findMany({
-    include: {
-      position: {
-        select: {
-          name: true,
-        },
-      }
-    }
   });
   return {
     props: {

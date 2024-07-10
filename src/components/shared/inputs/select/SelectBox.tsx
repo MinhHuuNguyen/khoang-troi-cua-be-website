@@ -4,7 +4,6 @@ import classNames from "classnames";
 
 export type SelectOption = {
   label: string;
-  value: string | number;
 };
 
 type Props = {
@@ -14,8 +13,7 @@ type Props = {
   fullWidth?: boolean;
   label?: string;
   options: SelectOption[];
-  value: string | number;
-  onChange: (value: string | number) => void;
+  onChange: (label: string) => void; // Updated to expect a label instead of value
   disabled?: boolean;
   placeholder?: string;
   disabledClearable?: boolean;
@@ -28,31 +26,29 @@ const SelectBox = ({
   error,
   label,
   options,
-  value,
   onChange,
   placeholder,
   disabledClearable = false,
   ...props
 }: Props) => {
-  const [_value, setValue] = useState<string | number | undefined>("");
+  const [_label, setLabel] = useState<string | undefined>("");
 
   useEffect(() => {
-    const option = options.find((option) => option?.value === value);
+    const option = options.find((option) => option.label === _label);
 
-    setValue(option?.value);
-  }, [options, value]);
+    setLabel(option?.label);
+  }, [options, _label]);
 
   const handleChangeValue = (_event: SyntheticEvent<Element, Event>) => {
-    const newValue = (_event.target as HTMLInputElement).value;
-    if (!newValue) {
+    const newLabel = (_event.target as HTMLSelectElement).selectedOptions[0].text;
+    if (!newLabel) {
       onChange("");
-      setValue(undefined);
-
+      setLabel(undefined);
       return;
     }
 
-    onChange("" + newValue);
-    setValue(newValue);
+    onChange(newLabel);
+    setLabel(newLabel);
   };
 
   return (
@@ -64,7 +60,7 @@ const SelectBox = ({
       helperText={helperText}
     >
       <select
-        value={_value as string | number}
+        value={_label as string}
         onChange={handleChangeValue}
         className={classNames(
           "rounded-md border min-w-[120px] border-gray-300 px-2 py-2 focus:border-[#556cd6] h-[40px] bg-transparent bg-white",
@@ -87,8 +83,9 @@ const SelectBox = ({
           return (
             <option
               className="px-4 py-2 block whitespace-nowrap text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900"
-              key={option.value}
-              value={option.value}
+              // key remains as value for uniqueness
+              value={option.label} // Changed to label
+              key={option.label}
             >
               {option.label}
             </option>

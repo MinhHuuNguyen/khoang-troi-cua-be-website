@@ -101,7 +101,7 @@ export const InterviewDetail: React.FC<Props> = ({
               <p className="font-bold">Chọn bài test</p>
               <SelectBox
                 options={TestOptions}
-                value={""}
+                label={""}
                 onChange={(value) => console.log(value)}
                 fullWidth
               />

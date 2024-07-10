@@ -218,7 +218,6 @@ export const Profile = () => {
                   label={"Ngân hàng"}
                   required
                   fullWidth
-                  value={value}
                   onChange={onChange}
                   error={!!errors.bank?.message}
                   helperText={errors.bank?.message}

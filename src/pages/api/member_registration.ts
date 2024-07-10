@@ -23,16 +23,9 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         workPlace: data.work_place,
         hasSocialActivities: hasSocialActivities,
         memories: data.memories,
-        positionId: parseInt(data.position),
+        positionLabel: data.position,
         hopeToReceive: data.hope_to_receive
-      },
-      include: {
-        position: {
-          select: {
-            name: true,
-          },
-        },
-      },
+      }
     });
 
     await sendMail(

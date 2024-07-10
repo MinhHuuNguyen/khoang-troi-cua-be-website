@@ -68,7 +68,7 @@ export const SubmissionDetail: React.FC<Props> = ({
             </div>
             <div className={classNameCol}>
               <span className="font-bold">Vị trí mong muốn: </span>
-              {data.position.name}
+              {data.positionLabel}
             </div>
             <div className={classNameCol}>
               <span className="font-bold">

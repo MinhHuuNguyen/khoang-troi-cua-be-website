@@ -17,34 +17,6 @@ async function main() {
   });
   console.log({ user });
   // seed positions
-  await prisma.position.upsert({
-    where: { id: 1 },
-    update: {},
-    create: {
-      name: 'Tình nguyện viên',
-    },
-  });
-  await prisma.position.upsert({
-    where: { id: 2 },
-    update: {},
-    create: {
-      name: 'Thành viên ban tổ chức',
-    },
-  });
-  await prisma.position.upsert({
-    where: { id: 3 },
-    update: {},
-    create: {
-      name: 'Thư ký',
-    },
-  });
-  await prisma.position.upsert({
-    where: { id: 4 },
-    update: {},
-    create: {
-      name: 'Chủ tịch',
-    },
-  });
 }
 
 main()
