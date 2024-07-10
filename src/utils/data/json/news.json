@@ -8,7 +8,8 @@
     "author": "",
     "tags": [],
     "team": "quy-ktcb",
-    "is_highlight": false
+    "is_highlight": false,
+    "is_public": false
   },
   {
     "time": "2022/01/21",
@@ -19,7 +20,8 @@
     "author": "Lê Nguyễn Ngọc Hân",
     "tags": [],
     "team": "noi-dung",
-    "is_highlight": false
+    "is_highlight": false,
+    "is_public": false
   },
   {
     "time": "2022/01/18",
@@ -30,7 +32,8 @@
     "author": "Đào Khánh Linh",
     "tags": [],
     "team": "noi-dung",
-    "is_highlight": false
+    "is_highlight": false,
+    "is_public": false
   },
   {
     "time": "2022/05/06",
@@ -41,7 +44,8 @@
     "author": "Đào Khánh Linh",
     "tags": [],
     "team": "truyen-thong",
-    "is_highlight": false
+    "is_highlight": false,
+    "is_public": false
   },
   {
     "time": "2022/04/01",
@@ -52,7 +56,8 @@
     "author": "Lê Việt An",
     "tags": [],
     "team": "truyen-thong",
-    "is_highlight": false
+    "is_highlight": false,
+    "is_public": false
   },
   {
     "time": "2022/03/22",
@@ -63,7 +68,8 @@
     "author": "Trần Thị Khánh Ly",
     "tags": [],
     "team": "truyen-thong",
-    "is_highlight": false
+    "is_highlight": false,
+    "is_public": false
   },
   {
     "time": "2022/03/01",
@@ -74,7 +80,8 @@
     "author": "Lê Nguyễn Ngọc Hân",
     "tags": [],
     "team": "truyen-thong",
-    "is_highlight": false
+    "is_highlight": false,
+    "is_public": false
   },
   {
     "time": "2024/01/15",
@@ -85,7 +92,8 @@
     "author": "Đào Khánh Linh",
     "tags": [],
     "team": "truyen-thong",
-    "is_highlight": false
+    "is_highlight": false,
+    "is_public": false
   },
   {
     "time": "2024/01/16",
@@ -96,7 +104,8 @@
     "author": "Lê Thị Vân",
     "tags": [],
     "team": "truyen-thong",
-    "is_highlight": false
+    "is_highlight": false,
+    "is_public": false
   },
   {
     "time": "2018/09/06",
@@ -107,7 +116,8 @@
     "author": "Nguyễn Thị Phương Thu",
     "tags": [],
     "team": "truyen-thong",
-    "is_highlight": false
+    "is_highlight": false,
+    "is_public": false
   },
   {
     "time": "2021/09/06",
@@ -118,7 +128,8 @@
     "author": "Nguyễn Thị Phương Thu",
     "tags": [],
     "team": "truyen-thong",
-    "is_highlight": false
+    "is_highlight": false,
+    "is_public": false
   },
   {
     "time": "2023/05/29",
@@ -129,7 +140,8 @@
     "author": "Trần Thị Khánh Ly",
     "tags": [],
     "team": "cung-be-trai-nghiem",
-    "is_highlight": false
+    "is_highlight": false,
+    "is_public": false
   },
   {
     "time": "2023/04/16",
@@ -140,7 +152,8 @@
     "author": "Đào Khánh Linh",
     "tags": [],
     "team": "kien-truc-su-tinh-nguyen",
-    "is_highlight": false
+    "is_highlight": false,
+    "is_public": false
   },
   {
     "time": "2023/04/09",
@@ -151,7 +164,8 @@
     "author": "Lê Nguyễn Ngọc Hân",
     "tags": [],
     "team": "kien-truc-su-tinh-nguyen",
-    "is_highlight": false
+    "is_highlight": false,
+    "is_public": false
   },
   {
     "time": "2021/11/05",
@@ -162,7 +176,8 @@
     "author": "Nguyễn Thị Phương Thu",
     "tags": [],
     "team": "truyen-thong",
-    "is_highlight": false
+    "is_highlight": false,
+    "is_public": false
   },
   {
     "time": "2023/12/10",
@@ -173,7 +188,8 @@
     "author": "Lê Việt An",
     "tags": [],
     "team": "kien-truc-su-tinh-nguyen",
-    "is_highlight": false
+    "is_highlight": false,
+    "is_public": false
   },
   {
     "time": "2023/02/09",
@@ -184,7 +200,8 @@
     "author": "Nguyễn Thị Phương Thu",
     "tags": [],
     "team": "kien-truc-su-tinh-nguyen",
-    "is_highlight": false
+    "is_highlight": false,
+    "is_public": false
   },
   {
     "time": "2022/02/20",
@@ -195,7 +212,8 @@
     "author": "Lê Nguyên Khánh",
     "tags": [],
     "team": "quy-ktcb",
-    "is_highlight": false
+    "is_highlight": false,
+    "is_public": false
   },
   {
     "time": "2022/12/18",
@@ -206,7 +224,8 @@
     "author": "Lê Nguyên Khánh",
     "tags": [],
     "team": "truyen-thong",
-    "is_highlight": false
+    "is_highlight": false,
+    "is_public": false
   },
   {
     "time": "2023/11/15",
@@ -217,7 +236,8 @@
     "author": "Lê Thị Vân",
     "tags": [],
     "team": "truyen-thong",
-    "is_highlight": false
+    "is_highlight": false,
+    "is_public": false
   },
   {
     "time": "2023/08/27",
@@ -228,7 +248,8 @@
     "author": "Lê Nguyên Khánh",
     "tags": [],
     "team": "cung-be-trai-nghiem",
-    "is_highlight": false
+    "is_highlight": false,
+    "is_public": false
   },
   {
     "time": "2023/11/11",
@@ -239,7 +260,8 @@
     "author": "Lê Thị Vân",
     "tags": [],
     "team": "truyen-thong",
-    "is_highlight": false
+    "is_highlight": false,
+    "is_public": false
   },
   {
     "time": "2023/11/11",
@@ -250,7 +272,8 @@
     "author": "Lê Thị Vân",
     "tags": [],
     "team": "kien-truc-su-tinh-nguyen",
-    "is_highlight": false
+    "is_highlight": false,
+    "is_public": false
   },
   {
     "time": "2023/11/11",
@@ -261,7 +284,8 @@
     "author": "Lê Thị Vân",
     "tags": [],
     "team": "noi-dung",
-    "is_highlight": false
+    "is_highlight": false,
+    "is_public": false
   },
   {
     "time": "2023/11/11",
@@ -272,6 +296,7 @@
     "author": "Lê Thị Vân",
     "tags": [],
     "team": "cung-be-trai-nghiem",
-    "is_highlight": false
+    "is_highlight": false,
+    "is_public": false
   }
 ]

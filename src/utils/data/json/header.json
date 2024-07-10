@@ -46,6 +46,10 @@
       "path": "/list-news"
     },
     {
+      "name": "Tài liệu nội bộ",
+      "path": "/private-news"
+    },
+    {
       "name": "Tham Gia",
       "path": "/",
       "subMenus": [

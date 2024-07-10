@@ -57,6 +57,11 @@ export const getMediumNews = (team?: string) => {
   return sortNews(team)?.slice(1, 7);
 };
 
+export const getPrivateNews = (team?: string) => {
+  const data = sortNews(team);
+  return data.filter(post => post.is_public);
+}
+
 export const sortNews = (team?: string) => {
   const data = newsData as unknown as INews[];
 

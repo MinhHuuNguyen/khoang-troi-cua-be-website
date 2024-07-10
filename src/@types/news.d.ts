@@ -9,4 +9,5 @@ export interface INews {
   team: string[];
 
   is_highlight?: boolean;
+  is_public?: boolean;
 }
