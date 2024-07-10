@@ -126,13 +126,15 @@ export default async function handler(
           await sendMail(
             [registrationInfo.email],
             "KẾT QUẢ VÒNG ĐƠN KHOẢNG TRỜI CỦA BÉ",
-            mailMemberFormFail(registrationInfo)
+            mailMemberFormFail(registrationInfo),
+            ktcbMail
           );
         } else if (registrationInfo.status === "INTERVIEW") {
           await sendMail(
             [registrationInfo.email],
             "KẾT QUẢ VÒNG PHỎNG VẤN KHOẢNG TRỜI CỦA BÉ",
-            mailMemberInterviewFail(registrationInfo)
+            mailMemberInterviewFail(registrationInfo),
+            ktcbMail
           );
         }
 
