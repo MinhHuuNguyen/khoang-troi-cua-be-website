@@ -52,5 +52,13 @@
         { "name": "Thành viên", "path": "/member-registration"},
         { "name": "Nhà hảo tâm", "path": "/donor-registration"}
       ]
+    },
+    {
+      "name": "Nội bộ",
+      "path": "/",
+      "subMenus": [
+        { "name": "Quản lý đơn tuyển", "path": "/recruitment-management"},
+        { "name": "Danh sách thành viên", "path": "/member-list"}
+      ]
     }
   ]

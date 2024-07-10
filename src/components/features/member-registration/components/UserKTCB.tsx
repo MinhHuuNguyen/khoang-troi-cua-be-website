@@ -3,7 +3,7 @@ import { Control, Controller, FieldErrors } from "react-hook-form";
 import { MemberRegistrationInputType } from "../types";
 import { Stack, Typography, Grid } from "@mui/material";
 import { Input, SelectBox } from "@/components/shared/inputs";
-import PositionKTCB from "@/utils/data/json/position-ktcb.json";
+import PositionKTCB from "@/utils/data/json/position_ktcb.json";
 
 interface Props {
   control: Control<MemberRegistrationInputType>;
