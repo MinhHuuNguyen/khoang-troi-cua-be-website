@@ -5,7 +5,7 @@ import {
   DonorRegistrationInputSchema,
   DonorRegistrationInputType,
 } from "./types";
-import { IconButton, Modal, Button, Typography, Grid, Box } from "@mui/material";
+import { IconButton, Modal, Button, Typography, Grid, Box, Tooltip } from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import { ContainerXL } from "@/components/layouts/ContainerXL";
@@ -184,12 +184,16 @@ export const DonorRegistration = () => {
             </div>
           </div>
           <div className="flex justify-end space-x-4 p-4">
-            <IconButton onClick={handleClose} aria-label="cancel">
-              <CloseIcon />
-            </IconButton>
-            <IconButton onClick={handleConfirm} aria-label="confirm" color="primary">
-              <CheckIcon />
-            </IconButton>
+            <Tooltip title="Hủy bỏ và đóng cửa sổ">
+              <IconButton onClick={handleClose} aria-label="cancel">
+                <CloseIcon />
+              </IconButton>
+            </Tooltip>
+            <Tooltip title="Xác nhận thông tin">
+              <IconButton onClick={handleConfirm} aria-label="confirm" color="primary">
+                <CheckIcon />
+              </IconButton>
+            </Tooltip>
           </div>
         </div>
       </Modal>
