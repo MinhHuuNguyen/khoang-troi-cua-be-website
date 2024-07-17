@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useState } from "react";
 
 export function useDisclosure(
   initialState = false,
@@ -8,7 +8,7 @@ export function useDisclosure(
   const [opened, setOpened] = useState(initialState);
 
   const open = useCallback(() => {
-    setOpened(isOpened => {
+    setOpened((isOpened) => {
       if (!isOpened) {
         onOpen?.();
         return true;
@@ -18,7 +18,7 @@ export function useDisclosure(
   }, [onOpen]);
 
   const close = useCallback(() => {
-    setOpened(isOpened => {
+    setOpened((isOpened) => {
       if (isOpened) {
         onClose?.();
         return false;

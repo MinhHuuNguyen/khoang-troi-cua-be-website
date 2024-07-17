@@ -1,7 +1,7 @@
-import { PrismaClient } from '@prisma/client'
-import { hash } from 'bcryptjs'
+import { PrismaClient } from "@prisma/client";
+import { hash } from "bcryptjs";
 
-const prisma = new PrismaClient()
+const prisma = new PrismaClient();
 
 async function main() {
   // seed users
@@ -21,28 +21,28 @@ async function main() {
     where: { id: 1 },
     update: {},
     create: {
-      name: 'Tình nguyện viên',
+      name: "Tình nguyện viên",
     },
   });
   await prisma.position.upsert({
     where: { id: 2 },
     update: {},
     create: {
-      name: 'Thành viên ban tổ chức',
+      name: "Thành viên ban tổ chức",
     },
   });
   await prisma.position.upsert({
     where: { id: 3 },
     update: {},
     create: {
-      name: 'Thư ký',
+      name: "Thư ký",
     },
   });
   await prisma.position.upsert({
     where: { id: 4 },
     update: {},
     create: {
-      name: 'Chủ tịch',
+      name: "Chủ tịch",
     },
   });
 }

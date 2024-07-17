@@ -49,12 +49,12 @@ export default function Login() {
       const res = await signIn("credentials", {
         redirect: false,
         email: data.email,
-        password: data.password
+        password: data.password,
       });
 
       console.log(res);
       if (!res?.error) {
-        router.push('/');
+        router.push("/");
       }
     } catch (error: any) {
       console.log(error);
@@ -160,8 +160,12 @@ export default function Login() {
 }
 
 export async function getServerSideProps(context: any) {
-  const session = await getServerSession(context.req, context.res, authOptions as any);
-  if (session) return { redirect: { destination: '/' } };
+  const session = await getServerSession(
+    context.req,
+    context.res,
+    authOptions as any,
+  );
+  if (session) return { redirect: { destination: "/" } };
 
   return { props: { session } };
 }

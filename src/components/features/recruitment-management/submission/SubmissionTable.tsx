@@ -56,9 +56,9 @@ const SubmissionTable = (props: { data: MemberRegistrationWithPosition[] }) => {
         header: "Ngày sinh",
         size: 200,
         Cell: (props) => <EllipsisCell {...props} />,
-      }
+      },
     ],
-    []
+    [],
   );
 
   const [opened, { open, close }] = useDisclosure();
@@ -66,12 +66,13 @@ const SubmissionTable = (props: { data: MemberRegistrationWithPosition[] }) => {
   const [openedDetail, { open: openDetail, close: closeDetail }] =
     useDisclosure();
 
-  const [rowSelected, setRowSelected] = useState<MemberRegistrationWithPosition>();
+  const [rowSelected, setRowSelected] =
+    useState<MemberRegistrationWithPosition>();
   const [action, setAction] = useState<ActionTypeAdd>();
 
   const handleOpenModal = (
     person: MemberRegistrationWithPosition,
-    action?: ActionTypeAdd
+    action?: ActionTypeAdd,
   ) => {
     action ? open() : openDetail();
 
@@ -112,7 +113,7 @@ const SubmissionTable = (props: { data: MemberRegistrationWithPosition[] }) => {
             onClick={() =>
               handleOpenModal(
                 row.original,
-                ACTIONS["ACCEPT_INTERVIEW"] as ActionTypeAdd
+                ACTIONS["ACCEPT_INTERVIEW"] as ActionTypeAdd,
               )
             }
           >
