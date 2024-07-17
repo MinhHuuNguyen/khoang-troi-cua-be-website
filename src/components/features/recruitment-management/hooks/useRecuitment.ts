@@ -5,7 +5,7 @@ export const useRecruitment = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationKey: ["useRecruitment"],
+    mutationKey: ["updateMemberRegistration"],
     mutationFn: async (data: UpdateMemberRegistrationDto) => {
       const response = await fetch("/api/recruitment_management", {
         method: "PATCH",
@@ -23,7 +23,10 @@ export const useRecruitment = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["useRecruitment"],
+        queryKey: ["memberRegistration"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["personInterview"],
       });
     },
   });

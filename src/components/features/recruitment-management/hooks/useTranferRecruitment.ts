@@ -23,7 +23,10 @@ export const useTranferRecruitment = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["useTranferRecruitment"],
+        queryKey: ["memberRegistration"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["personInterview"],
       });
     },
   });

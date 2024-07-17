@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { MaterialReactTable, type MRT_ColumnDef } from "material-react-table";
 
 import { MemberRegistrationWithPosition } from "@/@types/membershipRegistration";
@@ -22,8 +22,6 @@ import { useTranferRecruitment } from "../hooks/useTranferRecruitment";
 import { MemberRegistrationStatus } from "@prisma/client";
 import TestOptions from "@/utils/data/json/recruitment_test.json";
 import { DatetimePicker, SelectTest } from "@/components/shared/inputs";
-import { format } from "date-fns";
-import { useRouter } from "next/navigation";
 
 
 export type ActionTypeAdd = ActionType | "accept_interview";
@@ -46,7 +44,6 @@ const SubmissionTable = (props: { data: MemberRegistrationWithPosition[] }) => {
   const recruitment = useRecruitment();
   const deleteRecruitment = useDeleteRecruitment();
   const tranferRecruitment = useTranferRecruitment();
-  const router = useRouter();
 
   const columns = useMemo<MRT_ColumnDef<MemberRegistrationWithPosition>[]>(
     () => [
@@ -151,12 +148,7 @@ const SubmissionTable = (props: { data: MemberRegistrationWithPosition[] }) => {
     if (action) {
       if (action === "reject") {
         // Gọi hàm deleteRecruitment để xóa bản ghi
-        deleteRecruitment.mutateAsync({ id: rowSelected!.id },{
-          onSuccess: () => {
-            // Refresh the page after successful update
-            router.refresh();
-          }
-        });
+        deleteRecruitment.mutateAsync({ id: rowSelected!.id });
       } else if (action === "accept") {
         // Gọi hàm tranferRecruitment để chuyển bản ghi
         tranferRecruitment.mutateAsync({
@@ -167,11 +159,6 @@ const SubmissionTable = (props: { data: MemberRegistrationWithPosition[] }) => {
           phoneNumber: rowSelected!.phoneNumber,
           address: rowSelected!.address,
           workPlace: rowSelected!.workPlace,
-        },{
-          onSuccess: () => {
-            // Refresh the page after successful update
-            router.refresh();
-          }
         });
       }else {
         recruitment.mutateAsync({
@@ -181,11 +168,6 @@ const SubmissionTable = (props: { data: MemberRegistrationWithPosition[] }) => {
           test: rowSelected!.test,
           email: rowSelected!.email,
           type: action === "accept_interview" ? "INTERVIEW" : "FORM",
-        },{
-          onSuccess: () => {
-            // Refresh the page after successful update
-            router.refresh();
-          }
         });
       }
     }

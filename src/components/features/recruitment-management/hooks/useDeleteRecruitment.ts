@@ -23,7 +23,10 @@ export const useDeleteRecruitment = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["useDeleteRecruitment"],
+        queryKey:  ["memberRegistration"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["personInterview"],
       });
     },
   });

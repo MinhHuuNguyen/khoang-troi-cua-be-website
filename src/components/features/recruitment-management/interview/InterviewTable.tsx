@@ -119,12 +119,7 @@ const InterviewTable = (props: {data: MemberRegistrationWithPosition[] }) => {
     if (action) {
       if (action === "reject") {
         // Gọi hàm deleteRecruitment để xóa bản ghi
-        deleteRecruitment.mutateAsync({ id: rowSelected!.id },{
-          onSuccess: () => {
-            // Refresh the page after successful update
-            router.refresh();
-          }
-        });
+        deleteRecruitment.mutateAsync({ id: rowSelected!.id });
       } else if (action === "accept") {
         // Gọi hàm tranferRecruitment để chuyển bản ghi
         tranferRecruitment.mutateAsync({
@@ -135,25 +130,6 @@ const InterviewTable = (props: {data: MemberRegistrationWithPosition[] }) => {
           phoneNumber: rowSelected!.phoneNumber,
           address: rowSelected!.address,
           workPlace: rowSelected!.workPlace,
-        },{
-          onSuccess: () => {
-            // Refresh the page after successful update
-            router.refresh();
-          }
-        });
-      }else {
-        recruitment.mutateAsync({
-          id: rowSelected!.id,
-          status: renderStatusByAction(action),
-          interviewTime: rowSelected!.interviewTime,
-          test: rowSelected!.test,
-          email: rowSelected!.email,
-          type: action === "accept_interview" ? "INTERVIEW" : "FORM",
-        },{
-          onSuccess: () => {
-            // Refresh the page after successful update
-            router.refresh();
-          }
         });
       }
     }
@@ -164,7 +140,7 @@ const InterviewTable = (props: {data: MemberRegistrationWithPosition[] }) => {
 
   const table = useTable({
     columns,
-    data,
+    data: data || [],
     enableRowActions: true,
     renderTopToolbar: () => <div />,
     renderBottomToolbar: () => <div />,
@@ -229,16 +205,3 @@ const InterviewTable = (props: {data: MemberRegistrationWithPosition[] }) => {
 };
 
 export { InterviewTable };
-
-export const renderStatusByAction = (action: ActionTypeAdd) => {
-  switch (action) {
-    case "accept":
-      return MemberRegistrationStatus.PASSED;
-    case "reject":
-      return MemberRegistrationStatus.FAILED;
-    case "accept_interview":
-      return MemberRegistrationStatus.INTERVIEW;
-    default:
-      return MemberRegistrationStatus.REVIEWING;
-  }
-};
