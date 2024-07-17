@@ -7,7 +7,7 @@ import { mailDonorRegistration } from "@/mailer/templates/donor-registration-com
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
 ) {
   try {
     switch (req.method) {

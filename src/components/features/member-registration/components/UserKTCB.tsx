@@ -33,7 +33,7 @@ export const UserKTCB: React.FC<Props> = ({ control, errors }) => {
                 onChange={onChange}
                 error={!!errors.position?.message}
                 helperText={errors.position?.message}
-                options={PositionKTCB.filter(option => option.is_required)}
+                options={PositionKTCB.filter((option) => option.is_required)}
                 placeholder="Chọn vị trí ứng tuyển"
               />
             )}
@@ -45,7 +45,7 @@ export const UserKTCB: React.FC<Props> = ({ control, errors }) => {
             name="hope_to_receive"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <div style={{ position: 'relative' }}>
+              <div style={{ position: "relative" }}>
                 <Input
                   label={
                     "Bạn mong muốn nhận được điều gì khi tham gia hoạt động cùng với Khoảng Trời Của Bé?"
@@ -58,7 +58,8 @@ export const UserKTCB: React.FC<Props> = ({ control, errors }) => {
                   value={value}
                   onChange={(e) => {
                     // Giới hạn số ký tự được nhập
-                    if (e.target.value.length <= 100) { // Adjust the character limit as needed
+                    if (e.target.value.length <= 100) {
+                      // Adjust the character limit as needed
                       onChange(e);
                     }
                   }}

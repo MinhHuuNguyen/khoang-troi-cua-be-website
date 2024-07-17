@@ -5,7 +5,14 @@ import {
   DonorRegistrationInputSchema,
   DonorRegistrationInputType,
 } from "./types";
-import { IconButton, Modal, Button, Typography, Grid, Box } from "@mui/material";
+import {
+  IconButton,
+  Modal,
+  Button,
+  Typography,
+  Grid,
+  Box,
+} from "@mui/material";
 import CheckIcon from "@mui/icons-material/Check";
 import CloseIcon from "@mui/icons-material/Close";
 import { ContainerXL } from "@/components/layouts/ContainerXL";
@@ -23,7 +30,9 @@ import { KIND_OF_DONATION_OPTIONS } from "@/utils/constants";
 export const DonorRegistration = () => {
   const router = useRouter();
   const { showModal } = useGlobalModalContext();
-  const [formData, setFormData] = useState<DonorRegistrationInputType | null>(null);
+  const [formData, setFormData] = useState<DonorRegistrationInputType | null>(
+    null,
+  );
   const [open, setOpen] = useState(false);
 
   const methods = useForm<DonorRegistrationInputType>({
@@ -41,7 +50,9 @@ export const DonorRegistration = () => {
   });
 
   const getDonationLabel = (value: string | undefined) => {
-    const option = KIND_OF_DONATION_OPTIONS.find(option => option.value === value);
+    const option = KIND_OF_DONATION_OPTIONS.find(
+      (option) => option.value === value,
+    );
     return option ? option.label : "Không xác định";
   };
 
@@ -62,7 +73,10 @@ export const DonorRegistration = () => {
   const handleConfirm = () => {
     // Xác nhận dữ liệu và đóng Dialog
     mutate.mutate(formData as DonorRegistrationInputType);
-    showModal(MODAL_TYPES.MODAL_SUCCESS, { heading: "Xác nhận thành công", content: "Cảm ơn đã gửi thông tin", });
+    showModal(MODAL_TYPES.MODAL_SUCCESS, {
+      heading: "Xác nhận thành công",
+      content: "Cảm ơn đã gửi thông tin",
+    });
     setOpen(false);
     setFormData(null);
 
@@ -167,7 +181,7 @@ export const DonorRegistration = () => {
               </div>
               <div className={classNameCol}>
                 <span className="font-bold">Ngày tháng năm sinh: </span>
-                {new Date(formData?.birthday).toLocaleDateString('vi-VN')}
+                {new Date(formData?.birthday).toLocaleDateString("vi-VN")}
               </div>
               <div className={classNameCol}>
                 <span className="font-bold">Email: </span>
@@ -187,7 +201,11 @@ export const DonorRegistration = () => {
             <IconButton onClick={handleClose} aria-label="cancel">
               <CloseIcon />
             </IconButton>
-            <IconButton onClick={handleConfirm} aria-label="confirm" color="primary">
+            <IconButton
+              onClick={handleConfirm}
+              aria-label="confirm"
+              color="primary"
+            >
               <CheckIcon />
             </IconButton>
           </div>

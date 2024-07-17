@@ -79,7 +79,7 @@ export const MemberRegistration = () => {
           heading="Xác nhận thành công"
           content="Cảm ơn đã gửi thông tin"
         />
-        
+
         <div className="flex justify-center items-center gap-2">
           <Button
             variant="contained"

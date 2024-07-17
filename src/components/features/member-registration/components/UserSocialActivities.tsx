@@ -63,14 +63,15 @@ export const UserSocialActivities: React.FC<Props> = ({ control, errors }) => {
                   value={value}
                   onChange={(e) => {
                     // Giới hạn số ký tự được nhập
-                    if (e.target.value.length <= 100) { // Giả sử giới hạn là 500 ký tự
+                    if (e.target.value.length <= 100) {
+                      // Giả sử giới hạn là 500 ký tự
                       onChange(e);
                     }
                   }}
                   error={!!errors.memories?.message}
                   helperText={errors.memories?.message}
                 />
-                <Typography variant="caption" display="block" gutterBottom >
+                <Typography variant="caption" display="block" gutterBottom>
                   {value.length}/100
                 </Typography>
               </>

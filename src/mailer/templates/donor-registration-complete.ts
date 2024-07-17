@@ -10,7 +10,7 @@ export const mailDonorRegistration = (data: DonorRegistration) => {
     Chúng mình xác nhận đã nhận được thông tin về hồ sơ của bạn. Thông tin chi tiết như sau:<br>
     1. Họ và tên: ${data.fullName}<br>
     2. Ngày, tháng, năm sinh: ${new Date(data.birthday).toLocaleDateString(
-      "vi"
+      "vi",
     )}<br>
     3. Số điện thoại: ${data.phoneNumber}<br>
     4. Email: ${data.email}<br>
