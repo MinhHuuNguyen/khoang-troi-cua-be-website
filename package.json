@@ -30,7 +30,7 @@
     "@vercel/analytics": "^1.1.1",
     "@vercel/speed-insights": "^1.0.4",
     "bcryptjs": "^2.4.3",
-    "ci": "2.3.0",
+    "cipm": "^0.1.0",
     "classnames": "^2.5.1",
     "date-fns": "^2.30.0",
     "eslint": "8.42.0",
