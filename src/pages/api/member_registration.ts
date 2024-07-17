@@ -2,7 +2,9 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/libs/prisma";
 import { sendMail } from "@mailer/mailService";
 import mailData from "@mailer/templates/recruit-members/member-registration-complete";
-import internalMail from "@mailer/templates/recruit-members/new-registration";
+import newMember from "@mailer/templates/internal-mail/new-member-regis";
+import formEmail from "@mailer/templates/internal-mail/save-form-email";
+import interviewEmail from "@mailer/templates/internal-mail/save-interview-email";
 import mailMemberInterviewFail from "@/mailer/templates/recruit-members/member-interview-fail";
 import mailMemberFormFail from "@/mailer/templates/recruit-members/member-form-fail";
 import { MemberRegistrationStatus } from "@prisma/client";
@@ -62,31 +64,19 @@ export default async function handler(
           },
         });
 
-        await new Promise(async (resolve, reject) => {
-          try {
-            // Send mail to user
-            const userMailResult = await sendMail(
-              [data.email],
-              "CẢM ƠN BẠN ĐÃ ĐĂNG KÝ THÀNH VIÊN KHOẢNG TRỜI CỦA BÉ",
-              mailData(member)
-            );
-        
-            // send mail to internal
-            const internalMailResult = await sendMail(
-              [ktcbMail],
-              "THÔNG BÁO ĐĂNG KÝ MỚI",
-              internalMail(member)
-            );
-        
-            resolve({userMailResult, internalMailResult});
-            res.status(200).json({ message: "Mail sent to user and internal!" });
-          } catch (err: any) {
-            reject(err);
-            return res.status(500).json({
-              error: err.message || "Something went wrong",
-            });
-          }
-        });
+        await sendMail(
+          [member.email],
+          "CẢM ƠN BẠN ĐÃ ĐĂNG KÝ THÀNH VIÊN KHOẢNG TRỜI CỦA BÉ",
+          mailData(member)
+        );
+
+        for (const email of ktcbMail) {
+          await sendMail(
+            [email],
+            "CÓ ĐƠN ĐĂNG KÝ MỚI",
+            newMember(member)
+          );
+        }
 
       case "GET":
         const registrations = await prisma.memberRegistration.findMany({
@@ -126,16 +116,28 @@ export default async function handler(
           await sendMail(
             [registrationInfo.email],
             "KẾT QUẢ VÒNG ĐƠN KHOẢNG TRỜI CỦA BÉ",
-            mailMemberFormFail(registrationInfo),
-            ktcbMail
+            mailMemberFormFail(registrationInfo)
           );
+          for (const email of ktcbMail) {
+            await sendMail(
+              [email],
+              "ỨNG VIÊN BỊ LOẠI VÒNG ĐƠN",
+              formEmail(registrationInfo)
+            );
+          }
         } else if (registrationInfo.status === "INTERVIEW") {
           await sendMail(
             [registrationInfo.email],
             "KẾT QUẢ VÒNG PHỎNG VẤN KHOẢNG TRỜI CỦA BÉ",
-            mailMemberInterviewFail(registrationInfo),
-            ktcbMail
+            mailMemberInterviewFail(registrationInfo)
           );
+          for (const email of ktcbMail) {
+            await sendMail(
+              [email],
+              "ỨNG VIÊN BỊ LOẠI VÒNG PHỎNG VẤN",
+              interviewEmail(registrationInfo)
+            );
+          }
         }
 
         const deleteMember = await prisma.memberRegistration.delete({
