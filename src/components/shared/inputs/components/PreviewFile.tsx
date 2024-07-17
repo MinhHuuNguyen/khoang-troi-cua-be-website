@@ -11,7 +11,7 @@ interface PreviewFileProps {
   type: FileType;
   handleDeleteFile: (
     file: FilePreviewType,
-    event: React.MouseEvent<HTMLElement>
+    event: React.MouseEvent<HTMLElement>,
   ) => void;
 }
 

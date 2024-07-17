@@ -14,7 +14,9 @@ type Props = {
   label?: string;
   iconLabel?: string;
   startAdornmentIcon?: React.ReactNode;
-} & { options: Array<{ value: number | string; label: string }> } & RadioGroupProps;
+} & {
+  options: Array<{ value: number | string; label: string }>;
+} & RadioGroupProps;
 
 const Radio = ({
   required = false,

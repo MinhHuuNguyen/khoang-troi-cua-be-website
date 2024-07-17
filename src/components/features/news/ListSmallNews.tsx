@@ -26,7 +26,7 @@ const ListSmallNews = () => {
 
           return undefined;
         },
-      }
+      },
     );
 
   const dataFlat = useMemo(() => {

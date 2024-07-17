@@ -64,8 +64,8 @@ export const UploadFile = <T extends FieldValues>({
           acceptedFiles.map((file) =>
             Object.assign(file, {
               preview: URL.createObjectURL(file),
-            })
-          )
+            }),
+          ),
         );
 
         const type = acceptedFiles[0].type.split("/")[0] as FileType;
@@ -79,7 +79,7 @@ export const UploadFile = <T extends FieldValues>({
         onChange?.(acceptedFiles[0]);
       }
     },
-    [name, onChange, setError]
+    [name, onChange, setError],
   );
 
   const { getRootProps, getInputProps, open } = useDropzone({
@@ -112,7 +112,7 @@ export const UploadFile = <T extends FieldValues>({
 
   const handleDeleteFile = (
     file: FilePreviewType,
-    event: React.MouseEvent<HTMLElement>
+    event: React.MouseEvent<HTMLElement>,
   ) => {
     event.stopPropagation();
 

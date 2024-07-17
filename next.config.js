@@ -18,33 +18,33 @@ const nextConfig = {
   async redirects() {
     return [
       {
-        source: '/change-password',
-        destination: '/',
+        source: "/change-password",
+        destination: "/",
         permanent: true,
       },
       {
-        source: '/expense-management',
-        destination: '/',
+        source: "/expense-management",
+        destination: "/",
         permanent: true,
       },
       {
-        source: '/member-list',
-        destination: '/',
+        source: "/member-list",
+        destination: "/",
         permanent: true,
       },
       {
-        source: '/member-management',
-        destination: '/',
+        source: "/member-management",
+        destination: "/",
         permanent: true,
       },
       {
-        source: '/profile',
-        destination: '/',
+        source: "/profile",
+        destination: "/",
         permanent: true,
       },
       {
-        source: '/recruitment-management',
-        destination: '/',
+        source: "/recruitment-management",
+        destination: "/",
         permanent: true,
       },
     ];

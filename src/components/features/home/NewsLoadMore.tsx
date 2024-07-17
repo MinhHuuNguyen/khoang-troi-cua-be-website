@@ -48,7 +48,7 @@ export const NewsLoadMore = () => {
 
           return undefined;
         },
-      }
+      },
     );
 
   const dataFlat = useMemo(() => {
@@ -207,7 +207,7 @@ export const NewsLoadMore = () => {
                   const left = (parent.offsetWidth - target.width) / 2;
 
                   const logo = parent.querySelector(
-                    ".logo"
+                    ".logo",
                   ) as HTMLImageElement;
 
                   if (logo) {

@@ -102,7 +102,7 @@ export const ExpenseApprovalTable = () => {
         },
       },
     ],
-    []
+    [],
   );
 
   const handleOpenModal = (expense: IExpense, action: ActionType) => {

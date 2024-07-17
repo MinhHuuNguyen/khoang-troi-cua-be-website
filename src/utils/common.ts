@@ -74,10 +74,10 @@ export const sortNews = (team?: string) => {
   });
 
   highlightedPosts.sort(
-    (a, b) => new Date(b.time).getTime() - new Date(a.time).getTime()
+    (a, b) => new Date(b.time).getTime() - new Date(a.time).getTime(),
   );
   nonHighlightedPosts.sort(
-    (a, b) => new Date(b.time).getTime() - new Date(a.time).getTime()
+    (a, b) => new Date(b.time).getTime() - new Date(a.time).getTime(),
   );
 
   const sortedData = [...highlightedPosts, ...nonHighlightedPosts];
@@ -87,7 +87,7 @@ export const sortNews = (team?: string) => {
 
 export const loadMoreSmallNews = async (
   _cursor?: number,
-  _pageSize?: number
+  _pageSize?: number,
 ) => {
   const cursor = _cursor || 7;
   const pageSize = _pageSize || 6;

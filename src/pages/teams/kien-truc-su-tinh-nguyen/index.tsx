@@ -33,7 +33,7 @@ export default KtstnTeam;
 export const getStaticProps: GetStaticProps = async () => {
   try {
     const quote = getQuoteByTeam(
-      TEAM_NAME["KIEN_TRUC_SU_TINH_NGUYEN"] as TeamName
+      TEAM_NAME["KIEN_TRUC_SU_TINH_NGUYEN"] as TeamName,
     );
 
     if (!quote?.title || !quote?.content || !quote?.banner_url) {

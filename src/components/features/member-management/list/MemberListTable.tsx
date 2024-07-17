@@ -206,7 +206,7 @@ const MemberListTable = () => {
         },
       },
     ],
-    []
+    [],
   );
 
   const handleDownloadList = () => {

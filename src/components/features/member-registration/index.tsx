@@ -46,9 +46,9 @@ export const MemberRegistration = () => {
     setIsSubmitted(true);
 
     try {
-      const response = await fetch('/api/member_registration', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/member_registration", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
 

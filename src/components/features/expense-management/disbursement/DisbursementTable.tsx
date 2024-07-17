@@ -103,7 +103,7 @@ export const DisbursementTable = () => {
                   ...item,
                   img_disbursement: value?.preview || "",
                 }
-              : item
+              : item,
           );
         }
       });
@@ -114,7 +114,7 @@ export const DisbursementTable = () => {
         return newErrors;
       });
     },
-    []
+    [],
   );
 
   const columns = useMemo<MRT_ColumnDef<IDisbursement>[]>(
@@ -189,7 +189,7 @@ export const DisbursementTable = () => {
         },
       },
     ],
-    [handleOnChangeUpload, validationErrors]
+    [handleOnChangeUpload, validationErrors],
   );
 
   const handleDisburse = (disbursementId: string) => {

@@ -26,7 +26,7 @@ const MenuSection: React.FC<MenuSectionProps> = ({ menuData }) => {
 
   const handleClick = (
     e: React.MouseEvent<HTMLButtonElement>,
-    isNotHover?: boolean
+    isNotHover?: boolean,
   ) => {
     if (isNotHover && menuData.path) {
       router.push(menuData.path);
