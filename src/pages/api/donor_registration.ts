@@ -4,6 +4,13 @@ import { kindOfDonation } from "@prisma/client";
 import { DonorRegistrationInputType } from "@/components/features/donor-registration/types";
 import { sendMail } from "@/mailer/mailService";
 import { mailDonorRegistration } from "@/mailer/templates/donor-registration-complete";
+import newDonorRegis from "@/mailer/templates/internal-mail/new-donor-regis";
+
+const fs = require("fs");
+const internalEmails = JSON.parse(
+  fs.readFileSync("src/utils/data/json/internal_email.json", "utf8")
+);
+const ktcbMail = internalEmails.emails;
 
 export default async function handler(
   req: NextApiRequest,
@@ -36,6 +43,14 @@ export default async function handler(
           "CẢM ƠN BẠN ĐÃ ỦNG HỘ VÀO QUỸ KHOẢNG TRỜI CỦA BÉ",
           mailDonorRegistration(donor),
         );
+
+        for (const email of ktcbMail) {
+          await sendMail(
+            [email],
+            "CÓ ĐƠN ĐĂNG KÝ MỚI",
+            newDonorRegis(data)
+          );
+        }
 
         return res.status(201).json(donor);
       default:
