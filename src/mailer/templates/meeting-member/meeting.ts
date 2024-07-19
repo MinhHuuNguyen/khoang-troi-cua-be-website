@@ -1,20 +1,22 @@
 /* eslint-disable import/no-anonymous-default-export */
 import mailTemplate from "../template";
-// TODO: Dùng sau khi xác nhận NHẬN QUA vòng phỏng vấn
+import { format } from 'date-fns';
+import { vi } from 'date-fns/locale';
+// TODO: Dùng sau khi xác nhận NHẬN QUA vòng đơn
 
 export default (data: any) => {
+  const formattedDateTime = format(new Date(data.date), "eeee', ngày 'dd/MM/yyyy', lúc 'HH:mm", { locale: vi });
   const content = `
+    Thân gửi bạn ${data.fullName}!<br>
     <br>
-    Khoảng Trời Của Bé chào bạn! Chúng mình rất ấn tượng với năng lượng và tình yêu dành cho tình nguyện của bạn. Chúng mình tin rằng, với năng lực và tinh thần nhiệt huyết đó, bạn sẽ cùng chúng mình cống hiến thật nhiều trong các hoạt động và công tác tình nguyện của Khoảng Trời Của Bé.<br>
-    CHÚC MỪNG BẠN ĐÃ CHÍNH THỨC TRỞ THÀNH MỘT MÀNH GHÉP TRONG GIA ĐÌNH KHOẢNG TRỜI CỦA BÉ.<br>
+    Một lần nữa chúc mừng bạn đã xuất sắc vượt qua phỏng vấn cá nhân đợt Tuyển thành viên của tổ chức Khoảng Trời Của Bé.<br>
     <br>
-    Chúng mình sẽ có buổi gặp mặt trong thời gian tới, cụ thể như sau:<br>
-    - Tên sự kiện: ${data.name}.<br>
-    - Thời gian: ${data.date}.<br>
-    - Địa điểm: ${data.address}<br>
-    - Liên hệ tiếp đón: <SỐ ĐIỆN THOẠI THÀNH VIÊN TIẾP ĐÓN> ${data.host}<br>
+    Như đã đề cập ở email trước, chúng mình xin phép gửi bạn một số thông tin cụ thể về Buổi gặp mặt thành viên mới, cụ thể như sau:<br>
+    - Thời gian: ${formattedDateTime}.<br>
+    - Địa điểm: ${data.address} ${data.linkMaps}<br>
+    - Liên hệ tiếp đón: ${data.phoneNumber} - ${data.host}<br>
     <br>
-    Bạn vui lòng xác nhận tham gia buổi gặp mặt qua email này để chúng mình có sự chuẩn bị tiếp đón bạn tốt nhất nhé. Hẹn gặp lại bạn!<br>
+    Bạn vui lòng xác nhận việc tham gia buổi gặp mặt qua email này để chúng mình có sự chuẩn bị tiếp đón bạn tốt nhất nhé. Hẹn gặp lại bạn!<br>
     <br>
     Thân mến!<br>
     Khoảng Trời Của Bé<br>

@@ -48,11 +48,12 @@ model Member {
 }
 
 model Meeting{
-   id           Int      @id @default(autoincrement())
-  name     String
+  id           Int      @id @default(autoincrement())
+  phoneNumber  String
   date    DateTime
   address  String
   host      String
+  linkMaps  String
 }
 
 model Position {

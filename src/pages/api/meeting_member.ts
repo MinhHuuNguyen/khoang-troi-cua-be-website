@@ -17,10 +17,11 @@ export default async function handler(
         // Tạo dữ liệu Meeting mới
         const newMeeting = await prisma.meeting.create({
           data: {
-            name: req.body.name,
+            phoneNumber: req.body.phone_number,
             date: new Date(req.body.date), // Đảm bảo định dạng ngày tháng chính xác
             address: req.body.address,
             host: req.body.host,
+            linkMaps : "https://goo.gl/maps/1q2w3e4r5t6y7u8i9o0p",
           },
         });
 
@@ -33,10 +34,14 @@ export default async function handler(
 
         // Gửi email cho mỗi thành viên tìm thấy
         for (const member of members) {
+          const meetingDataWithFullName = {
+            ...newMeeting,
+            fullName: member.fullName, // Giả sử member có thuộc tính fullName
+          };
           await sendMail(
             [member.email], // Sử dụng email từ cơ sở dữ liệu
-            "Thông báo về cuộc họp mới",
-            mailData(newMeeting) // Sử dụng dữ liệu Meeting mới tạo
+            "MỜI THAM DỰ BUỔI GẶP MẶT THÀNH VIÊN MỚI",
+            mailData(meetingDataWithFullName) // Sử dụng dữ liệu Meeting mới tạo
           );
         }
 

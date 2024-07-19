@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { Control, Controller, useFormContext } from "react-hook-form";
-import { Stack, Typography, Grid } from "@mui/material";
+import { Stack, Typography, Grid, InputAdornment } from "@mui/material";
 import { Input } from "@/components/shared/inputs";
 import { DatetimePicker } from "@/components/shared/inputs/time-picker";
 import { MeetingInputType } from "../types";
+import IconButton from '@mui/material/IconButton';
+import MapIcon from '@mui/icons-material/Map';
 
 const COL_SPAN = {
   xs: 12,
@@ -25,18 +27,37 @@ export const MeetingInformation = () => {
       <Grid container spacing={2}>
         <Grid item {...COL_SPAN}>
           <Controller
-            name="name"
+            name="host"
             control={control}
             render={({ field: { onChange, value } }) => (
               <Input
-                label={"Tên buổi gặp mặt"}
+                label={"Thành viên tiếp đón"}
                 required
                 fullWidth
                 placeholder={"Nhập tên"}
                 value={value}
                 onChange={onChange}
-                error={!!errors.name?.message}
-                helperText={errors.name?.message}
+                error={!!errors.host?.message}
+                helperText={errors.host?.message}
+              />
+            )}
+          />
+        </Grid>
+
+        <Grid item {...COL_SPAN}>
+          <Controller
+            name="phone_number"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <Input
+                label={"Số điện thoại liên hệ"}
+                required
+                fullWidth
+                placeholder={"Nhập số điện thoại"}
+                value={value}
+                onChange={onChange}
+                error={!!errors.phone_number?.message}
+                helperText={errors.phone_number?.message}
               />
             )}
           />
@@ -64,38 +85,33 @@ export const MeetingInformation = () => {
             name="address"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <Input
-                label={"Địa điểm buổi gặp mặt"}
-                required
-                fullWidth
-                placeholder={"Nhập địa chỉ"}
-                value={value}
-                onChange={onChange}
-                error={!!errors.address?.message}
-                helperText={errors.address?.message}
-              />
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <Input
+                  label="Địa điểm buổi gặp mặt"
+                  required
+                  fullWidth
+                  placeholder="Nhập địa chỉ"
+                  value={value}
+                  onChange={onChange}
+                  error={!!errors.address?.message}
+                  helperText={errors.address?.message}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        color="primary"
+                        onClick={() => window.open(`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(value)}`, '_blank')}
+                        aria-label="search on google maps"
+                      >
+                        <MapIcon />
+                      </IconButton>
+                    </InputAdornment>
+                  }
+                />
+              </div>
             )}
           />
         </Grid>
 
-        <Grid item {...COL_SPAN}>
-          <Controller
-            name="host"
-            control={control}
-            render={({ field: { onChange, value } }) => (
-              <Input
-                label={"Thành viên tiếp đón"}
-                required
-                fullWidth
-                placeholder={"Nhập tên thành viên"}
-                value={value}
-                onChange={onChange}
-                error={!!errors.host?.message}
-                helperText={errors.host?.message}
-              />
-            )}
-          />
-        </Grid>
       </Grid>
     </Stack>
   );

@@ -24,10 +24,10 @@ export const MeetingScreen = () => {
   const methods = useForm<MeetingInputType>({
     resolver: zodResolver(MeetingInputSchema),
     defaultValues: {
-      name: "",
+      host: "",
+      phone_number: "",
       date: Date.now(),
       address: "",
-      host: "",
     },
   });
 
@@ -111,8 +111,12 @@ export const MeetingScreen = () => {
           <div className="grid grid-cols-6 h-full md:p-8 p-4 gap-4">
             <div className="lg:col-span-6 col-span-6 grid grid-cols-1 md:grid-cols-2 gap-4">
               <div className={classNameCol}>
-                <span className="font-bold">Tên buổi gặp mặt: </span>
-                {formData?.name}
+                <span className="font-bold">Tên thành viên tiếp đón: </span>
+                {formData?.host}
+              </div>
+              <div className={classNameCol}>
+                <span className="font-bold">Số điện thoại: </span>
+                {formData?.phone_number}
               </div>
               <div className={classNameCol}>
                 <span className="font-bold">Thời gian: </span>
@@ -128,10 +132,6 @@ export const MeetingScreen = () => {
               <div className={classNameCol}>
                 <span className="font-bold">Địa chỉ: </span>
                 {formData?.address}
-              </div>
-              <div className={classNameCol}>
-                <span className="font-bold">Thành viên tiếp đón: </span>
-                {formData?.host}
               </div>
             </div>
           </div>
