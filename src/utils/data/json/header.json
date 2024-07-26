@@ -46,6 +46,10 @@
       "path": "/list-news"
     },
     {
+      "name": "Chia sẻ bài viết",
+      "path": "/share-news"
+    },
+    {
       "name": "Tham Gia",
       "path": "/",
       "subMenus": [
