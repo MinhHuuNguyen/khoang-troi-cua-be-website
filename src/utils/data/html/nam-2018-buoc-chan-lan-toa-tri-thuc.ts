@@ -1,0 +1,25 @@
+export default `
+<p><br />
+Trên con đường hướng tới sứ mệnh tạo ra những biến đổi tích cực trong cộng đồng, tổ chức tình nguyện: “Khoảng Trời Của Bé" ra đời với mong muốn đem lại cho các em nhỏ những kỉ niệm đáng nhớ cũng như những bài học đời sống đầy ý nghĩa.</p>
+<p>Nhật ký hoạt động không chỉ là một bản ghi chép đơn thuần về các sự kiện đã diễn ra, mà còn là bức tranh sống động về tình yêu thương, sự chăm sóc và sự phát triển của những đứa trẻ, những người được coi là tương lai của thế giới này. Mỗi trang giấy ghi lại những cử chỉ nhỏ bé, những nụ cười tươi sáng và những giọt nước mắt hạnh phúc, tất cả đều tạo nên một khung cảnh vô cùng đẹp, nơi tình nguyện viên và trẻ em cùng nhau xây dựng và chia sẻ. Đây không chỉ là những dòng chữ trên giấy mực mà còn là những dấu ấn khó phai, là niềm vinh dự được góp phần vào việc thay đổi thế giới từng chút một. Hãy cùng Khoảng Trời Của Bé nhìn lại năm 2018 đầy sôi động với những dự án hướng về cộng đồng.</p>
+<p><img class="size-full wp-image-463 aligncenter" src="http://ktcb.top/wp-content/uploads/2024/05/1.png" alt="" width="999" height="691" /></p>
+<h3>Hai dự án lớn năm 2018</h3>
+<p>Tiếp nối sự thành công của dự án “Bé Vươn Cao 2017”, “Bé Vươn Cao 2018” là phiên bản nâng cấp hơn với mức kinh phí lớn hơn, nhóm tình nguyện đã quay trở về 2 ngôi trường tiểu học Trung Sơn A và Trung Sơn B để trao tặng cho các em hơn 3000 hộp sữa cùng các đồ dùng học tập với tổng kinh phí là 30,000,000 VNĐ.</p>
+<p><img class="size-full wp-image-459 aligncenter" src="http://ktcb.top/wp-content/uploads/2024/05/5.png" alt="" width="1245" height="830" /></p>
+<p>Nằm trong chuỗi chương trình trọng điểm năm 2018, Chương trình “Bé Vẽ Ước Mơ” được tổ chức tại 3 điểm trường thuộc Trường tiểu học Minh Tiến, xã Minh Hương, Hàm Yên, tỉnh Tuyên Quang. Chương trình đã chuẩn bị 1000 suất quà gồm: áo ấm, áo giữ nhiệt, chăn mền, bánh kẹo để trao tận tay đến các bạn học sinh nơi đây. Đặc biệt, chương trình còn vinh dự có sự góp mặt của các vị khách quý: </p>
+<ul>
+	<li>Hoa hậu du lịch thế giới thành phố; Á hậu 1 Hoa hậu du lịch thế giới 2018 - Aneta SUSTKOVA.</li>
+	<li>TS. Pavel Janasek: Chủ tịch hiệp hội đối ngoại châu u.</li>
+	<li>TS. Lê Hoàng Anh Tuấn: Nhà báo quốc tế.</li>
+</ul>
+<p>Bé Vẽ Ước Mơ đã thắp sáng lên hàng trăm mơ ước của trẻ em, chương trình đã diễn ra thành công tốt đẹp và để lại nhiều cảm xúc khó quên đối với các em cũng như các tình nguyện viên đã tham gia chuyến đi lần này.</p>
+<h3>Những chương trình đi khắp Hà Nội</h3>
+<p>Tại khu vực Hà Nội, Khoảng Trời Của Bé đã mang đến cho các bé tại Chùa Bồ Đề (Long Biên, Hà Nội) những trải nghiệm thú vị thông qua hoạt động: “Bé Gửi Yêu Thương”. Ban tổ chức cùng các tình nguyện viên đã phối hợp cùng với nhau tổ chức các trò chơi dân gian để các bé được thỏa sức vận động đồng thời gửi tặng những món quà từ các mạnh thường quân đến cho các em, ngoài ra chúng mình còn tổ chức một buổi tiệc nho nhỏ với các loại quà bánh, sữa, trái cây để các em liên hoan cùng nhau.</p>
+<p><img class="size-full wp-image-460 aligncenter" src="http://ktcb.top/wp-content/uploads/2024/05/4.png" alt="" width="1245" height="830" /></p>
+<p>Một hoạt động thường xuyên của Khoảng Trời Của Bé: Dự án “Bé Làm Nghệ Sĩ” được tổ chức hàng tuần vào chiều thứ 6 tại Bệnh viện Nhi Trung Ương, “Lớp Học Hy Vọng” mang đến cho các bé những kiến thức thiết thực nhưng không kém phần thú vị, giúp các bé hình thành những thói quen tốt. Ngoài ra, chúng mình còn cùng các em sáng tạo nên những tác phẩm nghệ thuật, tạo điều kiện cho các em thỏa sức tưởng tượng, tư duy. Tuy các em mang nhiều bệnh tật nhưng với sự lạc quan, vui tươi, các em vẫn miệt mài, say mê với bút, giấy, màu, cọ vẽ.</p>
+<p>Cứ mỗi tháng một lần, Khoảng Trời Của Bé lại tổ chức một buổi tiệc nhỏ xinh, cùng các em bé tại bệnh viện Nhi Trung Ương vui đón sinh nhật. Những bữa tiệc đông đúc, đầm ấm với bánh kem, nến, quà vặt cùng những tiếng cười rộn vang đã xua tan những giá lạnh mùa đông, mang bớt đi những nỗi đau về thể xác, các em như được sưởi ấm tâm hồn, tiếp thêm động lực điều trị bệnh.</p>
+<h3>Lời cảm ơn tất cả</h3>
+<p>Trong cuộc hành trình của chúng ta, không có gì quý bằng sự hiện diện và đóng góp của những tình nguyện viên - những người mà không cần bất kỳ sự bắt buộc nào vẫn tự nguyện dành thời gian và tâm huyết cho những hoạt động của Khoảng Trời Của Bé.</p>
+<p><img class="size-full wp-image-461 aligncenter" src="http://ktcb.top/wp-content/uploads/2024/05/3.png" alt="" width="1246" height="830" /></p>
+<p>Chúng mình xin gửi lời biết ơn chân thành nhất đến các tình nguyện viên, những người không ngần ngại dành thời gian và công sức để chia sẻ yêu thương và sự hỗ trợ đến cho các em nhỏ. Các bạn không chỉ là những người đồng hành, mà còn là những người bạn đáng quý, là nguồn động viên và niềm tự hào của chúng mình. Cùng nhau, chúng ta đã làm được nhiều hơn những gì mình nghĩ và xin hãy tiếp tục đồng hành với chúng mình trong những dự án sắp tới.</p>
+`
