@@ -11,5 +11,5 @@ export default (content: any) => {
         ${content}
       </body>
     </html>
-  `
+  `;
 };

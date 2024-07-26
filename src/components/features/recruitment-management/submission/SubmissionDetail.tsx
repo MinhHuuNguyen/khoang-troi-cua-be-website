@@ -13,7 +13,10 @@ interface Props {
   data: MemberRegistrationWithPosition;
   open: boolean;
   onClose: () => void;
-  handleOpenModal: (person: MemberRegistrationWithPosition, action?: ActionTypeAdd) => void;
+  handleOpenModal: (
+    person: MemberRegistrationWithPosition,
+    action?: ActionTypeAdd,
+  ) => void;
 }
 
 const classNameCol = "md:col-span-1 xs:col-span-2";
@@ -93,7 +96,7 @@ export const SubmissionDetail: React.FC<Props> = ({
                     onClick={() =>
                       handleOpenModal(
                         data,
-                        ACTIONS["ACCEPT_INTERVIEW"] as ActionTypeAdd
+                        ACTIONS["ACCEPT_INTERVIEW"] as ActionTypeAdd,
                       )
                     }
                   >

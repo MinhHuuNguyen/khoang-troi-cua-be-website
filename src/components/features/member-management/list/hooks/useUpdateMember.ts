@@ -16,8 +16,8 @@ export const useUpdateMember = () => {
         prevUsers?.map((prevUser: IMemberList) =>
           prevUser.full_name === newMemberInfo.full_name
             ? newMemberInfo
-            : prevUser
-        )
+            : prevUser,
+        ),
       );
     },
     // onSettled: () => queryClient.invalidateQueries({ queryKey: ['members'] }), //refetch users after mutation, disabled for demo

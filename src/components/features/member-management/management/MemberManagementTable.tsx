@@ -139,7 +139,7 @@ const MemberManagementTable = () => {
         Cell: (props) => <EllipsisCell {...props} />,
       },
     ],
-    []
+    [],
   );
 
   const handleConfirm = () => {

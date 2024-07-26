@@ -150,7 +150,7 @@ const InterviewTable = () => {
         Cell: (props) => <EllipsisCell {...props} />,
       },
     ],
-    []
+    [],
   );
 
   const [opened, { open, close }] = useDisclosure();

@@ -33,7 +33,7 @@ export const UserKTCB: React.FC<Props> = ({ control, errors }) => {
                 onChange={onChange}
                 error={!!errors.position?.message}
                 helperText={errors.position?.message}
-                options={PositionKTCB}
+                options={PositionKTCB.filter((option) => option.is_required)}
                 placeholder="Chọn vị trí ứng tuyển"
               />
             )}
@@ -45,20 +45,31 @@ export const UserKTCB: React.FC<Props> = ({ control, errors }) => {
             name="hope_to_receive"
             control={control}
             render={({ field: { onChange, value } }) => (
-              <Input
-                label={
-                  "Bạn mong muốn nhận được điều gì khi tham gia hoạt động cùng với Khoảng Trời Của Bé?"
-                }
-                required
-                multiline
-                rows={4}
-                fullWidth
-                placeholder={"Nhập điều mong muốn của bạn"}
-                value={value}
-                onChange={onChange}
-                error={!!errors.hope_to_receive?.message}
-                helperText={errors.hope_to_receive?.message}
-              />
+              <div style={{ position: "relative" }}>
+                <Input
+                  label={
+                    "Bạn mong muốn nhận được điều gì khi tham gia hoạt động cùng với Khoảng Trời Của Bé?"
+                  }
+                  required
+                  multiline
+                  rows={4}
+                  fullWidth
+                  placeholder={"Nhập điều mong muốn của bạn"}
+                  value={value}
+                  onChange={(e) => {
+                    // Giới hạn số ký tự được nhập
+                    if (e.target.value.length <= 100) {
+                      // Adjust the character limit as needed
+                      onChange(e);
+                    }
+                  }}
+                  error={!!errors.hope_to_receive?.message}
+                  helperText={errors.hope_to_receive?.message}
+                />
+                <Typography variant="caption" display="block" gutterBottom>
+                  {value.length}/100
+                </Typography>
+              </div>
             )}
           />
         </Grid>

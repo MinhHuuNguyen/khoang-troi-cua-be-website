@@ -26,8 +26,8 @@ const RecruitmentManagementPage: NextPage<Props> = ({ registrations }) => {
   const { data: session } = useSession({
     required: true,
     onUnauthenticated() {
-      router.push('/login');
-    }
+      router.push("/login");
+    },
   });
   const router = useRouter();
 
@@ -117,12 +117,12 @@ export const getServerSideProps = async () => {
         select: {
           name: true,
         },
-      }
-    }
+      },
+    },
   });
   return {
     props: {
-      registrations: JSON.parse(JSON.stringify(registrations))
+      registrations: JSON.parse(JSON.stringify(registrations)),
     },
   };
 };

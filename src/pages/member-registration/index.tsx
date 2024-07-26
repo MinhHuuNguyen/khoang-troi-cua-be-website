@@ -5,10 +5,12 @@ import { DefaultSeo } from "next-seo";
 import React from "react";
 
 const MemberRegistrationPage: NextPage = () => {
-  return <>
-    <DefaultSeo {...SEO} title="Đăng ký thành viên" />
-    <MemberRegistration />
-  </>;
+  return (
+    <>
+      <DefaultSeo {...SEO} title="Đăng ký thành viên" />
+      <MemberRegistration />
+    </>
+  );
 };
 
 export default MemberRegistrationPage;

@@ -1,4 +1,4 @@
-import {  maxLengthMessage } from "@/utils/common";
+import { maxLengthMessage } from "@/utils/common";
 import { z } from "zod";
 import { REGEX_PHONE_NUMBER } from "@/utils/constants";
 
@@ -64,12 +64,9 @@ export const MemberRegistrationInputSchema = z
       }),
 
     // UserKTCB
-    position: z
-      .string()
-      .trim()
-      .min(1, {
-        message: "Không được để trống",
-      }),
+    position: z.string().trim().min(1, {
+      message: "Không được để trống",
+    }),
     hope_to_receive: z
       .string()
       .trim()
@@ -92,7 +89,7 @@ export const MemberRegistrationInputSchema = z
     {
       path: ["memories"],
       message: "Không được để trống",
-    }
+    },
   );
 
 export type MemberRegistrationInputType = z.infer<

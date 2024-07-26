@@ -1,5 +1,6 @@
-import { Prisma } from '@prisma/client';
+import { Prisma } from "@prisma/client";
 
-export type MemberRegistrationWithPosition = Prisma.MemberRegistrationGetPayload<{
-  include: { position: true }
-}>
+export type MemberRegistrationWithPosition =
+  Prisma.MemberRegistrationGetPayload<{
+    include: { position: true };
+  }>;

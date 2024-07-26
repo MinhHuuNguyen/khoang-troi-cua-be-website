@@ -91,7 +91,7 @@ export const InterviewDetail: React.FC<Props> = ({
               <DatetimePicker
                 defaultValue={format(
                   new Date(data?.date_time as string),
-                  "yyyy-MM-dd HH:mm"
+                  "yyyy-MM-dd HH:mm",
                 )}
                 onChange={(e) => console.log(e)}
                 fullWidth

@@ -81,8 +81,7 @@ const Header = () => {
             >
               Đăng nhập
             </Link>
-          )
-          }
+          )}
           <IconButton>
             <LanguageIcon sx={{ fontSize: 25 }} />
           </IconButton>

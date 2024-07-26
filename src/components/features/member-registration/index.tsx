@@ -22,6 +22,7 @@ export const MemberRegistration = () => {
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<MemberRegistrationInputType>({
     resolver: zodResolver(MemberRegistrationInputSchema),
     defaultValues: {
@@ -46,16 +47,16 @@ export const MemberRegistration = () => {
     setIsSubmitted(true);
 
     try {
-      const response = await fetch('/api/member_registration', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+      const response = await fetch("/api/member_registration", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(data),
       });
 
       if (!response.ok) {
         throw new Error(`API request failed with status ${response.status}`);
       }
-
+      reset();
       setOpen(true);
     } catch (err) {
       console.error(err);
@@ -78,6 +79,7 @@ export const MemberRegistration = () => {
           heading="Xác nhận thành công"
           content="Cảm ơn đã gửi thông tin"
         />
+
         <div className="flex justify-center items-center gap-2">
           <Button
             variant="contained"
