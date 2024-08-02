@@ -11,6 +11,7 @@ import ktcbBackground from "@public/mission-background.jpg";
 import { useRouter } from "next/router";
 import ToastSuccess from "@/components/shared/toasts/ToastSuccess";
 import { ContainerXL } from "@/components/layouts/ContainerXL";
+import { useCreateMemberRegistration } from "./hooks/useCreateMemberRegistration";
 
 export const MemberRegistration = () => {
   const router = useRouter();
@@ -43,24 +44,13 @@ export const MemberRegistration = () => {
     },
   });
 
+  const mutate = useCreateMemberRegistration();
+
   const onSubmit = handleSubmit(async (data) => {
     setIsSubmitted(true);
-
-    try {
-      const response = await fetch("/api/member_registration", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
-
-      if (!response.ok) {
-        throw new Error(`API request failed with status ${response.status}`);
-      }
-      reset();
-      setOpen(true);
-    } catch (err) {
-      console.error(err);
-    }
+    mutate.mutate(data);
+    reset();
+    setOpen(true);
   });
 
   return (

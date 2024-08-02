@@ -1,6 +1,6 @@
 import mailTemplate from "./template";
 
-export default (data: any) => {
+export const mailMemberRegistration = (data: any) => {
   const content = `
     Thân gửi bạn ${data.fullName}!<br>
     <br>
