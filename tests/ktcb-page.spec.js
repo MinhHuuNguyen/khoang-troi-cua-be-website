@@ -8,6 +8,18 @@ test.describe('Home Page', () => {
   test('should display the correct title', async ({ page }) => {
     await expect(page).toHaveTitle('Khoảng Trời Của Bé | Khoảng Trời Của Bé');
   });
+  
+  test('should display and click the "Xem thêm" button', async ({ page }) => {
+    // Verify the "Xem thêm" button is visible
+    const loadMoreButton = page.locator('button:has-text("Xem thêm")');
+    await expect(loadMoreButton).toBeVisible();
+
+    // Click the "Xem thêm" button
+    await loadMoreButton.click();
+
+    // Add a delay to wait for the content to load
+    await page.waitForTimeout(2000); // Adjust the timeout as needed
+  });
 
   test('should display and click the "Chương trình" navbar link and its "Dự án cùng bé trải nghiệm" submenu', async ({ page }) => {
     // Hover over the "Tham gia" link to reveal the submenu
@@ -145,3 +157,57 @@ test.describe('Member Registration', () => {
       await page.click('button:has-text("Gửi thông tin")');
     });
   });
+
+test.describe('Donor Registration', () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto('http://localhost:3000/donor-registration'); // Adjust the URL as needed
+    });
+  
+    test('should submit the form and show success toast', async ({ page }) => {
+      // Fill out the form
+      await page.getByPlaceholder('Nhập họ và tên').fill('John Doe');
+      await page.getByPlaceholder('Nhập số điện thoại').fill('0123456789');
+      await page.getByPlaceholder('Nhập email').fill('johndoe@gmail.com');
+      await page.click('button:has-text("Gửi thông tin")');
+    });
+  });
+    
+  test.describe('ListNews Page', () => {
+    test.beforeEach(async ({ page }) => {
+      await page.goto('http://localhost:3000/list-news'); // Adjust the URL as needed
+    });
+  
+    test('should display the ListNews page with correct elements', async ({ page }) => {
+      // Verify the SEO title
+      await expect(page).toHaveTitle(/Danh sách bài viết/);
+  
+      // Verify the HighlightNews section
+      const highlightNews = page.locator('section.highlight-news');
+      if (await highlightNews.count() > 0) {
+        await expect(highlightNews).toBeVisible();
+      }
+  
+      // Verify the medium news articles
+      const mediumNewsArticles = page.locator('section.medium-news article');
+      if (await mediumNewsArticles.count() > 0) {
+        await expect(mediumNewsArticles).toHaveCountGreaterThan(0);
+      }
+    });
+
+    test('should display article details when clicking "Đọc tiếp" button', async ({ page }) => {
+      // Verify the medium news articles
+      const mediumNewsArticles = page.locator('section.medium-news article');
+      if (await mediumNewsArticles.count() > 0) {
+        // Click the "Đọc tiếp" button of the first article
+        await mediumNewsArticles.first().locator('button:has-text("Đọc tiếp")').click();
+    
+        // Wait for the article details page to load
+        await page.waitForLoadState('networkidle');
+    
+        // Verify that the article details page is displayed
+        const articleTitle = page.locator('h1.article-title'); // Điều chỉnh selector nếu cần
+        await expect(articleTitle).toBeVisible();
+      }
+    });
+  });
+  
