@@ -11,7 +11,7 @@ import ToastSuccess from "@/components/shared/toasts/ToastSuccess";
 import { EllipsisCell } from "@/components/shared/table";
 import { INews } from "@/@types/news";
 import newsData from "@/utils/data/json/news.json";
-import internalEmails from "@/utils/data/json/internal-email.json";
+import internalEmails from '@/utils/data/json/internal-email.json';
 
 const NewsTable = () => {
   const columns = useMemo<MRT_ColumnDef<INews>[]>(() => [
@@ -46,6 +46,7 @@ const NewsTable = () => {
   const [openToast, setOpenToast] = useState(false);
   const [rowSelected, setRowSelected] = useState<INews>();
   const [action, setAction] = useState<ActionType>();
+  const [loading, setLoading] = useState(false);
 
   const handleOpenModal = (person: INews, action?: ActionType) => {
     action ? open() : openDetail();
@@ -57,6 +58,26 @@ const NewsTable = () => {
     setOpenToast(true);
     closeDetail();
     close();
+  };
+
+  const handleSendEmails = async (news: INews) => {
+    setLoading(true);
+    try {
+      const response = await fetch('/api/share_new', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ news }),
+      });
+      const data = await response.json();
+      alert(data.message);
+    } catch (error) {
+      console.error('Error sending emails:', error);
+      alert('Error sending emails');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const table = useTable({
@@ -71,7 +92,7 @@ const NewsTable = () => {
     renderRowActions: ({ row }) => (
       <div className="flex items-center justify-center min-w-">
         <Tooltip title="Chia sẻ bài viết">
-          <IconButton onClick={() => handleOpenModal(row.original)}>
+          <IconButton onClick={() => handleSendEmails(row.original)}>
             <ShareIcon />
           </IconButton>
         </Tooltip>

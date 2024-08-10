@@ -7,19 +7,24 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405).json({ message: 'Method not allowed' });
   }
 
-  const { title, link } = req.body;
-
-  if (!title || !link) {
-    return res.status(400).json({ message: 'Title and link are required' });
-  }
-
   try {
-    const emailPromises = internalEmails.emails.map((email: string) => {
-      const content = `<a href="${link}">${title}</a>`;
+    const { news } = req.body;
+    if (!news) {
+      return res.status(400).json({ message: 'News data is required' });
+    }
 
+    const baseUrl = process.env.BASE_URL || 'http://localhost:3000'; // Ensure this is set in your environment variables
+
+    const content = `
+      <h1>${news.title}</h1>
+      <p>${news.description}</p>
+      <a href="${baseUrl}/${news.slug}">Đọc tiếp</a>
+    `;
+
+    const emailPromises = internalEmails.emails.map((email: string) => {
       return sendMail(
         [email],
-        'Thông báo bài viết mới',
+        'Bài viết mới',
         content
       );
     });
