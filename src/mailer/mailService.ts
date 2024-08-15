@@ -1,6 +1,6 @@
 import * as nodemailer from "nodemailer";
 
-export async function sendMail(to: [string], subject: string, html: any) {
+export async function sendMail(to: string[], subject: string, html: any) {
   var transporter = nodemailer.createTransport({
     host: "smtp.resend.com",
     port: 465,
@@ -18,11 +18,13 @@ export async function sendMail(to: [string], subject: string, html: any) {
     html,
   };
 
-  return transporter.sendMail(mailOptions, (err: Error | null, info) => {
-    if (err) {
-      throw new Error(err.message);
-    } else {
-      return info;
-    }
+  return new Promise((resolve, reject) => {
+    transporter.sendMail(mailOptions, (err: Error | null, info) => {
+      if (err) {
+        reject(new Error(err.message));
+      } else {
+        resolve(info);
+      }
+    });
   });
 }

@@ -34,4 +34,7 @@ jobs:
         run: npx jest --testPathPattern="jest-test/unit-member-regis.test.ts" 
 
       - name: Run unit-donor-regis.test.js 
-        run: npx jest --testPathPattern="jest-test/unit-donor-regis.test.ts"   
+        run: npx jest --testPathPattern="jest-test/unit-donor-regis.test.ts"  
+        
+      - name: Run send-mail.test.js 
+        run: npx jest --testPathPattern="jest-test/send-mail.test.ts" 
