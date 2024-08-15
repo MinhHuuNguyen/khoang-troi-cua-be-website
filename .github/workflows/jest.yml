@@ -25,7 +25,7 @@ jobs:
         run: npm install
 
       - name: Run member-regis.test.js 
-        run: npx jest --testPathPattern="member-regis.test.js"
+        run: npx jest --testPathPattern="__test__/member-regis.test.js"
 
       - name: Run donor-regis.test.js 
-        run: npx jest --testPathPattern="donor-regis.test.js" 
+        run: npx jest --testPathPattern="__test__/donor-regis.test.js" 
