@@ -18,7 +18,7 @@ test.describe("Home Page", () => {
     await loadMoreButton.click();
 
     // Add a delay to wait for the content to load
-    await page.waitForTimeout(2000); 
+    await page.waitForTimeout(2000);
   });
 
   test("should display the CoverImageSlide component", async ({ page }) => {
@@ -55,7 +55,7 @@ test.describe("Home Page", () => {
     await nextButton.click();
 
     // Add a delay to wait for the slide to change
-    await page.waitForTimeout(1000); 
+    await page.waitForTimeout(1000);
   });
 
   test("should click the prev button in CoverImageSlide", async ({ page }) => {
@@ -66,7 +66,7 @@ test.describe("Home Page", () => {
     await prevButton.click();
 
     // Add a delay to wait for the slide to change
-    await page.waitForTimeout(1000); 
+    await page.waitForTimeout(1000);
   });
 
   test('should display the "TIN TỨC GẦN ĐÂY" section', async ({ page }) => {
@@ -95,6 +95,31 @@ test.describe("Home Page", () => {
     }
   });
 
+  test('should display the "KHO ẢNH KỶ NIỆM" title and NewsLoadMore component', async ({
+    page,
+  }) => {
+    // Verify the title is visible
+    const title = page.locator("h3", { hasText: "KHO ẢNH KỶ NIỆM" });
+    await expect(title).toBeVisible();
+
+    // Verify the NewsLoadMore component is visible
+    const newsLoadMore = page.locator('button:has-text("Xem thêm")'); // Adjust the selector if needed
+    await expect(newsLoadMore).toBeVisible();
+
+    // Locate the first image in the NewsLoadMore component
+    const firstImage = page.locator('.MuiContainer-root > .MuiStack-root > div > div > div > .MuiBox-root').first(); // Adjust the selector as needed
+    await expect(firstImage).toBeVisible();
+
+    // Click the first image
+    await firstImage.click();
+    await expect(page.locator('.MuiModal-root > div:nth-child(3) > div').first()).toBeVisible();
+
+    // Click the "Đọc tiếp" button
+    const readMoreButton = page.getByRole('link', { name: 'Đọc tiếp' }); // Adjust the selector if needed
+    await expect(readMoreButton).toBeVisible();
+    await readMoreButton.click();
+  });
+
   test("should navigate to member registration when clicking the first button in Opportunity", async ({
     page,
   }) => {
@@ -108,7 +133,7 @@ test.describe("Home Page", () => {
     await opportunityButton.click();
 
     // Verify that the URL has changed to "/member-registration"
-    await expect(page).toHaveURL("http://localhost:3000/member-registration"); 
+    await expect(page).toHaveURL("http://localhost:3000/member-registration");
   });
 
   test("should navigate to donor registration when clicking the second button in Opportunity", async ({
@@ -124,6 +149,6 @@ test.describe("Home Page", () => {
     await opportunityButton.click();
 
     // Verify that the URL has changed to "/member-registration"
-    await expect(page).toHaveURL("http://localhost:3000/donor-registration"); 
+    await expect(page).toHaveURL("http://localhost:3000/donor-registration");
   });
 });
