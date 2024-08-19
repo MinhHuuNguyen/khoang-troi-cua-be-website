@@ -1,6 +1,6 @@
 import * as nodemailer from "nodemailer";
 
-export async function sendMail(to: string[], subject: string, html: any) {
+export async function sendMail(to: [string], subject: string, html: any) {
   var transporter = nodemailer.createTransport({
     host: "smtp.resend.com",
     port: 465,

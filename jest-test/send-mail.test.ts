@@ -21,7 +21,7 @@ describe('sendMail', () => {
   });
 
   it('should send an email successfully', async () => {
-    const to = ['test@example.com'];
+    const to:[string] = ['test@example.com'];
     const subject = 'Test Subject';
     const html = '<p>Test HTML</p>';
 
@@ -55,7 +55,7 @@ describe('sendMail', () => {
       callback(new Error('Failed to send email'), null);
     });
 
-    const to = ['test@example.com'];
+    const to:[string] = ['test@example.com'];
     const subject = 'Test Subject';
     const html = '<p>Test HTML</p>';
 
