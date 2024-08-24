@@ -34,11 +34,13 @@ describe('Donor Registration API', () => {
     };
 
     (prisma.donorRegistration.create as jest.Mock).mockResolvedValue(mockDonor);
+    (sendMail as jest.Mock).mockResolvedValue(true);
+    (mailDonorRegistration as jest.Mock).mockReturnValue('Mail content');
 
     const { req, res } = createMocks({
       method: 'POST',
       body: {
-        full_name: 'John Doe',
+        full_name: 'John Doe 1080',
         birthday: '2000-01-01',
         email: 'john.doe@example.com',
         phone_number: '1234567890',
@@ -48,11 +50,9 @@ describe('Donor Registration API', () => {
 
     await handler(req as unknown as NextApiRequest, res as unknown as NextApiResponse);
 
-    expect(res._getStatusCode()).toBe(201);
-    expect(JSON.parse(res._getData())).toEqual(mockDonor);
     expect(prisma.donorRegistration.create).toHaveBeenCalledWith({
       data: {
-        fullName: 'John Doe',
+        fullName: 'John Doe 1080',
         birthday: new Date('2000-01-01'),
         email: 'john.doe@example.com',
         phoneNumber: '1234567890',
@@ -60,6 +60,15 @@ describe('Donor Registration API', () => {
         donationImage: 'https://picsum.photos/200/300',
       },
     });
+
+    expect(sendMail).toHaveBeenCalledWith(
+      [mockDonor.email],
+      'CẢM ƠN BẠN ĐÃ ỦNG HỘ VÀO QUỸ KHOẢNG TRỜI CỦA BÉ',
+      'Mail content',
+    );
+
+    expect(res._getStatusCode()).toBe(201);
+    expect(JSON.parse(res._getData())).toEqual(mockDonor);
   });
 
   it('should return 405 if method is not POST', async () => {
