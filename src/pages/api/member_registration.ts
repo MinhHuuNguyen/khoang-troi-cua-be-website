@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import prisma from "@/libs/prisma";
-import { sendMail } from "@mailer/mailService";
-import mailData from "@mailer/templates/recruit-members/member-registration-complete";
-import newMember from "@mailer/templates/internal-mail/new-member-regis";
-import formEmail from "@mailer/templates/internal-mail/save-form-email";
-import interviewEmail from "@mailer/templates/internal-mail/save-interview-email";
+import { sendMail } from "@/mailer/mailService";
+import mailData from "@/mailer/templates/recruit-members/member-registration-complete";
+import newMember from "@/mailer/templates/internal-mail/new-member-regis";
+import formEmail from "@/mailer/templates/internal-mail/save-form-email";
+import interviewEmail from "@/mailer/templates/internal-mail/save-interview-email";
 import mailMemberInterviewFail from "@/mailer/templates/recruit-members/member-interview-fail";
 import mailMemberFormFail from "@/mailer/templates/recruit-members/member-form-fail";
 import { MemberRegistrationStatus } from "@prisma/client";
