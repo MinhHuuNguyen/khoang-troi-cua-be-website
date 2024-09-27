@@ -2,8 +2,10 @@ import React from "react";
 import opportunityData from "../../../utils/data/json/oppotunity.json";
 import { Stack, Typography, Button, Paper, Box } from "@mui/material";
 import { COLORS } from "@/utils/constants";
+import { useRouter } from "next/router";
 
 export const Opportunity: React.FC = () => {
+  const router = useRouter();
   return (
     <Stack alignItems="center" my={8}>
       <Paper elevation={3} sx={{ width: ["80%", "70%"] }}>
@@ -32,12 +34,14 @@ export const Opportunity: React.FC = () => {
                 minWidth: "110px",
                 marginRight: 2,
               }}
+              onClick={() => router.push("/member-registration")}
             >
               {opportunityData.button1}
             </Button>
             <Button
               variant="contained"
               sx={{ backgroundColor: COLORS.PINK, minWidth: "110px" }}
+              onClick={() => router.push("/donor-registration")}
             >
               {opportunityData.button2}
             </Button>

@@ -1,0 +1,40 @@
+name: Run Specific Jest Tests
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run member-regis.test.js 
+        run: npx jest --testPathPattern="jest-test/api/member-regis.test.ts"
+
+      - name: Run donor-regis.test.js 
+        run: npx jest --testPathPattern="jest-test/api/donor-regis.test.ts" 
+
+      - name: Run unit-member-regis.test.js 
+        run: npx jest --testPathPattern="jest-test/unit/unit-member-regis.test.ts" 
+
+      - name: Run unit-donor-regis.test.js 
+        run: npx jest --testPathPattern="jest-test/unit/unit-donor-regis.test.ts"  
+        
+      - name: Run send-mail.test.js 
+        run: npx jest --testPathPattern="jest-test/unit/send-mail.test.ts" 
