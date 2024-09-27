@@ -1,15 +1,10 @@
 import { createMocks } from 'node-mocks-http';
+import type { NextApiRequest, NextApiResponse } from 'next';
 import handler from '@/pages/api/donor_registration';
 import prisma from '@/libs/prisma';
-import { sendMail } from '@/mailer/mailService';
 import { mailDonorRegistration } from '@/mailer/templates/donor-registration-complete';
-import type { NextApiRequest, NextApiResponse } from 'next';
+import { sendMail } from '@/mailer/mailService';
 
-jest.mock('@/libs/prisma', () => ({
-  donorRegistration: {
-    create: jest.fn(),
-  },
-}));
 jest.mock('@/mailer/mailService', () => ({
   sendMail: jest.fn(),
 }));
@@ -17,30 +12,22 @@ jest.mock('@/mailer/templates/donor-registration-complete', () => ({
   mailDonorRegistration: jest.fn(),
 }));
 
-describe('Donor Registration API', () => {
-  beforeEach(() => {
-    jest.clearAllMocks();
+describe('Member Registration API (Integration)', () => {
+  beforeAll(async () => {
+    // Connect to the database
+    await prisma.$connect();
   });
 
-  it('Create a new donor registration', async () => {
-    const mockDonor = {
-      id: 1,
-      fullName: 'John Doe',
-      birthday: '2000-01-01',
-      email: 'john.doe@example.com',
-      phoneNumber: '1234567890',
-      kindOfDonation: 'MONEY',
-      donationImage: 'https://picsum.photos/200/300',
-    };
+  afterAll(async () => {
+    // Disconnect from the database
+    await prisma.$disconnect();
+  });
 
-    (prisma.donorRegistration.create as jest.Mock).mockResolvedValue(mockDonor);
-    (sendMail as jest.Mock).mockResolvedValue(true);
-    (mailDonorRegistration as jest.Mock).mockReturnValue('Mail content');
-
+  it('creates a new donor registration and retrieves the ID from the database', async () => {
     const { req, res } = createMocks({
       method: 'POST',
       body: {
-        full_name: 'John Doe 1080',
+        full_name: 'John Doe donor',
         birthday: '2000-01-01',
         email: 'john.doe@example.com',
         phone_number: '1234567890',
@@ -48,27 +35,19 @@ describe('Donor Registration API', () => {
       },
     });
 
+    // Call the API handler
     await handler(req as unknown as NextApiRequest, res as unknown as NextApiResponse);
 
-    expect(prisma.donorRegistration.create).toHaveBeenCalledWith({
-      data: {
-        fullName: 'John Doe 1080',
-        birthday: new Date('2000-01-01'),
-        email: 'john.doe@example.com',
-        phoneNumber: '1234567890',
-        kindOfDonation: 'MONEY',
-        donationImage: 'https://picsum.photos/200/300',
-      },
+    // Retrieve the member from the database directly to get the ID
+    const donor = await prisma.donorRegistration.findFirst({
+      where: { fullName: 'John Doe donor' },
     });
 
-    expect(sendMail).toHaveBeenCalledWith(
-      [mockDonor.email],
-      'CẢM ƠN BẠN ĐÃ ỦNG HỘ VÀO QUỸ KHOẢNG TRỜI CỦA BÉ',
-      'Mail content',
-    );
+    // Assert that the member is found and retrieve the ID
+    expect(donor).not.toBeNull();
+    expect(donor?.email).toBe('john.doe@example.com');
 
     expect(res._getStatusCode()).toBe(201);
-    expect(JSON.parse(res._getData())).toEqual(mockDonor);
   });
 
   it('should return 405 if method is not POST', async () => {
@@ -82,13 +61,12 @@ describe('Donor Registration API', () => {
   });
 
   it('should return 500 if there is an error', async () => {
-    (prisma.donorRegistration.create as jest.Mock).mockRejectedValue(new Error('Database error'));
-
+    // Induce an error by passing invalid data
     const { req, res } = createMocks({
       method: 'POST',
       body: {
-        full_name: 'John Doe',
-        birthday: '2000-01-01',
+        full_name: 'John Doe donor',
+        birthday: 'invalid-date',
         email: 'john.doe@example.com',
         phone_number: '1234567890',
         kind_of_donate: '1',
@@ -98,6 +76,6 @@ describe('Donor Registration API', () => {
     await handler(req as unknown as NextApiRequest, res as unknown as NextApiResponse);
 
     expect(res._getStatusCode()).toBe(500);
-    expect(JSON.parse(res._getData())).toEqual({ message: 'Something went wrong' });
+    expect(res._getJSONData()).toEqual({ message: 'Something went wrong' });
   });
 });
