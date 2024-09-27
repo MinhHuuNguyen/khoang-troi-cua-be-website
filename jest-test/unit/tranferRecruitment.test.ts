@@ -1,86 +1,61 @@
-import prisma from "@/libs/prisma"; // Điều chỉnh đường dẫn import tới Prisma client
+import prisma from "@/libs/prisma"; // Adjust the import path to your prisma setup
+import { id } from "date-fns/locale";
 
-jest.mock("@/libs/prisma", () => ({
-  memberRegistration: {
-    findMany: jest.fn(),
-    deleteMany: jest.fn(),
-  },
-  member: {
-    create: jest.fn(),
-  },
-}));
-
-describe('Transfer member registrations', () => {
-  it('should transfer member registrations correctly', async () => {
-    const passMember = {
-      id: 1,
-      email: "john.doe@example.com",
-      fullName: "John Doe",
-      birthday: "1990-01-01",
-      phoneNumber: "123456789",
-      address: "123 Main St",
-      workPlace: "Company A",
+describe("transferMemberRegistrations (Real Database)", () => {
+  // Seed database before each test
+  let registrationId: number;
+  beforeEach(async () => {
+    const data = {
+      full_name: 'Jane Doe',
+      birthday: '1995-02-15',
+      phone_number: '0987654321',
+      email: 'jane.doe@example.com',
+      address: '123 Main St',
+      work_place: 'Company XYZ',
+      has_social_activities: true,
+      memories: 'Great memories from the past',
+      position: '2',
+      hope_to_receive: 'More community support',
     };
-
-    const memberRegistrations = [
-      {
-        id: 1,
-        fullName: "John Doe",
-        birthday: "1990-01-01",
-        phoneNumber: "123456789",
-        email: "john.doe@example.com",
-        address: "123 Main St",
-        workPlace: "Company A",
+    // Create a member registration entry
+    const registration = await prisma.memberRegistration.create({
+      data: {
+        fullName: data.full_name,
+        birthday: new Date(data.birthday),
+        phoneNumber: data.phone_number,
+        email: data.email,
+        address: data.address,
+        workPlace: data.work_place,
+        hasSocialActivities: data.has_social_activities,
+        memories: data.memories,
+        positionId: parseInt(data.position),
+        hopeToReceive: data.hope_to_receive,
+        test: "test",
       },
-    ];
-
-    const transferredIds = [1];
-
-    // Giả lập dữ liệu trả về từ findMany
-    (prisma.memberRegistration.findMany as jest.Mock).mockResolvedValue(memberRegistrations);
-
-    // Giả lập việc xóa dữ liệu thành công
-    (prisma.memberRegistration.deleteMany as jest.Mock).mockResolvedValue({ count: transferredIds.length });
-
-    // Đoạn mã cần kiểm tra
-    const memberRegistrationsFromDb = await prisma.memberRegistration.findMany({
-      where: {
-        id: passMember.id,
-      },
-    });
-
-    for (const registration of memberRegistrationsFromDb) {
-      await prisma.member.create({
-        data: {
-          fullName: registration.fullName,
-          birthday: registration.birthday,
-          phoneNumber: registration.phoneNumber,
-          email: registration.email,
-          address: registration.address,
-          workPlace: registration.workPlace,
-          bank: "",
-          bankAccount: "",
-          avatar: "",
-        },
-      });
-    }
-
-    await prisma.memberRegistration.deleteMany({
-      where: {
-        id: {
-          in: transferredIds,
+      include: {
+        position: {
+          select: {
+            name: true,
+          },
         },
       },
     });
 
-    // Kiểm tra phương thức findMany có được gọi đúng cách hay không
-    expect(prisma.memberRegistration.findMany).toHaveBeenCalledWith({
-      where: { id: passMember.id },
+    registrationId = registration.id;
+  });
+
+  it("should transfer member registrations and return the transferred IDs", async () => {
+    // Fetch the member registrations
+    const memberRegistrations = await prisma.memberRegistration.findMany({
+      where: {
+        id: registrationId,
+      },
     });
 
-    // Kiểm tra phương thức create có được gọi đúng cách hay không
+    let transferredIds = [];
+    let createdMemberId: number = 0;
     for (const registration of memberRegistrations) {
-      expect(prisma.member.create).toHaveBeenCalledWith({
+      const newMember = await prisma.member.create({
         data: {
           fullName: registration.fullName,
           birthday: registration.birthday,
@@ -93,15 +68,29 @@ describe('Transfer member registrations', () => {
           avatar: "",
         },
       });
+      createdMemberId = newMember.id;
+      transferredIds.push(registration.id);
+    
+      // Delete the registration after transfer
+      await prisma.memberRegistration.delete({
+        where: { id: registration.id },
+      });
     }
 
-    // Kiểm tra phương thức deleteMany có được gọi đúng cách hay không
-    expect(prisma.memberRegistration.deleteMany).toHaveBeenCalledWith({
-      where: {
-        id: {
-          in: transferredIds,
-        },
-      },
+    // Assert that the IDs were transferred
+    expect(transferredIds).toEqual([registrationId]);
+
+    // Assert that the member was created
+    const createdMember = await prisma.member.findUnique({
+      where: { id: createdMemberId },
     });
+    expect(createdMember?.fullName).toBe("Jane Doe");
+    console.log(createdMember);
+
+    // Assert that the member registration was deleted
+    const deletedRegistration = await prisma.memberRegistration.findUnique({
+      where: { id: registrationId},
+    });
+    expect(deletedRegistration).toBeNull();
   });
 });

@@ -1,29 +1,16 @@
 import prisma from "@/libs/prisma";
-import { mock } from "node:test";
-
-jest.mock("@/libs/prisma", () => ({
-  memberRegistration: {
-    findMany: jest.fn(),
-  },
-}));
 
 describe('Get member registration with status REVIEWING', () => {
+  beforeAll(async () => {
+    // Connect to the database
+    await prisma.$connect();
+  });
+
+  afterAll(async () => {
+    // Clean up after all tests
+    await prisma.$disconnect();
+  });
   it('should retrieve the member registrations with status REVIEWING', async () => {
-    const mockMembers = [
-      {
-        id: 1,
-        status: "REVIEWING",
-        position: { name: "Developer" },
-      },
-      {
-        id: 2,
-        status: "REVIEWING",
-        position: { name: "Designer" },
-      },
-    ];
-
-    (prisma.memberRegistration.findMany as jest.Mock).mockResolvedValue(mockMembers);
-
     const members = await prisma.memberRegistration.findMany({
       where: {
         status: "REVIEWING",
@@ -36,10 +23,25 @@ describe('Get member registration with status REVIEWING', () => {
         },
       },
     });
+    expect(members[0].status).toBe("REVIEWING");
+    console.log(members);
+  });
+});
 
-    expect(prisma.memberRegistration.findMany).toHaveBeenCalledWith({
+describe('Get member registration with status REVIEWING', () => {
+  beforeAll(async () => {
+    // Connect to the database
+    await prisma.$connect();
+  });
+
+  afterAll(async () => {
+    // Clean up after all tests
+    await prisma.$disconnect();
+  });
+  it('should retrieve the member registrations with status INTERVIEW', async () => {
+    const interviews = await prisma.memberRegistration.findMany({
       where: {
-        status: "REVIEWING",
+        status: "INTERVIEW",
       },
       include: {
         position: {
@@ -49,54 +51,7 @@ describe('Get member registration with status REVIEWING', () => {
         },
       },
     });
-
-    expect(members).toEqual(mockMembers);
+    expect(interviews[0].status).toBe("INTERVIEW");
+    console.log(interviews);
   });
 });
-
-describe('Get member registration with status REVIEWING', () => {
-    it('should retrieve the member registrations with status INTERVIEW', async () => {
-      const mockInterviews = [
-        {
-          id: 1,
-          status: "INTERVIEW",
-          position: { name: "Developer" },
-        },
-        {
-          id: 2,
-          status: "INTERVIEW",
-          position: { name: "Designer" },
-        },
-      ];
-  
-      (prisma.memberRegistration.findMany as jest.Mock).mockResolvedValue(mockInterviews);
-  
-      const interviews = await prisma.memberRegistration.findMany({
-        where: {
-          status: "INTERVIEW",
-        },
-        include: {
-          position: {
-            select: {
-              name: true,
-            },
-          },
-        },
-      });
-  
-      expect(prisma.memberRegistration.findMany).toHaveBeenCalledWith({
-        where: {
-          status: "INTERVIEW",
-        },
-        include: {
-          position: {
-            select: {
-              name: true,
-            },
-          },
-        },
-      });
-  
-      expect(interviews).toEqual(mockInterviews);
-    });
-  });
