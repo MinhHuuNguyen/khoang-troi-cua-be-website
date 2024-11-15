@@ -42,11 +42,11 @@ const nextConfig = {
         destination: '/',
         permanent: true,
       },
-      {
-        source: '/recruitment-management',
-        destination: '/',
-        permanent: true,
-      },
+      // {
+      //   source: '/recruitment-management',
+      //   destination: '/',
+      //   permanent: true,
+      // },
     ];
   },
 };

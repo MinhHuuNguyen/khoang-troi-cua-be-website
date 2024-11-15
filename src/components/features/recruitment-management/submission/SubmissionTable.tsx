@@ -79,10 +79,25 @@ const SubmissionTable = (props: { data: MemberRegistrationWithPosition[] }) => {
     setAction(action);
   };
 
-  const handleConfirm = () => {
-    setOpenToast(true);
-    closeDetail();
-    close();
+  const handleConfirm = async () => {
+    if (action === ACTIONS["ACCEPT_INTERVIEW"]) {
+      const response = await fetch('/api/member_interview', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      });
+
+      if (!response.ok) {
+        throw new Error(`API request failed with status ${response.status}`);
+      }
+
+      setOpenToast(true);
+      closeDetail();
+      close();
+    } else {
+      setOpenToast(true);
+      closeDetail();
+      close();
+    }
   };
 
   const table = useTable({
