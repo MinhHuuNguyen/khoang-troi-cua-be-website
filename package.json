@@ -36,7 +36,7 @@
     "eslint-config-next": "13.4.5",
     "material-react-table": "^2.0.6",
     "mui-nested-menu": "^3.2.2",
-    "next": "13.4.5",
+    "next": "15.5.29",
     "next-auth": "^4.24.5",
     "next-seo": "^6.1.0",
     "node-fetch": "^3.3.2",
